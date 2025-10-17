@@ -1,0 +1,140 @@
+
+h1{
+    text-align:center;
+}
+.device{
+    margin: auto;
+    width: 640px;
+    height: 960px;
+    overflow: hidden;
+    background-color: orange;
+    position: relative;
+}
+
+* {
+    box-sizing: border-box;
+}
+  
+ul li {
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    background: #eee;
+    font-size: 18px;
+    transition: 0.2s;
+  
+}
+  
+/* zebra-stripes when adding items*/
+
+ul li:nth-child(odd) {
+    background: #f9f9f9;
+}
+  
+/* darker background-color on hover */
+ul li:hover {
+    background: #ddd;
+}
+  
+/* when clicked on, add a background color and strike out text */
+ul li.checked {
+    background: #888;
+    color: #fff;
+    text-decoration: line-through;
+}
+  
+/* add a "checked" mark when clicked on */
+ul li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top: 10px;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+}
+  
+/* style the close button */
+.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 12px 16px 12px 16px;
+}
+  
+.close:hover {
+    background-color: #f44336;
+    color: white;
+}
+  
+/* style the header */
+.header {
+    background-color: orange;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+}
+  
+  
+/* style the input */
+input {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+}
+  
+/* style the "Add" button */
+.addBtn {
+    padding: 10px;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0;
+}
+  
+.addBtn:hover {
+    background-color: #bbb;
+}
+
+/* This begins the CSS for the navigational part of the app */
+footer{
+  width: 640px;
+  height: 90px;
+  bottom : 0;
+  margin:auto;
+  position:fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  background-color: orange;
+}
+.nav{
+    color:black;
+    text-decoration: none;
+}
+.nav:visited{
+    color:black;
+}
+.nav-img{
+ height:70px;
+}
+.nav:hover{
+    background-color:rgba(245, 245, 220, 0.682);
+}
+#nav-curr{
+    background-color: beige;
+}

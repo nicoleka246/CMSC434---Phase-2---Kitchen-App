@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<div class="device">
+    <h1>User Profile</h1>
+  <div class="profile" id="profile">
+    <img src="chef.png" id="profImg" onclick="document.getElementById('message').style.display='block'">
+    <h2 id="username">Chef</h2>
+  </div>
+  <div class="message" id="message" style="display:none">
+    <p >Welcome Back Chef!</p>
+    <button class="close-btn" id="closeBtn" onclick="document.getElementById('message').style.display='none'">Close</button>
+  </div>
+  <footer>
+        <!--TEXT  -->
+         <a class = "nav" href="text.html">
+            <img class = "nav-img" src="text.png" alt = "text">
+            <span>Text</span>
+        </a>
+        <!-- LR -->
+         <a  class = "nav" href = "LR.html">
+            <img class = "nav-img" src = "LR.png" alt = "LR">
+            <span>LR</span>
+        </a>
+        <!-- COLORS -->
+         <a  class = "nav" href = "colors.html">
+            <img class = "nav-img" src = "colors.png" alt = "colors">
+            <span>Colors</span>
+        </a>
+        <!-- PROFILE -->
+         <a class = "nav" id = "nav-curr" href ="profile.html">
+            <img class = "nav-img" src = "profile.png" alt = "profile">
+            <span>Profile</span>
+         </a>
+        <!-- CHOICES-->
+         <a class = "nav" href = "choices.html">
+            <img class = "nav-img" src = "choices.png" alt = "choices">
+            <span>Choices</span>
+        </a>
+        <!-- TODO-->
+         <a class = "nav" href="todo.html">
+            <img class = "nav-img" src = "todo.png" alt = "todo">
+            <span>ToDo</span>
+        </a>
+    </footer>
+</div>
+</html>

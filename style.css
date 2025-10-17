@@ -1,0 +1,127 @@
+h1,h2{
+    text-align:center;
+}
+.device{
+    margin: auto;
+    width: 640px;
+    height: 960px;
+    overflow-y: auto;
+    background-color: orange;
+    position: relative;
+    font-size: 20px;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+#profImg{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: block;
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+#message{
+    width: 250px;
+    height: 100px;
+    background-color: white;
+    border-radius: 30px;
+    text-align: center;
+    margin: auto;
+    padding-top: 5px;
+    font-size: 20px;
+    display: block;
+    position: relative;
+}
+
+.deviceSetting{
+    width: 640px;
+    height: 960px;
+    background-color: orange;
+    margin:auto;
+    position:relative;
+    overflow: hidden;
+}
+
+.basicTabSetting{
+    width: 640px;
+    height: 900px;
+    position:relative;
+    margin:auto;
+}
+
+.tabTwoStyle{
+    position: absolute;
+    bottom:100px;
+    right:20px;
+}
+
+.popUp{
+    background-color: beige;
+    width: 50%;
+    height: 30px;
+    margin: auto;
+    text-align: center;
+}
+
+
+.lr-text {
+    position: absolute;
+    bottom: 5rem;
+    right: 0;
+    padding-right: .5rem;
+    
+}
+/* This begins the CSS for the navigational part of the app */
+footer{
+  width: 640px;
+  height: 90px;
+  bottom : 0;
+  margin:auto;
+  position:fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  background-color: orange;
+}
+.nav{
+    color:black;
+    text-decoration: none;
+}
+.nav:visited{
+    color:black;
+}
+.nav-img{
+ height:70px;
+}
+.nav:hover{
+    background-color:rgba(245, 245, 220, 0.682);
+}
+#nav-curr{
+    background-color: beige;
+}
+/* The CSS Continues Here*/
+#black-bg{
+    text-align:center; 
+    background-color:black;
+    color:yellow;
+    font-size: 1.5rem;
+    font-style: bold;
+}
+#yellow-bg{
+    text-align:center; 
+    background-color:yellow;
+    color:purple;
+    font-size: 1.5rem;
+    font-style: bold;
+}
+#tab5{
+  padding-left: 2rem;
+  font-size:1.25rem;
+}
