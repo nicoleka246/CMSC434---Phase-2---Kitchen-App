@@ -106,7 +106,30 @@ footer{
 #nav-curr{
     background-color: beige;
 }
-/* The CSS Continues Here*/
+/* Start of CSS for the Pantry Tab */ 
+.food-cad-header{
+    text-align:center; 
+    background-color: beige;
+    color:black;
+    font-size: 1.5rem;
+    font-style: bold;
+}
+.pantry-tab-setting{
+    padding-left: 2rem;
+    font-size:1.5rem;
+}
+.button-styling{
+    font-size:1.5rem;
+}
+
+.button-styling-center{
+    font-size:1.5rem;
+    display: block;
+    margin: 0 auto;
+}
+/* End of CSS for the Pantry Tab */
+
+/* The CSS Continues Here */
 #black-bg{
     text-align:center; 
     background-color:black;
