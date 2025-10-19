@@ -6,24 +6,45 @@
     <link rel="stylesheet" href="style.css">
     <title>pantry</title>
 </head>
-<body>
+<body onload = "start()">
     <div class = "device">
-        <h1>Pantry</h1>
+        <h1>My Pantry</h1>
         <div class = "content-container">
             <div class = "pantry-tab-setting">
                 <p id = "filter-header">Filter By: 
-                    <button class = "button-styling" type = "button">Category</button> 
-                    <button class = "button-styling" type = "button">Quantity</button> 
-                    <button class = "button-styling" type = "button">Expiration Date</button> 
+                    <button id = "category-button" class = "button-styling" type = "button">Category</button> 
+                    <button id = "quantity-button" class = "button-styling" type = "button">Quantity</button> 
+                    <button id = "expiration-button" class = "button-styling" type = "button">Expiration Date</button> 
                 </p>
-                <button class = "button-styling-center" type="button">Add Item</button>
+                <button id = "add-item-button" class = "button-styling-center" type="button" onclick = "call_add_item()">Add Item</button>
             </div>
             <p id = "fruits-header" class = "food-cad-header">Fruits</p>
+            <div id = "fruits-list" class = "table-style">
+
+            </div>
             <p id = "veg-header" class = "food-cad-header">Vegetables</p>
+            <div id = "veg-list" class = "table-style">
+
+            </div>
             <p id = "protein-header" class = "food-cad-header">Protein</p>
+            <div id = "protein-list" class = "table-style">
+
+            </div>
             <p id = "dairy-header" class = "food-cad-header">Dairy</p>
+            <div id = "dairy-list" class = "table-style">
+
+            </div>
             <p id = "spices-header" class = "food-cad-header">Spices</p>
+            <div id = "spices-list" class = "table-style">
+
+            </div>
             <p id = "other-header" class = "food-cad-header">Other</p>
+            <div id = "other-list" class = "table-style">
+
+            </div>
+            <br>
+            <br>
+            <br>
         </div>
          <footer>
         <!--TEXT  -->
@@ -58,5 +79,224 @@
         </a>
     </footer>
     </div>
+    <!-- <script src="pantry-script.js"></script> -->
+    <script>
+        // localStorage.removeItem("items");
+        // localStorage.removeItem("firstTime");
+        function start(){
+            if(!localStorage.getItem("firstTime")){
+                let items = Array();
+                localStorage.setItem("items", JSON.stringify(items));
+                localStorage.setItem("firstTime", "true");
+            }else{
+                let items = JSON.parse(localStorage.getItem("items"));
+                console.log(items);
+                localStorage.setItem("items", JSON.stringify(items));
+            }
+            populate_items();
+        }
+        function delete_item(button){
+            const name = button.dataset.name;
+            console.log(name);
+            let items = JSON.parse(localStorage.getItem("items"));
+            let i = 0;
+            for(i = 0; i < items.length; i++){
+                let te = items[i];
+                if(te.name === name){
+                    items.splice(i, 1);
+                }
+            }
+            localStorage.setItem("items", JSON.stringify(items));
+            start();
+        }
+        function edit_item(button){
+            const name = button.dataset.name;
+            let items = JSON.parse(localStorage.getItem("items"));
+            let i = 0;
+            for(i = 0; i < items.length; i++){
+                let te = items[i];
+                if(te.name === name){
+                    localStorage.setItem("edit-item", i);
+                    break;
+                }
+            }
+            window.location.href = 'food_item.html';
+        }
+        function populate_items(){
+            let items = JSON.parse(localStorage.getItem("items"));
+            console.log(items);
+            let fruit_count = 0;
+            let veg_count = 0;
+            let protein_count = 0;
+            let spices_count = 0;
+            let dairy_count = 0;
+            let other_count = 0;
+            let fruit_array = new Array();
+            let veg_array = new Array();
+            let protein_array = new Array();
+            let spices_array = new Array();
+            let dairy_array = new Array();
+            let other_array = new Array();
+           
+            for(i = 0; i < items.length; i++){
+                let tmp = items[i];
+                if(tmp.category == "Fruits"){
+                    fruit_count++;
+                    fruit_array.push(tmp);
+                }else if(tmp.category == "Vegetables"){
+                    veg_count++;
+                    veg_array.push(tmp);
+                }else if(tmp.category == "Protein"){
+                    protein_count++;
+                    protein_array.push(tmp);
+                }else if(tmp.category == "Dairy"){
+                    dairy_count++;
+                    dairy_array.push(tmp);
+                }else if(tmp.category == "Spices"){
+                    spices_count++;
+                    spices_array.push(tmp);
+                }else if(tmp.category == "Other"){
+                    other_count++;
+                    other_array.push(tmp);
+                }
+            }
+            let tb = "";
+            // SET FRUITS CATEGORY 
+            document.getElementById("fruits-header").innerText = `Fruits - ${fruit_count} Items`;
+            if(fruit_count != 0){
+                tb = "";
+                tb += "<table> <tr>"
+                for(i = 0; i < fruit_array.length; i++){
+                    let tmp = fruit_array[i];
+                    tb += "<td>"
+                    tb += `Name: ${tmp.name} <br>` ;
+                    tb += `Category: ${tmp.category} <br>` ;
+                    tb += `Quantity: ${tmp.quantity}, Units: ${tmp.units}<br>` ;
+                    tb += `Storage: ${tmp.storage} <br>` ;
+                    tb += `Additional Notes: ${tmp.notes} <br>` ;
+                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
+                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
+                    tb += "</td>"
+                } 
+                tb += `</tr> </table>`;
+                document.getElementById("fruits-list").innerHTML = tb;
+            }else{
+                document.getElementById("fruits-list").innerHTML = `<p class = "no-items-header">None</p>`;
+            }
+            // SET VEGETABLES CATEGORY 
+            document.getElementById("veg-header").innerText = `Vegetables - ${veg_count} Items`;
+            if(veg_count != 0){
+                tb = "";
+                tb += "<table> <tr>"
+                for(i = 0; i < veg_array.length; i++){
+                    let tmp = veg_array[i];
+                    tb += "<td>";
+                    tb += `Name: ${tmp.name} <br>`;
+                    tb += `Category: ${tmp.category} <br>`;
+                    tb += `Quantity: ${tmp.quantity}, Units: ${tmp.units}<br>`;
+                    tb += `Storage: ${tmp.storage} <br>`;
+                    tb += `Additional Notes: ${tmp.notes} <br>`;
+                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
+                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`;  
+                    tb += "</td>";
+                } 
+                tb += `</tr> </table>`;
+                document.getElementById("veg-list").innerHTML = tb;
+            }else{
+                document.getElementById("veg-list").innerHTML = `<p class = "no-items-header">None</p>`;
+            }
+            // SET PROTEIN CATEGORY 
+            document.getElementById("protein-header").innerText = `Protein - ${protein_count} Items`;
+            if(protein_count != 0){
+                tb = "";
+                tb += "<table> <tr>"
+                for(i = 0; i < protein_array.length; i++){
+                    let tmp = protein_array[i];
+                    tb += "<td>";
+                    tb += `Name: ${tmp.name} <br>`;
+                    tb += `Category: ${tmp.category} <br>`;
+                    tb += `Quantity: ${tmp.quantity}, Units: ${tmp.units}<br>`;
+                    tb += `Storage: ${tmp.storage} <br>`;
+                    tb += `Additional Notes: ${tmp.notes} <br>`;
+                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
+                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
+                    tb += "</td>";
+                } 
+                tb += `</tr> </table>`;
+                document.getElementById("protein-list").innerHTML = tb;
+            }else{
+                document.getElementById("protein-list").innerHTML = `<p class = "no-items-header">None</p>`;
+            }
+            // SET DAIRY CATEGORY 
+            document.getElementById("dairy-header").innerText = `Dairy - ${dairy_count} Items`;
+            if(dairy_count != 0){
+                tb = "";
+                tb += "<table> <tr>"
+                for(i = 0; i < dairy_array.length; i++){
+                    let tmp = dairy_array[i];
+                    tb += "<td>";
+                    tb += `Name: ${tmp.name} <br>`;
+                    tb += `Category: ${tmp.category} <br>`;
+                    tb += `Quantity: ${tmp.quantity}, Units: ${tmp.units}<br>`;
+                    tb += `Storage: ${tmp.storage} <br>`;
+                    tb += `Additional Notes: ${tmp.notes} <br>`;
+                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
+                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
+                    tb += "</td>";
+                } 
+                tb += `</tr> </table>`;
+                document.getElementById("dairy-list").innerHTML = tb;
+            }else{
+                document.getElementById("dairy-list").innerHTML = `<p class = "no-items-header">None</p>`;
+            }
+            // SET SPICES CATEGORY 
+            document.getElementById("spices-header").innerText = `Spices - ${spices_count} Items`;
+            if(spices_count != 0){
+                tb = "";
+                tb += "<table> <tr>"
+                for(i = 0; i < spices_array.length; i++){
+                    let tmp = spices_array[i];
+                    tb += "<td>";
+                    tb += `Name: ${tmp.name} <br>`;
+                    tb += `Category: ${tmp.category} <br>`;
+                    tb += `Quantity: ${tmp.quantity}, Units: ${tmp.units}<br>`;
+                    tb += `Storage: ${tmp.storage} <br>`;
+                    tb += `Additional Notes: ${tmp.notes} <br>`;
+                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
+                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
+                    tb += "</td>";
+                } 
+                tb += `</tr> </table>`;
+                document.getElementById("spices-list").innerHTML = tb;
+            }else{
+                document.getElementById("spices-list").innerHTML = `<p class = "no-items-header">None</p>`;
+            }
+            // SET OTHERS CATEGORY 
+            document.getElementById("other-header").innerText = `Other - ${other_count} Items`;   
+            if(other_count != 0){
+                tb = "";
+                tb += "<table> <tr>"
+                for(i = 0; i < other_array.length; i++){
+                    let tmp = other_array[i];
+                    tb += "<td>";
+                    tb += `Name: ${tmp.name} <br>`;
+                    tb += `Category: ${tmp.category} <br>`;
+                    tb += `Quantity: ${tmp.quantity}, Units: ${tmp.units}<br>`;
+                    tb += `Storage: ${tmp.storage} <br>`;
+                    tb += `Additional Notes: ${tmp.notes} <br>`;
+                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
+                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
+                    tb += "</td>"
+                } 
+                tb += `</tr> </table>`;
+                document.getElementById("other-list").innerHTML = tb;
+            }else{
+                document.getElementById("other-list").innerHTML = `<p class = "no-items-header">None</p>`;
+            }  
+        }
+        function call_add_item(){
+            window.location.href = 'food_item.html';
+        }
+    </script>
 </body>
 </html>

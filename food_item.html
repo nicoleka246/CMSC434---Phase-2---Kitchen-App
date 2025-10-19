@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Add Food Item Page</title>
+</head>
+<body onload = "start()">
+    <div class = "device">
+        <h1>Add New Item </h1>
+        <div class = "content-container">       
+            <div class = "pantry-tab-setting">
+                <p>(*) Required Field</p>
+                <label for="item-name">* Name:</label>
+                <input class = "button-styling" type="text" id="item-name" name="item-name" size="40">
+                <br> <br>
+                <label for="item-category">* Category</label>
+                <br><br>
+                <input type="radio" id="fruits_rb" value="Fruits" name="category-choice">
+                <label for="fruits_rb">Fruits</label>
+                <input type="radio" id="veg_rb" value="Vegetables" name="category-choice">
+                <label for="veg_rb">Vegetables</label>
+                <input type="radio" id="protein_rb" value="Protein" name="category-choice">
+                <label for="protein_rb">Protein</label>
+                <input type="radio" id="dairy_rb" value="Dairy" name="category-choice">
+                <label for="dairy_rb">Dairy</label>
+                <input type="radio" id="spices_rb" value="Spices" name="category-choice">
+                <label for="spices_rb">Spices</label>
+                <input type="radio" id="other_rb" value="Other" name="category-choice">
+                <label for="other_rb">Other</label>
+
+                <br><br>
+                <label for="item-quantity">* Quantity</label>
+                <input class = "button-styling" type="number" id="quantity" name="quantity" min="1" max="500">
+                <label for="item-unit">* Units:</label>
+
+                <select class = "button-styling" name="item-unit" id="item-unit">
+                    <option value="grams">Grams (g)</option>
+                    <option value="pounds">Pounds (lb)</option>
+                    <option value="milligrams">Milligrams (mg)</option>
+                    <option value="ounces">Ounces (oz)</option>
+                    <option value="cup">Cup(s)</option>
+                    <option value="carton">Carton</option>
+                    <option value="package">Package</option>
+                    <option value="piece">Piece(s)</option>
+                    <option value="container">Container(s)</option>
+                    <option value="servings">Servings(s)</option>
+                </select>
+
+                <br><br>
+                <label for="item-exp-date">* Expiration Date</label>
+                <input class = "button-styling" type="date" id="item-exp-date" name="item-exp-date">
+
+                <br><br>
+                <label for="item-location">* Storage Location</label>
+                <br><br>
+                <input type="radio" id="pantry_rb" value="Pantry" name="storage-choice">
+                <label for="pantry_rb">Pantry</label>
+                <input type="radio" id="fridge_rb" value="Fridge" name="storage-choice">
+                <label for="fridge_rb">Fridge</label>
+                <input type="radio" id="freezer_rb" value="Freezer" name="storage-choice">
+                <label for="freezer_rb">Freezer</label>
+                <br><br>
+                <label for="item-name">Additional Notes</label> <br>
+                <input class = "button-styling" type="text" id="item-notes" name="item-notes" size="45">
+                <br>
+                <br>
+                <button id = "save-item-button" class = "button-styling-center" type="button" onclick = "save_new_item()">Save</button>
+                <br>
+                <button id = "cancel-item-button" class = "button-styling-center" type="button" onclick = "go_back_to_pantry()">Cancel</button>
+            </div>
+        </div>
+        <footer>
+            <!--TEXT  -->
+             <a class = "nav" href="text.html">
+                <img class = "nav-img" src="text.png" alt = "text">
+                <span>Text</span>
+            </a>
+            <!-- PANTRY -->
+             <a  class = "nav" id = "nav-curr" href = "pantry.html">
+                <img class = "nav-img" src = "pantry.png" alt = "pantry">
+                <span>Pantry</span>
+            </a>
+            <!-- COLORS -->
+             <a  class = "nav" href = "colors.html">
+                <img class = "nav-img" src = "colors.png" alt = "colors">
+                <span>Colors</span>
+            </a>
+            <!-- PROFILE -->
+             <a class = "nav" href ="profile.html">
+                <img class = "nav-img" src = "profile.png" alt = "profile">
+                <span>Profile</span>
+             </a>
+            <!-- CHOICES-->
+             <a class = "nav" href = "choices.html">
+                <img class = "nav-img" src = "choices.png" alt = "choices">
+                <span>Choices</span>
+            </a>
+            <!-- TODO-->
+             <a class = "nav" href="todo.html">
+                <img class = "nav-img" src = "todo.png" alt = "todo">
+                <span>ToDo</span>
+            </a>
+        </footer>
+    </div>
+    <!-- <script src="pantry-script.js"></script> -->
+    <script>
+        function start(){
+            if(localStorage.getItem("edit-item") !== null){
+                let index = localStorage.getItem("edit-item");
+                localStorage.removeItem("edit-item")
+                edit_existing_item(index);
+            }
+        }
+        function edit_existing_item(index){
+            let items = JSON.parse(localStorage.getItem("items"));
+            let ite = items[index];
+            document.getElementById("item-name").value  = ite.name
+            let category_arr = document.getElementsByName('category-choice');
+            for (i = 0; i < category_arr.length; i++) {
+                if (category_arr[i].value == ite.category){
+                    category_arr[i].checked = true;
+                    break;
+                }
+            }
+            document.getElementById("quantity").value = ite.quantity;
+            document.getElementById("item-unit").value = ite.units;
+            document.getElementById("item-exp-date").value = ite.date;
+            let storage_arr = document.getElementsByName('storage-choice');
+            for (i = 0; i < storage_arr.length; i++) {
+                if (storage_arr[i].value == ite.storage){
+                    storage_arr[i].checked = true;
+                    break;
+                }
+            }
+            if(ite.notes){
+                document.getElementById("item-notes").value = ite.notes;
+            }
+            localStorage.setItem("editing-existing-item", index);
+        }
+        function go_back_to_pantry(){
+            window.location.href = 'pantry.html';
+        }
+        function save_new_item(){
+            window.location.href = 'pantry.html';
+        }
+        function save_new_item(){
+            let name = document.getElementById("item-name").value;
+            let category_arr = document.getElementsByName('category-choice');
+            let quan = document.getElementById("quantity").value;
+            let units = document.getElementById("item-unit").value;
+            let category_choice;
+            let date = document.getElementById("item-exp-date").value;
+            let storage_arr = document.getElementsByName('storage-choice');
+            let storage_choice;
+            let additional_notes = document.getElementById("item-notes").value;
+
+            for (i = 0; i < category_arr.length; i++) {
+                if (category_arr[i].checked){
+                    category_choice = category_arr[i].value;
+                }
+            }
+
+            for (i = 0; i < storage_arr.length; i++) {
+                if (storage_arr[i].checked){
+                    storage_choice = storage_arr[i].value;
+                }
+            }
+            let item = new Object();
+            item.name = name;
+            item.category = category_choice;
+            item.quantity = quan;
+            item.units = units;
+            item.date = date;
+            item.storage = storage_choice;
+            item.notes = additional_notes;
+            console.log(item);
+            let items = JSON.parse(localStorage.getItem("items"));
+
+            if(localStorage.getItem("editing-existing-item") !== null){
+                let index = localStorage.getItem("editing-existing-item");
+                items[index] = item;
+                localStorage.removeItem("editing-existing-item");
+            }else{
+                items.push(item);
+            }
+            localStorage.setItem("items", JSON.stringify(items));
+            window.location.href = 'pantry.html';
+        }
+    </script>
+    
+    
+</body>
+</html>

@@ -114,6 +114,12 @@ footer{
     font-size: 1.5rem;
     font-style: bold;
 }
+.no-items-header{
+    text-align:center; 
+    color:black;
+    font-size: 1.5rem;
+    font-style: bold;
+}
 .pantry-tab-setting{
     padding-left: 2rem;
     font-size:1.5rem;
@@ -121,12 +127,19 @@ footer{
 .button-styling{
     font-size:1.5rem;
 }
-
 .button-styling-center{
     font-size:1.5rem;
     display: block;
     margin: 0 auto;
 }
+.table-style{
+    overflow-x: auto;
+    width: 100%;
+}
+table {
+    border-collapse: collapse;
+    min-width: 2000px;
+  }
 /* End of CSS for the Pantry Tab */
 
 /* The CSS Continues Here */
