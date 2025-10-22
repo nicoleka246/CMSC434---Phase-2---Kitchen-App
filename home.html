@@ -11,7 +11,7 @@
         <div class = "header">
         <img class = "header-img" src = "setting.png" alt = "setting">
         <h1>Kitchen Companion</h1>
-        <a class = "user" href = "index.html">
+        <a class = "user" href = "profile.html">
             <img class = "header-img" src = "user.png" alt = "user">
             <span>User</span>
         </a>
@@ -19,25 +19,48 @@
 
         <div class = "search">
         <img id = "search-img" src = "search.png" alt = "search">
-        <input id = "search-bar" type = "search" placeholder = "Search Recipe or Ingredients">
-        <button type = "submit">GO</button>
+        <input id = "search-bar" type = "search" placeholder = "Search Recipes or Ingredients">
+        <button type = "submit" id = "search-btn">GO</button>
         </div>
         <div id = "current-inventory">
             <p class = "section">Current Inventory</p>
             <!--Insert Images of Foods-->
+            <!--left scroll image-->
             <div id = "food-row">
-            <a class = "food-item" href = "index.html">
-                <img class = "food-img" src = "food/milk.png" alt = "milk">
+              <button id = "left-scroll" class = "scroll"> 
+                <img src = "left-arrow.png" alt = "left scroll"> 
+              </button>
+            <a class = "food-item" href = "pantry.html">
+                <img class = "food-img" src = "food groups/dairy-products.png" alt = "dairy">
                 <span>Milk</span>
             </a>
-            <a class = "food-item" href = "index.html">
-                <img class = "food-img" src = "food/bread.png" alt = "bread">
+            <a class = "food-item" href = "pantry.html">
+                <img class = "food-img" src = "food groups/bread (1).png" alt = "grain">
                 <span>Bread</span>
             </a>
-            <a class = "food-item" href = "index.html">
-                <img class = "food-img" src = "food/eggs.png" alt = "eggs">
+            <a class = "food-item" href = "pantry.html">
+                <img class = "food-img" src = "food groups/dairy-products.png" alt = "dairy">
                 <span>Eggs</span>
             </a>
+            <a class = "food-item" href = "pantry.html">
+                <img class = "food-img" src = "food groups/fruits.png" alt = "fruit">
+                <span>Apples</span>
+            </a>
+            <a class = "food-item" href = "pantry.html">
+                <img class = "food-img" src = "food groups/vegetable.png" alt = "vegetable">
+                <span>Carrots</span>
+            </a>
+            <a class = "food-item" href = "pantry.html">
+                <img class = "food-img" src = "food groups/dairy-products.png" alt = "dairy">
+                <span>Cheese</span>
+            </a>
+            <a class = "food-item" href = "pantry.html">
+                <img class = "food-img" src = "food groups/bread (1).png" alt = "grain">
+                <span>Rice</span>
+            </a>
+            <button id = "right-scroll" class = "scroll"> 
+              <img src = "right-arrow.png" alt = "right scroll"> 
+            </button>
             </div>
         </div>
         <div id = "personal-recipies">
@@ -47,16 +70,14 @@
                 <li>Chicken Pasta ............. 3/6 Items</li>
             </ul>
         </div>
-        <div id = "Shopping Links">
-            <p class = "section">Shopping Links</p>
-            <p>You need need <strong>three</strong> more items for Chickem Pasta</p>
+        <div id = "Shopping Reminders">
+            <p class = "section">Shopping Reminders</p>
+            <ul>
+              <li>You need need <strong>three</strong> more items for Chicken Pasta</li>
+            </ul>
         </div>
         <div id = "Expiring Soon">
-            <p class = "section">Expiring Soon</p>
-            <ul>
-                <li>Milk ................... 2 Days Left </li>
-                <li>Heavy Cream ............ 1 Day Left </li>
-            </ul>
+          <p class = "section">Expiring Soon</p>
         </div>
  <footer>
         <!--TEXT  -->
@@ -91,4 +112,58 @@
         </a>
     </footer>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    initItems();
+    addFoodIcon();     
+  });
+
+  function initItems() {
+    if (!localStorage.getItem('items')) {
+      localStorage.setItem('items', '[]');
+    }
+  }
+
+  function addFoodIcon() {
+    const container = document.getElementById('food-row'); 
+    if (!container) return;
+
+    const items = JSON.parse(localStorage.getItem('items') || '[]');
+    const recent = items.slice(0, 12);
+
+    const rightArrow = document.getElementById('right-scroll');
+    recent.forEach(item => container.insertBefore(makeIcon(item), rightArrow));
+  }
+
+  function makeIcon(item){
+    const a = document.createElement('a');
+    a.className = 'food-item';
+    a.href = 'pantry.html';
+
+    const img = document.createElement('img');
+    img.className = 'food-img';
+    img.alt = (item.category || 'item').toLowerCase();
+    img.src = pickIcon(item);
+
+    const span = document.createElement('span');
+    span.textContent = item.name;
+
+    a.append(img, span);
+    return a;
+  }
+
+  function pickIcon(item) {
+    if (item.image) return item.image;
+    const byCat = {
+      'Fruits':     'food groups/fruits.png',
+      'Vegetables': 'food groups/vegetable.png',
+      'Protein':    'food groups/proteins.png',
+      'Dairy':      'food groups/dairy-products.png',
+      'Grains':     'food groups/bread (1).png',
+      'Other':      'food groups/other.png'
+    };
+    return byCat[item.category];
+  }
+
+  </script>
 </html>

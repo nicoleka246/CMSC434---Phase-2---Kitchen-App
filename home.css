@@ -6,6 +6,11 @@ h1, .section{
 p, button, input, a{
     padding-left:1rem;
     font-family: 'Roboto Flex';
+
+}
+p{
+    background-color:beige;
+    text-align: center;
 }
 ul, li, span{
     font-family: 'Roboto Flex';
@@ -23,7 +28,6 @@ ul, li, span{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #e3dad292;
     padding: 12px 20px;
     position: sticky; 
     top: 0;
@@ -42,15 +46,16 @@ ul, li, span{
   display: flex; 
   align-items: center; 
   justify-content: center;
-  background-color: #fff; 
+  background-color: orange; 
   margin: 16px auto; 
-  width: 90%; 
   max-width: 480px; 
-  padding: 10px 14px; 
 }
-.search-bar{
+#search-bar{
   flex: 1; 
-  border: none; 
+  border-style:double;
+  border-color:black; 
+  border-radius: 1rem;
+  background-color: beige; 
   outline: none; 
   font-size: 15px; 
   font-family: inherit; 
@@ -60,6 +65,15 @@ ul, li, span{
   height: 20px;
   margin-right: 8px; 
   opacity: 0.6; 
+}
+#search-btn{
+    background-color: orange;
+    border: 2px; 
+    border-style: double; 
+    border-radius: 1rem; 
+    border-color:black; 
+    text-align: center;
+    padding: .5rem;
 }
 input{
     width: 300px;
@@ -76,10 +90,18 @@ input{
 #food-row {
   display: flex;            
   justify-content: center;      
-  align-items: center;        
-  gap: 24px;              
+  align-items: center;  
+  overflow-x: auto;  
+  overflow-y: hidden;     
+  white-space: nowrap;    
+  scroll-behavior: smooth;           
 }
-
+.food-item span{
+    color:black;
+}
+.food-item:visited{
+    color:black;
+}
 .food-item {
   display: flex;                  
   flex-direction: column;         
@@ -92,6 +114,25 @@ input{
   height: 70px;
   object-fit: contain;            
   margin-bottom: 6px;         
+}
+.scroll{
+    position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;                 
+  background-color: beige;
+  border: none;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scroll img{
+    height: 35px;
+}
+#right-scroll.scroll{
+    left: auto;
+    right: 0;
 }
 /* This begins the CSS for the navigational part of the app */
 footer{
