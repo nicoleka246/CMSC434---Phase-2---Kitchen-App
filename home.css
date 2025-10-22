@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+h1, .section{
+    padding-left: 1rem;
+    font-family: 'DM Serif Text';
+}
+p, button, input, a{
+    padding-left:1rem;
+    font-family: 'Roboto Flex';
+}
+ul, li, span{
+    font-family: 'Roboto Flex';
+}
+.device{  
+    width: 640px;
+    height: 960px;
+    background-color: orange;
+    margin:auto;
+    position:relative;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #e3dad292;
+    padding: 12px 20px;
+    position: sticky; 
+    top: 0;
+}
+.user{
+    color:black;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header-img{
+    height:50px;
+}
+.search{
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  background-color: #fff; 
+  margin: 16px auto; 
+  width: 90%; 
+  max-width: 480px; 
+  padding: 10px 14px; 
+}
+.search-bar{
+  flex: 1; 
+  border: none; 
+  outline: none; 
+  font-size: 15px; 
+  font-family: inherit; 
+}
+#search-img {
+  width: 20px; 
+  height: 20px;
+  margin-right: 8px; 
+  opacity: 0.6; 
+}
+input{
+    width: 300px;
+}
+.section {
+    font-size: 1.5rem;
+}
+.current-inventory {
+  display: flex;                
+  flex-wrap: wrap;                
+  justify-content: center;         
+  gap: 24px;                      
+}
+#food-row {
+  display: flex;            
+  justify-content: center;      
+  align-items: center;        
+  gap: 24px;              
+}
+
+.food-item {
+  display: flex;                  
+  flex-direction: column;         
+  align-items: center;           
+  text-decoration: none;                           
+}
+
+.food-img {
+  width: 70px;                   
+  height: 70px;
+  object-fit: contain;            
+  margin-bottom: 6px;         
+}
+/* This begins the CSS for the navigational part of the app */
+footer{
+  width: 640px;
+  height: 90px;
+  bottom : 0;
+  margin:auto;
+  position:fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  background-color: orange;
+}
+.nav{
+    color:black;
+    text-decoration: none;
+}
+.nav:visited{
+    color:black;
+}
+.nav-img{
+ height:70px;
+}
+.nav:hover{
+    background-color:rgba(245, 245, 220, 0.682);
+}
+#nav-curr{
+    background-color: beige;
+}
