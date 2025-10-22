@@ -25,8 +25,6 @@
                 <label for="protein_rb">Protein</label>
                 <input type="radio" id="dairy_rb" value="Dairy" name="category-choice">
                 <label for="dairy_rb">Dairy</label>
-                <input type="radio" id="spices_rb" value="Spices" name="category-choice">
-                <label for="spices_rb">Spices</label>
                 <input type="radio" id="other_rb" value="Other" name="category-choice">
                 <label for="other_rb">Other</label>
 
@@ -36,16 +34,16 @@
                 <label for="item-unit">* Units:</label>
 
                 <select class = "button-styling" name="item-unit" id="item-unit">
-                    <option value="grams">Grams (g)</option>
-                    <option value="pounds">Pounds (lb)</option>
-                    <option value="milligrams">Milligrams (mg)</option>
-                    <option value="ounces">Ounces (oz)</option>
-                    <option value="cup">Cup(s)</option>
-                    <option value="carton">Carton</option>
-                    <option value="package">Package</option>
-                    <option value="piece">Piece(s)</option>
-                    <option value="container">Container(s)</option>
-                    <option value="servings">Servings(s)</option>
+                    <option value="Grams">Grams (g)</option>
+                    <option value="Pounds">Pounds (lb)</option>
+                    <option value="Milligrams">Milligrams (mg)</option>
+                    <option value="Ounces">Ounces (oz)</option>
+                    <option value="Cup(s)">Cup(s)</option>
+                    <option value="Carton(s)">Carton</option>
+                    <option value="Package(s)">Package</option>
+                    <option value="Piece(s)">Piece(s)</option>
+                    <option value="Container(s)">Container(s)</option>
+                    <option value="Serving(s)">Servings(s)</option>
                 </select>
 
                 <br><br>
@@ -140,9 +138,6 @@
             localStorage.setItem("editing-existing-item", index);
         }
         function go_back_to_pantry(){
-            window.location.href = 'pantry.html';
-        }
-        function save_new_item(){
             window.location.href = 'pantry.html';
         }
         function save_new_item(){
