@@ -11,8 +11,6 @@ h1,h2{
     font-size: 20px;
 }
 
-
-
 div {
     display: block;
     unicode-bidi: isolate;
@@ -108,7 +106,7 @@ footer{
 #nav-curr{
     background-color: beige;
 }
-/* Start of CSS for the Pantry Tab */ 
+
 .food-cad-header{
     text-align:center; 
     background-color: beige;
