@@ -8,7 +8,6 @@
 
 body {
   font-family: 'Roboto Flex', Arial, sans-serif;
-  background-color: orange;
   color: #222;
   line-height: 1.6;
   margin: 0;
@@ -20,10 +19,14 @@ body {
 
 /* Container */
 .container {
-  max-width: 800px;
+  width: 640px;
+  height: 960px;
   margin: 0 auto;
   padding: 16px;
   padding-bottom: 120px; 
+  background-color: orange;
+  overflow-y: auto;      
+  overflow-x: hidden; 
 }
 
 
@@ -246,36 +249,45 @@ body {
 .hidden {
   display: none !important;
 }
-
-
-/* Footer Navigation */
-footer {
+/*Nav Bar CSS*/ 
+footer{
   width: 640px;
   height: 90px;
-  bottom: 0;
-  margin: auto;
-  position: fixed;
+  bottom : 0;
+  margin:auto;
+  position:fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
   background-color: orange;
-  border-top: 2px solid #f1b04b;
 }
-.nav {
-  color: black;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.nav{
+    color:black;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    text-decoration: none;
+    padding: 0;              
+    margin: 0;
+    text-align: center; 
 }
-.nav-img {
-  height: 60px;
+.nav:visited{
+    color:black;
 }
-.nav:hover {
-  background-color: rgba(245, 245, 220, 0.682);
+.nav-img{
+ height:70px;
 }
-#nav-curr {
-  background-color: beige;
+.nav:hover{
+    background-color:rgba(245, 245, 220, 0.682);
 }
+#nav-curr{
+    background-color: beige;
+}
+footer a{
+  padding-left: 1rem;
+}
+
+
