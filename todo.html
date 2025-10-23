@@ -1,57 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-    <link rel="stylesheet" href="todo-style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping List</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="todo-style.css"/>
 </head>
 <body>
-    <div class = "device">
-        <h1>To Do List</h1>
-        <div id="myDIV" class="header">
-            <h2>My To Do List</h2>
-            <input type="text" id="myInput" placeholder="task...">
-            <span onclick="newElement()" class="addBtn">Add</span>
-        </div>
-        
-        <ul id="myUL">
-        </ul>
-    <footer>
-        <!--TEXT  -->
-         <a class = "nav" href="home.html">
-            <img class = "nav-img" src="home.png" alt = "home">
-            <span>Home</span>
-        </a>
-        <!-- PANTRY -->
-        <a  class = "nav" id = "nav-curr" href = "pantry.html">
-            <img class = "nav-img" src = "pantry.png" alt = "pantry">
-            <span>Pantry</span>
-        </a>
-        <!-- COLORS -->
-         <a  class = "nav" href = "colors.html">
-            <img class = "nav-img" src = "colors.png" alt = "colors">
-            <span>Colors</span>
-        </a>
-        <!-- PROFILE -->
-         <a class = "nav" href ="profile.html">
-            <img class = "nav-img" src = "profile.png" alt = "profile">
-            <span>Profile</span>
-         </a>
-        <!-- CHOICES-->
-         <a class = "nav" href = "choices.html">
-            <img class = "nav-img" src = "choices.png" alt = "choices">
-            <span>Choices</span>
-        </a>
-        <!-- TODO-->
-         <a class = "nav" id = "nav-curr" href="todo.html">
-            <img class = "nav-img" src = "todo.png" alt = "todo">
-            <span>ToDo</span>
-        </a>
-    </footer>
+  <div class="device">
+    <h1>Shopping List</h1>
+
+    <div class="tabs">
+      <button id="tab-current" class="tab active" data-tab="current">Current List</button>
+      <button id="tab-next" class="tab" data-tab="next">Next Trip</button>
     </div>
 
-    <script src = "todo-script.js"></script>
-    
+    <div class="add-row">
+      <input type="text" id="itemInput" placeholder="Add an item…" />
+      <button id="addBtn" class="btn">Add</button>
+    </div>
+
+    <div class="toolbar">
+      <button id="moveLeftoversBtn" class="btn ghost" title="move only unchecked items to Next Trip">
+        Move leftovers → Next Trip
+      </button>
+      <button id="loadPresetBtn" class="btn" title="add basic items to Current List">
+        Add Preset Basic Items
+      </button>
+      <button id="clearListBtn" class="btn danger" title="clear list">
+        Clear List
+      </button>
+    </div>
+
+    <ul id="list" aria-live="polite"></ul>
+
+    <footer>
+      <a class="nav" href="text.html">
+        <img class="nav-img" src="text.png" alt="text"/>
+        <span>Text</span>
+      </a>
+      <a class="nav" href="pantry.html">
+        <img class="nav-img" src="pantry.png" alt="pantry"/>
+        <span>Pantry</span>
+      </a>
+      <a class="nav" href="colors.html">
+        <img class="nav-img" src="colors.png" alt="colors"/>
+        <span>Colors</span>
+      </a>
+      <a class="nav" href="profile.html">
+        <img class="nav-img" src="profile.png" alt="profile"/>
+        <span>Profile</span>
+      </a>
+      <a class="nav" href="choices.html">
+        <img class="nav-img" src="choices.png" alt="choices"/>
+        <span>Choices</span>
+      </a>
+      <a class="nav" id="nav-curr" href="todo.html">
+        <img class="nav-img" src="todo.png" alt="todo"/>
+        <span>ToDo</span>
+      </a>
+    </footer>
+  </div>
+
+  <script src="todo-script.js"></script>
 </body>
 </html>
