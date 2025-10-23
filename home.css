@@ -6,7 +6,6 @@ h1, .section{
 p, button, input, a{
     padding-left:1rem;
     font-family: 'Roboto Flex';
-
 }
 p{
     background-color:beige;
