@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Catalog | Kitchen App</title>
+  <meta name="description" content="Discover delicious meals tailored to your preferences">
+  
+  <link rel="stylesheet" href="recipe.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="title">Recipe Catalog</h1>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input 
+        type="search" 
+        id="search-input" 
+        class="search-input" 
+        placeholder="Search recipes or ingredients..."
+      >
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-card">
+      <div class="filters-header">
+        <h3>Filters</h3>
+        <button id="clear-filters" class="clear-btn">
+          Clear all
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="filters-content">
+        <!-- Dietary Filters -->
+        <div class="filter-section">
+          <label class="filter-label">Dietary</label>
+          <div id="diet-badges" class="badge-group">
+            <button class="badge" data-diet="Vegan">Vegan</button>
+            <button class="badge" data-diet="Vegetarian">Vegetarian</button>
+            <button class="badge" data-diet="Gluten-Free">Gluten-Free</button>
+            <button class="badge" data-diet="Keto">Keto</button>
+            <button class="badge" data-diet="Paleo">Paleo</button>
+            <button class="badge" data-diet="Dairy-Free">Dairy-Free</button>
+          </div>
+        </div>
+
+        <!-- Other Filters -->
+        <div class="filter-row">
+          <div class="filter-select-group">
+            <label class="filter-label">Cuisine</label>
+            <select id="cuisine-select" class="filter-select">
+              <option value="">Any</option>
+              <option value="Italian">Italian</option>
+              <option value="Mexican">Mexican</option>
+              <option value="Asian">Asian</option>
+              <option value="Mediterranean">Mediterranean</option>
+              <option value="American">American</option>
+              <option value="Indian">Indian</option>
+              <option value="French">French</option>
+            </select>
+          </div>
+
+          <div class="filter-select-group">
+            <label class="filter-label">Time</label>
+            <select id="time-select" class="filter-select">
+              <option value="">Any</option>
+              <option value="under-15">Under 15 min</option>
+              <option value="15-30">15-30 min</option>
+              <option value="30-60">30-60 min</option>
+              <option value="over-60">Over 60 min</option>
+            </select>
+          </div>
+
+          <div class="filter-select-group">
+            <label class="filter-label">Difficulty</label>
+            <select id="difficulty-select" class="filter-select">
+              <option value="">Any</option>
+              <option value="beginner">Beginner</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe Grid -->
+    <div id="recipe-grid" class="recipe-grid">
+    </div>
+
+    <!-- No Results Message -->
+    <div id="no-results" class="no-results hidden">
+      <p>No recipes found matching your filters.</p>
+      <p class="no-results-hint">Try adjusting your search or filters.</p>
+    </div>
+  </div>
+
+  <!-- Recipe Popups -->
+  <div id="recipe-popup" class="popup hidden">
+    <div class="popup-overlay"></div>
+    <div class="popup-content">
+      <button id="close-popup" class="popup-close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div id="popup-body" class="popup-body">
+      </div>
+    </div>
+  </div>
+
+  <footer>
+        <!--TEXT  -->
+         <a class = "nav"  id = "nav-curr" href="home.html">
+            <img class = "nav-img" src="home.png" alt = "home">
+            <span>Home</span>
+        </a>
+        <!-- PANTRY -->
+        <a  class = "nav"  href = "pantry.html">
+            <img class = "nav-img" src = "pantry.png" alt = "pantry">
+            <span>Pantry</span>
+        </a>
+        <!-- COLORS -->
+         <a  class = "nav" href = "colors.html">
+            <img class = "nav-img" src = "colors.png" alt = "colors">
+            <span>Colors</span>
+        </a>
+        <!-- PROFILE -->
+         <a class = "nav" href ="profile.html">
+            <img class = "nav-img" src = "profile.png" alt = "profile">
+            <span>Profile</span>
+         </a>
+        <!-- CHOICES-->
+         <a class = "nav" href = "choices.html">
+            <img class = "nav-img" src = "choices.png" alt = "choices">
+            <span>Choices</span>
+        </a>
+        <!-- TODO-->
+         <a class = "nav" href="todo.html">
+            <img class = "nav-img" src = "todo.png" alt = "todo">
+            <span>ToDo</span>
+        </a>
+    </footer>
+  </div>
+
+  <script src="recipe.js"></script>
+
+</body>
+</html>
