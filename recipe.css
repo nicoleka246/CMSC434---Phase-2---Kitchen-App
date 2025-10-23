@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Roboto+Flex:wght@300;400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto Flex', Arial, sans-serif;
+  background-color: orange;
+  color: #222;
+  line-height: 1.6;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+   padding-bottom: 120px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-family: 'DM Serif Text';
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: #555;
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+/* Search */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 20px;
+}
+
+.search-icon {
+  color: #888;
+  margin-right: 8px;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+/* Filters */
+.filters-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.filters-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.clear-btn {
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.clear-btn:hover {
+  color: #000;
+}
+
+.filter-section {
+  margin-bottom: 12px;
+}
+
+.filter-label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Badges */
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge {
+  background: #f3f3f3;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.badge:hover {
+  background: #ffe4b5;
+}
+
+.badge.active {
+  background: #ffa500;
+  color: #fff;
+  border-color: #ffa500;
+}
+
+/* Select Filters */
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.filter-select-group label {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+/* Recipe Grid */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.recipe-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.recipe-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.recipe-card img {
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.recipe-title {
+  font-family: 'DM Serif Text', serif;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.recipe-meta {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup-content {
+  background: #fff;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  padding: 16px;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-body {
+  margin-top: 24px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* Footer Navigation */
+footer {
+  width: 640px;
+  height: 90px;
+  bottom: 0;
+  margin: auto;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  background-color: orange;
+  border-top: 2px solid #f1b04b;
+}
+.nav {
+  color: black;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nav-img {
+  height: 60px;
+}
+.nav:hover {
+  background-color: rgba(245, 245, 220, 0.682);
+}
+#nav-curr {
+  background-color: beige;
+}
