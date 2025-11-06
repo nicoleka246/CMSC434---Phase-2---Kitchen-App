@@ -127,7 +127,7 @@ input{
     left: auto;
     right: 0;
 }
-/* This begins the CSS for the navigational part of the app */
+
 footer{
   width: 640px;
   height: 90px;
@@ -264,7 +264,7 @@ footer{
     background: #ffe6e6;
   }
   
-  /* Favorites modal */
+  /* favorites modal */
   .sl-modal {
     position: fixed;
     inset: 0;
@@ -398,7 +398,7 @@ footer{
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    z-index: 200; /* ensures it stays above content */
+    z-index: 200; 
   }
   
   .sl-clear-btn:hover {
@@ -416,4 +416,38 @@ footer{
     padding-left: 0;            
     color: black;
   }
+  
+
+  .sl-list-wrapper {
+    background: white;
+    border-radius: 0.8rem;
+    border: 2px solid #ddd;
+    padding: 0.5rem 0.75rem;
+    margin: 0.75rem 0 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+  
+  
+  .sl-list li {
+    background: #f9f9f9;                 
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;               
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  
+  .sl-list li:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  .sl-list {
+    border: none;                       
+    margin: 0;
+    padding: 0;
+  }
+
   

@@ -150,6 +150,7 @@ clearBtn.addEventListener("click", () => {
   const confirmClear = confirm("Clear all items?");
   if (confirmClear) {
     items = [];                             // remove all items
-    renderItems();                          // refresh list visually
+    renderItems();                         
   }
 });
+
