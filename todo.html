@@ -10,7 +10,6 @@
 </head>
 <body>
   <div class="device">
-  
     <header class="header">
       <h1 class="section">Shopping List</h1>
       <button id="sl-edit-favs" class="sl-btn" type="button" title="Edit your favorites">
@@ -26,12 +25,11 @@
           class="sl-input"
           type="text"
           placeholder="Add an item…"
-          aria-label="Add item"
           required
         />
         <button id="sl-add-btn" class="sl-btn sl-btn--primary" type="submit">Add</button>
         <button id="sl-add-favs" class="sl-btn" type="button" title="Add all favorites">
-          Add Favorites
+          Load Favorites
         </button>
       </form>
 
@@ -39,13 +37,13 @@
       <p class="sl-hint">Press Enter to add. Click the checkbox to mark done; use the trash to delete.</p>
 
       <div class="sl-list-wrapper">
-        <ul id="sl-list" class="sl-list" aria-live="polite"></ul>
+        <ul id="sl-list" class="sl-list" ></ul>
       </div>
       
     </main>
 
     <!-- favorites modal -->
-    <div id="sl-fav-modal" class="sl-modal" aria-hidden="true" role="dialog" aria-labelledby="sl-fav-title">
+    <div id="sl-fav-modal" class="sl-modal">
       <div class="sl-modal__card">
         <div class="sl-modal__header">
           <h2 id="sl-fav-title" class="sl-modal__title">Edit Favorites</h2>
@@ -54,11 +52,11 @@
 
         <div class="sl-modal__body">
           <div class="sl-fav-add">
-            <input id="sl-fav-input" class="sl-input" type="text" placeholder="Add a favorite…" aria-label="Add favorite"/>
+            <input id="sl-fav-input" class="sl-input" type="text" placeholder="Add a favorite…"/>
             <button id="sl-fav-add-btn" class="sl-btn sl-btn--primary" type="button">Add</button>
           </div>
 
-          <ul id="sl-fav-list" class="sl-fav-list" aria-live="polite"></ul>
+          <ul id="sl-fav-list" class="sl-fav-list"></ul>
 
           <p class="sl-empty" id="sl-fav-empty">No favorites yet. Add some above!</p>
         </div>

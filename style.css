@@ -81,12 +81,12 @@ a {
     padding-left:1rem;
     font-family: 'Roboto Flex';
 }
-footer{
+footer {
     width: 640px;
     height: 90px;
-    bottom : 0;
-    margin:auto;
-    position:fixed;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
