@@ -1,30 +1,41 @@
+//local storage
+const LS_ITEMS_KEY = 'sl_items';
+const LS_FAVS_KEY  = 'sl_favorites';
 
-let items = [];
-let favorites = [];
+const load = (key, fallback) => {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
+  catch { return fallback; }
+};
+const save = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
+let items = load(LS_ITEMS_KEY, []);      
+let favorites = load(LS_FAVS_KEY, []);   
 
-const listEl = document.getElementById("sl-list");
-const formEl = document.getElementById("sl-add-form");
-const inputEl = document.getElementById("sl-item-input");
-const addFavsBtn = document.getElementById("sl-add-favs");
-const editFavsBtn = document.getElementById("sl-edit-favs");
+const listEl       = document.getElementById("sl-list");
+const formEl       = document.getElementById("sl-add-form");
+const inputEl      = document.getElementById("sl-item-input");
+const addFavsBtn   = document.getElementById("sl-add-favs");
+const editFavsBtn  = document.getElementById("sl-edit-favs");
 
-
-const favModal = document.getElementById("sl-fav-modal");
+// modal
+const favModal     = document.getElementById("sl-fav-modal");
 const closeFavsBtn = document.getElementById("sl-close-favs");
-const favInput = document.getElementById("sl-fav-input");
-const favAddBtn = document.getElementById("sl-fav-add-btn");
-const favListEl = document.getElementById("sl-fav-list");
-const favEmpty = document.getElementById("sl-fav-empty");
+const favInput     = document.getElementById("sl-fav-input");
+const favAddBtn    = document.getElementById("sl-fav-add-btn");
+const favListEl    = document.getElementById("sl-fav-list");
+const favEmpty     = document.getElementById("sl-fav-empty");
 
-// helper to render list
+
+const clearBtn     = document.getElementById("sl-clear-btn");
+
+// ------- Renderers -------
 function renderItems() {
   listEl.innerHTML = "";
   items.forEach((item, index) => {
     const li = document.createElement("li");
     if (item.done) li.classList.add("sl-checked");
 
-    // left side: checkbox + text
+    // left: checkbox + text
     const left = document.createElement("div");
     left.className = "sl-left";
 
@@ -41,10 +52,11 @@ function renderItems() {
     left.appendChild(cb);
     left.appendChild(text);
 
-    // push delete button to far right
+    // pushing delete to far right
     const spacer = document.createElement("div");
     spacer.className = "sl-spacer";
 
+    // delete button 
     const del = document.createElement("button");
     del.className = "sl-delete";
     del.type = "button";
@@ -52,7 +64,8 @@ function renderItems() {
     del.innerHTML = `
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm1 6h2v9h-2V9zm4 0h2v9h-2V9zM7 9h2v9H7V9z"/>
-      </svg>`;
+      </svg>
+    `;
     del.addEventListener("click", () => removeItem(index));
 
     li.appendChild(left);
@@ -61,35 +74,48 @@ function renderItems() {
 
     listEl.appendChild(li);
   });
-}
 
+  // to persist
+  save(LS_ITEMS_KEY, items);
+
+}
 
 function renderFavorites() {
   favListEl.innerHTML = "";
   if (favorites.length === 0) {
-    favEmpty.style.display = "block";
+    if (favEmpty) favEmpty.style.display = "block";
+    // also persist just in case edits made it empty
+    save(LS_FAVS_KEY, favorites);
     return;
   }
-  favEmpty.style.display = "none";
+  if (favEmpty) favEmpty.style.display = "none";
 
   favorites.forEach((fav, index) => {
     const li = document.createElement("li");
-    li.textContent = fav;
 
-    const del = document.createElement("button");
-    del.className = "sl-delete";
-    del.textContent = "Remove";
-    del.addEventListener("click", () => {
+    const name = document.createElement("span");
+    name.textContent = fav;
+
+    const remove = document.createElement("button");
+    remove.className = "sl-delete";
+    remove.type = "button";
+    remove.title = "Remove from favorites";
+    remove.textContent = "Remove";
+    remove.addEventListener("click", () => {
       favorites.splice(index, 1);
+      save(LS_FAVS_KEY, favorites);
       renderFavorites();
     });
 
-    li.appendChild(del);
+    li.appendChild(name);
+    li.appendChild(remove);
     favListEl.appendChild(li);
   });
+
+  // persist 
+  save(LS_FAVS_KEY, favorites);
 }
 
-// list actions
 function addItem(text) {
   const t = text.trim();
   if (!t) return;
@@ -108,10 +134,13 @@ function removeItem(i) {
 }
 
 function addAllFavorites() {
-  favorites.forEach((fav) => items.push({ text: fav, done: false }));
+  if (!favorites.length) return;
+  favorites.forEach(f => {
+    const t = (f || "").trim();
+    if (t) items.push({ text: t, done: false });
+  });
   renderItems();
 }
-
 
 formEl.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -125,6 +154,10 @@ addFavsBtn.addEventListener("click", addAllFavorites);
 editFavsBtn.addEventListener("click", () => {
   favModal.classList.add("sl-modal--open");
   renderFavorites();
+  if (favInput) {
+    favInput.value = "";
+    setTimeout(() => favInput.focus(), 0);
+  }
 });
 
 closeFavsBtn.addEventListener("click", () => {
@@ -132,9 +165,10 @@ closeFavsBtn.addEventListener("click", () => {
 });
 
 favAddBtn.addEventListener("click", () => {
-  const val = favInput.value.trim();
+  const val = (favInput.value || "").trim();
   if (!val) return;
   favorites.push(val);
+  save(LS_FAVS_KEY, favorites);
   favInput.value = "";
   renderFavorites();
 });
@@ -143,14 +177,14 @@ favModal.addEventListener("click", (e) => {
   if (e.target === favModal) favModal.classList.remove("sl-modal--open");
 });
 
-const clearBtn = document.getElementById("sl-clear-btn");
+if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+    if (items.length === 0) return;
+    if (confirm("Clear all items?")) {
+      items = [];
+      renderItems();
+    }
+  });
+}
 
-clearBtn.addEventListener("click", () => {
-  if (items.length === 0) return;           // do nothing if already empty
-  const confirmClear = confirm("Clear all items?");
-  if (confirmClear) {
-    items = [];                             // remove all items
-    renderItems();                         
-  }
-});
-
+renderItems();

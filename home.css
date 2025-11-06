@@ -142,37 +142,37 @@ footer{
   background-color: orange;
 }
 .nav{
-    color:black;
-    text-decoration: none;
+  color:black;
+  text-decoration: none;
 }
 .nav:visited{
-    color:black;
+  color:black;
 }
 .nav-img{
- height:70px;
+  height:70px;
 }
 .nav:hover{
-    background-color:rgba(245, 245, 220, 0.682);
+  background-color:rgba(245, 245, 220, 0.682);
 }
 #nav-curr{
-    background-color: beige;
+  background-color: beige;
 }
 
 
 .sl {
-    padding: 0 1rem 6rem; /* space above footer */
-  }
+  padding: 0 1rem 6rem; /* space above footer */
+}
   
   /* Add row */
-  .sl-add {
+.sl-add {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     align-items: center;
     padding: 0.5rem 0 0.25rem;
-  }
+}
   
-  .sl-input {
+.sl-input {
     flex: 1 1 18rem;
     padding: 0.6rem 0.8rem;
     border: 0.0625rem solid #ddd;
@@ -180,77 +180,72 @@ footer{
     background: #fff;
     font-size: 1rem;
     outline: none;
-  }
+}
   
-  .sl-input:focus {
+.sl-input:focus {
     border-color: #bcbcbc;
-  }
+}
   
-  .sl-btn {
+.sl-btn {
     padding: 0.6rem 0.9rem;
     border: 0.0625rem solid #ddd;
     border-radius: 0.5rem;
     background: #fff;
     cursor: pointer;
     font-size: 1rem;
-  }
+}
   
-  .sl-btn--primary {
+.sl-btn--primary {
     background: #ffb84d; 
     border-color: #f0c07a;
     font-weight: 600;
-  }
+}
   
-  .sl-hint {
+.sl-hint {
     margin: 0.25rem 0 0.5rem;
     background: transparent;
     text-align: left;
     color: #444;
     font-size: 0.95rem;
     padding-left: 1rem; 
-  }
+}
   
   
-  .sl-list {
+.sl-list {
     list-style: none;
     margin: 0.5rem 0 0;
     padding: 0;
     border-top: 0.0625rem solid rgb(8, 6, 6); 
   }
   
-  .sl-list li {
+.sl-list li {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 0.6rem;
     padding: 0.8rem 0.25rem;
     border-bottom: 0.0625rem solid rgb(6, 6, 6); 
-  }
+}
   
-  .sl-left {
+.sl-left {
     display: flex;
     align-items: center;
     gap: 0.6rem;
     min-width: 0;
-  }
+}
   
-  .sl-checkbox {
+.sl-checkbox {
     width: 1.1rem;
     height: 1.1rem;
     cursor: pointer;
-  }
+}
   
-  .sl-text {
-    min-width: 0;
-    word-break: break-word;
-  }
-  
-  .sl-checked .sl-text {
+.sl-checked .sl-text {
     text-decoration: line-through;
     color: #666;
-  }
+}
   
-  .sl-delete {
+.sl-delete {
     background: transparent;
     border: 0;
     color: #cc3b3b;
@@ -258,99 +253,91 @@ footer{
     border-radius: 0.5rem;
     cursor: pointer;
     font-weight: 700;
-  }
+}
   
-  .sl-delete:hover {
+.sl-delete:hover {
     background: #ffe6e6;
-  }
+}
   
   /* favorites modal */
-  .sl-modal {
+.sl-modal {
     position: fixed;
     inset: 0;
     display: none;
     place-items: center;
     background: rgba(0, 0, 0, 0.35);
     z-index: 50;
-  }
+}
   
-  .sl-modal--open {
+.sl-modal--open {
     display: grid;
-  }
+}
   
-  .sl-modal__card {
+.sl-modal__card {
     width: min(32rem, 92%);
     background: #fff;
     border-radius: 0.75rem;
     border: 0.0625rem solid #ddd;
     box-shadow: 0 0.8rem 2rem rgba(0,0,0,.25);
     padding: 1rem;
-  }
+}
   
-  .sl-modal__header {
+.sl-modal__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
     margin-bottom: 0.5rem;
-  }
+}
   
-  .sl-modal__title {
+.sl-modal__title {
     margin: 0;
     font-size: 1.25rem;
-  }
+}
   
-  .sl-modal__body {
+.sl-modal__body {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-  }
+}
   
-  .sl-fav-add {
+.sl-fav-add {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-  }
+}
   
-  .sl-fav-list {
+.sl-fav-list {
     list-style: none;
     margin: 0;
     padding: 0;
     border-top: 0.0625rem solid #ddd;
-  }
+}
   
-  .sl-fav-list li {
+.sl-fav-list li {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 0.125rem;
     border-bottom: 0.0625rem solid #ddd;
-  }
+}
   
-  .sl-empty {
+.sl-empty {
     margin: 0.25rem 0 0;
     background: transparent;
     text-align: left;
     color: #666;
     font-size: 0.95rem;
     padding-left: 0;
-  }
+}
   
-  
-.sl-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  
-  
-  .sl-spacer {
+.sl-spacer {
     flex: 1;
-  }
+}
   
   
-  .sl-delete {
+.sl-delete {
     color: #cc3b3b;
     background: transparent;
     border: 0;
@@ -360,27 +347,27 @@ footer{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-  }
+}
   
-  .sl-delete:hover {
+.sl-delete:hover {
     background: #ffe6e6;
-  }
+}
   
-  .sl-delete svg {
+.sl-delete svg {
     width: 20px;
     height: 20px;
     display: block;
     fill: currentColor; /* makes it inherit red */
-  }
+}
   
-  .sl-btn {
+.sl-btn {
     transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
+}
   
-  .sl-btn:hover {
+.sl-btn:hover {
     transform: scale(1.08);
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  }
+}
 
   
 .sl-clear-btn {
@@ -391,44 +378,41 @@ footer{
     color: white;
     border: none;
     border-radius: 0.5rem;
-    padding: 0.7rem 1.2rem;
+    padding: 0.5rem 1.2rem;
     font-size: 1rem;
     font-family: 'Roboto Flex';
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    z-index: 200; 
-  }
+}
   
-  .sl-clear-btn:hover {
+.sl-clear-btn:hover {
     transform: scale(1.08);
     background: #a32b2b;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-  }
+}
   
  
 .header .section {
     flex: 1;
-    text-align: center;
-    font-size: 2rem;          
-    font-family: 'DM Serif Text';
-    padding-left: 0;            
+    font-size: 2.5rem;          
+    font-family: 'DM Serif Text';          
     color: black;
-  }
+    padding-left: 4.3cm;
+}
   
 
-  .sl-list-wrapper {
+.sl-list-wrapper {
     background: white;
-    border-radius: 0.8rem;
+    border-radius: 0.5rem;
     border: 2px solid #ddd;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.5rem;
     margin: 0.75rem 0 1rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  }
+}
   
   
-  .sl-list li {
+.sl-list li {
     background: #f9f9f9;                 
     border-radius: 0.5rem;
     border: 1px solid #ccc;
@@ -437,17 +421,17 @@ footer{
     align-items: center;
     gap: 0.6rem;
     transition: transform 0.1s ease, box-shadow 0.1s ease;
-  }
+}
   
-  .sl-list li:hover {
+.sl-list li:hover {
     transform: scale(1.02);
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
+}
   
-  .sl-list {
+.sl-list {
     border: none;                       
     margin: 0;
     padding: 0;
-  }
+}
 
   
