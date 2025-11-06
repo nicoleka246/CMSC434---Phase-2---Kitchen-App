@@ -1,85 +1,156 @@
-let activeTab = "current";
-let currentList = [];
-let nextList = [];
 
-const byTab = (tab) => (tab === "current" ? currentList : nextList);
+let items = [];
+let favorites = [];
 
-function render() {
-  document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-  document.getElementById(activeTab === "current" ? "tab-current" : "tab-next").classList.add("active");
 
-  document.querySelector(".add-row").style.display = activeTab === "current" ? "flex" : "none";
+const listEl = document.getElementById("sl-list");
+const formEl = document.getElementById("sl-add-form");
+const inputEl = document.getElementById("sl-item-input");
+const addFavsBtn = document.getElementById("sl-add-favs");
+const editFavsBtn = document.getElementById("sl-edit-favs");
 
-  const listEl = document.getElementById("list");
+
+const favModal = document.getElementById("sl-fav-modal");
+const closeFavsBtn = document.getElementById("sl-close-favs");
+const favInput = document.getElementById("sl-fav-input");
+const favAddBtn = document.getElementById("sl-fav-add-btn");
+const favListEl = document.getElementById("sl-fav-list");
+const favEmpty = document.getElementById("sl-fav-empty");
+
+// helper to render list
+function renderItems() {
   listEl.innerHTML = "";
-  const data = byTab(activeTab);
-
-  data.forEach((item, idx) => {
+  items.forEach((item, index) => {
     const li = document.createElement("li");
-    if (item.done) li.classList.add("checked");
+    if (item.done) li.classList.add("sl-checked");
 
+    // left side: checkbox + text
     const left = document.createElement("div");
-    left.className = "item-left";
+    left.className = "sl-left";
 
     const cb = document.createElement("input");
     cb.type = "checkbox";
-    cb.className = "checkbox";
-    cb.checked = !!item.done;
-    cb.onchange = () => { item.done = cb.checked; render(); };
+    cb.className = "sl-checkbox";
+    cb.checked = item.done;
+    cb.addEventListener("change", () => toggleDone(index));
 
-    const text = document.createElement("div");
-    text.className = "text";
+    const text = document.createElement("span");
+    text.className = "sl-text";
     text.textContent = item.text;
 
     left.appendChild(cb);
     left.appendChild(text);
 
+    // push delete button to far right
+    const spacer = document.createElement("div");
+    spacer.className = "sl-spacer";
+
     const del = document.createElement("button");
-    del.className = "delete";
-    del.textContent = "Delete";
-    del.onclick = () => { data.splice(idx, 1); render(); };
+    del.className = "sl-delete";
+    del.type = "button";
+    del.title = "Delete";
+    del.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm1 6h2v9h-2V9zm4 0h2v9h-2V9zM7 9h2v9H7V9z"/>
+      </svg>`;
+    del.addEventListener("click", () => removeItem(index));
 
     li.appendChild(left);
+    li.appendChild(spacer);
     li.appendChild(del);
+
     listEl.appendChild(li);
   });
 }
 
-document.getElementById("tab-current").onclick = () => { activeTab = "current"; render(); };
-document.getElementById("tab-next").onclick = () => { activeTab = "next"; render(); };
 
-document.getElementById("addBtn").onclick = () => {
-  const inp = document.getElementById("itemInput");
-  const val = inp.value.trim();
+function renderFavorites() {
+  favListEl.innerHTML = "";
+  if (favorites.length === 0) {
+    favEmpty.style.display = "block";
+    return;
+  }
+  favEmpty.style.display = "none";
+
+  favorites.forEach((fav, index) => {
+    const li = document.createElement("li");
+    li.textContent = fav;
+
+    const del = document.createElement("button");
+    del.className = "sl-delete";
+    del.textContent = "Remove";
+    del.addEventListener("click", () => {
+      favorites.splice(index, 1);
+      renderFavorites();
+    });
+
+    li.appendChild(del);
+    favListEl.appendChild(li);
+  });
+}
+
+// list actions
+function addItem(text) {
+  const t = text.trim();
+  if (!t) return;
+  items.push({ text: t, done: false });
+  renderItems();
+}
+
+function toggleDone(i) {
+  items[i].done = !items[i].done;
+  renderItems();
+}
+
+function removeItem(i) {
+  items.splice(i, 1);
+  renderItems();
+}
+
+function addAllFavorites() {
+  favorites.forEach((fav) => items.push({ text: fav, done: false }));
+  renderItems();
+}
+
+
+formEl.addEventListener("submit", (e) => {
+  e.preventDefault();
+  addItem(inputEl.value);
+  inputEl.value = "";
+  inputEl.focus();
+});
+
+addFavsBtn.addEventListener("click", addAllFavorites);
+
+editFavsBtn.addEventListener("click", () => {
+  favModal.classList.add("sl-modal--open");
+  renderFavorites();
+});
+
+closeFavsBtn.addEventListener("click", () => {
+  favModal.classList.remove("sl-modal--open");
+});
+
+favAddBtn.addEventListener("click", () => {
+  const val = favInput.value.trim();
   if (!val) return;
-  currentList.push({ text: val, done: false });
-  inp.value = "";
-  render();
-};
+  favorites.push(val);
+  favInput.value = "";
+  renderFavorites();
+});
 
-document.getElementById("moveLeftoversBtn").onclick = () => {
-  const leftovers = currentList.filter(i => !i.done);
-  const existing = new Set(nextList.map(i => i.text.toLowerCase()));
-  leftovers.forEach(i => {
-    if (!existing.has(i.text.toLowerCase())) nextList.push({ text: i.text, done: false });
-  });
-  currentList = [];
-  render();
-};
+favModal.addEventListener("click", (e) => {
+  if (e.target === favModal) favModal.classList.remove("sl-modal--open");
+});
 
-document.getElementById("loadPresetBtn").onclick = () => {
-  const staples = ["Eggs", "Milk", "Bread", "Bananas"];
-  const exists = new Set(currentList.map(i => i.text.toLowerCase()));
-  staples.forEach(s => {
-    if (!exists.has(s.toLowerCase())) currentList.push({ text: s, done: false });
-  });
-  render();
-};
+const clearBtn = document.getElementById("sl-clear-btn");
 
-document.getElementById("clearListBtn").onclick = () => {
-  if (activeTab === "current") currentList = [];
-  else nextList = [];
-  render();
-};
+clearBtn.addEventListener("click", () => {
+  if (items.length === 0) return;           // do nothing if already empty
+  const confirmClear = confirm("Clear all items?");
+  if (confirmClear) {
+    items = [];                             // remove all items
+    renderItems();                         
+  }
+});
 
-render();
