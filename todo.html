@@ -4,59 +4,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shopping List</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="stylesheet" href="todo-style.css"/>
+
+  <link rel="stylesheet" href="home.css" />
+  
 </head>
 <body>
   <div class="device">
-    <h1>Shopping List</h1>
+  
+    <header class="header">
+      <h1 class="section">Shopping List</h1>
+      <button id="sl-edit-favs" class="sl-btn" type="button" title="Edit your favorites">
+        Edit Favorites
+      </button>
+    </header>
 
-    <div class="tabs">
-      <button id="tab-current" class="tab active" data-tab="current">Current List</button>
-      <button id="tab-next" class="tab" data-tab="next">Next Trip</button>
+    <main class="sl">
+      <!-- add item row -->
+      <form class="sl-add" id="sl-add-form" autocomplete="off">
+        <input
+          id="sl-item-input"
+          class="sl-input"
+          type="text"
+          placeholder="Add an item…"
+          aria-label="Add item"
+          required
+        />
+        <button id="sl-add-btn" class="sl-btn sl-btn--primary" type="submit">Add</button>
+        <button id="sl-add-favs" class="sl-btn" type="button" title="Add all favorites">
+          Add Favorites
+        </button>
+      </form>
+
+      
+      <p class="sl-hint">Press Enter to add. Click the checkbox to mark done; use the trash to delete.</p>
+
+      
+      <ul id="sl-list" class="sl-list" aria-live="polite"></ul>
+    </main>
+
+    <!-- favorites modal -->
+    <div id="sl-fav-modal" class="sl-modal" aria-hidden="true" role="dialog" aria-labelledby="sl-fav-title">
+      <div class="sl-modal__card">
+        <div class="sl-modal__header">
+          <h2 id="sl-fav-title" class="sl-modal__title">Edit Favorites</h2>
+          <button id="sl-close-favs" class="sl-btn" type="button">Close</button>
+        </div>
+
+        <div class="sl-modal__body">
+          <div class="sl-fav-add">
+            <input id="sl-fav-input" class="sl-input" type="text" placeholder="Add a favorite…" aria-label="Add favorite"/>
+            <button id="sl-fav-add-btn" class="sl-btn sl-btn--primary" type="button">Add</button>
+          </div>
+
+          <ul id="sl-fav-list" class="sl-fav-list" aria-live="polite"></ul>
+
+          <p class="sl-empty" id="sl-fav-empty">No favorites yet. Add some above!</p>
+        </div>
+      </div>
     </div>
 
-    <div class="add-row">
-      <input type="text" id="itemInput" placeholder="Add an item…" />
-      <button id="addBtn" class="btn">Add</button>
-    </div>
+    <button id="sl-clear-btn" class="sl-clear-btn" type="button">Clear List</button>
 
-    <div class="toolbar">
-      <button id="moveLeftoversBtn" class="btn ghost" title="move only unchecked items to Next Trip">
-        Move leftovers → Next Trip
-      </button>
-      <button id="loadPresetBtn" class="btn" title="add basic items to Current List">
-        Add Preset Basic Items
-      </button>
-      <button id="clearListBtn" class="btn danger" title="clear list">
-        Clear List
-      </button>
-    </div>
-
-    <ul id="list" aria-live="polite"></ul>
 
     <footer>
-      <!-- HOME  -->
-      <a class = "nav" href="home.html">
-        <img class = "nav-img" src="home.png" alt = "home">
+      <a class="nav" href="home.html">
+        <img class="nav-img" src="home.png" alt="home">
         <span>Home</span>
       </a>
-      <!-- PANTRY -->
-      <a  class = "nav"  href = "pantry.html">
-        <img class = "nav-img" src = "pantry.png" alt = "pantry">
+      <a class="nav" href="pantry.html">
+        <img class="nav-img" src="pantry.png" alt="pantry">
         <span>Pantry</span>
       </a>
-      <!-- RECIPES -->
-      <a  class = "nav" href = "recipe.html">
-        <img class = "nav-img" src = "recipe.png" alt = "recipe">
+      <a class="nav" href="recipe.html">
+        <img class="nav-img" src="recipe.png" alt="recipe">
         <span>Recipes</span>
       </a>
       <a class="nav" href="profile.html">
-        <img class="nav-img" src="profile.png" alt="profile"/>
+        <img class="nav-img" src="profile.png" alt="profile">
         <span>Profile</span>
       </a>
       <a class="nav" id="nav-curr" href="todo.html">
-        <img class="nav-img" src="todo.png" alt="todo"/>
+        <img class="nav-img" src="todo.png" alt="todo">
         <span>ToDo</span>
       </a>
     </footer>
