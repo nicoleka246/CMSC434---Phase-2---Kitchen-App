@@ -3,42 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pantry.css">
     <title>pantry</title>
 </head>
 <body onload = "start()">
     <div class = "device">
+        <!-- Header -->
         <h1>My Pantry</h1>
-        <div class = "content-container">
-            <div class = "pantry-tab-setting">
-                <div class = "centerSearch">
-                    <button id = "add-item-button" class = "search-bar-style" type="button" onclick = "call_add_item()">Add Item</button>
-                    <input class = "search-bar-style" type = "text" id = "pantrySearchBar" placeholder = "Search"> 
-                    <input class = "search-bar-style" type = "button" onclick = "search_for_item()" id = "searchButton" value = "Search"> 
-                </div>                
-                <p id = "filter-header">Filter By: 
-                    <button id = "category-button" class = "button-styling" type = "button" onclick = "sort_by_recently_added()">Recently Added</button> 
-                    <button id = "quantity-button" class = "button-styling" type = "button" onclick = "sort_by_quantity()">Quantity</button> 
-                    <button id = "expiration-button" class = "button-styling" type = "button" onclick = "sort_expiration_date()">Expiration Date</button> 
-                </p>
+         <!-- Search Bar -->
+         <div class = "container">
+            <div class="search-container">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input 
+                type="search" 
+                id="search-input" 
+                class="search-input" 
+                onkeyup="search_for_item()"
+                placeholder="Search for ingredients...">
             </div>
-            <p id = "fruits-header" class = "food-cad-header">Fruits</p>
-            <div id = "fruits-list" class = "table-style"></div>
+         </div>
 
-            <p id = "veg-header" class = "food-cad-header">Vegetables</p>
-            <div id = "veg-list" class = "table-style"></div>
+         <!-- Filters -->
+        <div class="filters-card">
+            <div class="filters-header">
+            <h3>Filters</h3>
+            <!-- <button id="clear-filters" class="clear-btn">
+                Clear all
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button> -->
+            </div>
+    
+            <div class="filters-content">
+                <!-- Food Group Filters -->
+                <div class="filter-section">
+                    <label class="filter-label">Food Group</label>
+                    <div id="fgroup-badges" class="badge-group">
+                    <button id="fruit_b" onclick="pressed_fruit()" class="badge" data-group="Fruit">Fruit</button>
+                    <button id="veg_b" onclick="pressed_veg()" class="badge" data-group="Vegetable">Vegetable</button>
+                    <button id="protein_b" onclick="pressed_protein()" class="badge" data-group="Protein">Protein</button>
+                    <button id="dairy_b" onclick="pressed_dairy()" class="badge" data-group="Dairy">Dairy</button>
+                    <button id="other_b"onclick="pressed_other()" class="badge" data-group="Other">Other</button>
+                    </div>
+                </div>
+        
+                <!-- Sort By Filter -->
+                <div class="filter-row">
+                    <div class="filter-select-group">
+                    <label class="filter-label">Sort By</label>
+                    <select id="sortby-select" class="filter-select">
+                        <option class="select-sortby-filters" value="Recently Added">Recently Added</option>
+                        <option class="select-sortby-filters" value="Quantity">Quantity</option>
+                        <option class="select-sortby-filters" value="Expiration Date">Expiration Date</option>
+                    </select>
+                    </div>
+                </div>
 
-            <p id = "protein-header" class = "food-cad-header">Protein</p>
-            <div id = "protein-list" class = "table-style"></div>
+                 <!-- Add Item Button -->
+                 <div class="filter-row">
+                    <div class="button-style">
+                    <button class="badge" onclick = "call_add_item()"><b>Add New Item</b></button>
+                    </div>
+                </div>
+            </div>
 
-            <p id = "dairy-header" class = "food-cad-header">Dairy</p>
-            <div id = "dairy-list" class = "table-style"></div>
-
-            <p id = "other-header" class = "food-cad-header">Other</p>
-            <div id = "other-list" class = "table-style"></div>
-            <br>
-            <br>
         </div>
+        <!-- Pantry Grid -->
+        <div id="pantry-grid" class="pantry-grid">
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="no-results hidden">
+            <p>No items found matching your filters.</p>
+            <p class="no-results-hint">Try adjusting your search or filters.</p>
+        </div>
+
+        <br><br>
+
          <footer>
         <!-- HOME  -->
         <a class = "nav" href="home.html">
@@ -65,663 +111,8 @@
             <img class = "nav-img" src = "todo.png" alt = "todo">
             <span>ToDo</span>
         </a>
-    </footer>
+        </footer>
     </div>
-    <script>
-        function start(){
-            if(!localStorage.getItem("firstTime")){
-                let items = Array();
-                localStorage.setItem("items", JSON.stringify(items));
-                localStorage.setItem("firstTime", "true");
-            }else{
-                let items = JSON.parse(localStorage.getItem("items"));
-                localStorage.setItem("items", JSON.stringify(items));
-            }
-            populate_items();
-        }
-        function delete_item(button){
-            const name = button.dataset.name;
-            let items = JSON.parse(localStorage.getItem("items"));
-            let i = 0;
-            for(i = 0; i < items.length; i++){
-                let te = items[i];
-                if(te.name === name){
-                    items.splice(i, 1);
-                }
-            }
-            localStorage.setItem("items", JSON.stringify(items));
-            start();
-        }
-        function edit_item(button){
-            const name = button.dataset.name;
-            let items = JSON.parse(localStorage.getItem("items"));
-            let i = 0;
-            for(i = 0; i < items.length; i++){
-                let te = items[i];
-                if(te.name === name){
-                    localStorage.setItem("edit-item", i);
-                    break;
-                }
-            }
-            window.location.href = 'food_item.html';
-        }
-        function search_for_item(){
-            let items = JSON.parse(localStorage.getItem("items"));
-            let fruit_count = 0;
-            let veg_count = 0;
-            let protein_count = 0;
-            let dairy_count = 0;
-            let other_count = 0;
-            let fruit_array = new Array();
-            let veg_array = new Array();
-            let protein_array = new Array();
-            let dairy_array = new Array();
-            let other_array = new Array();
-
-            let name = document.getElementById("pantrySearchBar").value;
-
-            for(i = 0; i < items.length; i++){
-                let tmp = items[i];
-                if(tmp.category == "Fruits" && tmp.name.includes(name)){
-                    fruit_count++;
-                    fruit_array.push(tmp);
-                }else if(tmp.category == "Vegetables" && tmp.name.includes(name)){
-                    veg_count++;
-                    veg_array.push(tmp);
-                }else if(tmp.category == "Protein" && tmp.name.includes(name)){
-                    protein_count++;
-                    protein_array.push(tmp);
-                }else if(tmp.category == "Dairy" && tmp.name.includes(name)){
-                    dairy_count++;
-                    dairy_array.push(tmp);
-                }else if(tmp.category == "Other" && tmp.name.includes(name)){
-                    other_count++;
-                    other_array.push(tmp);
-                }
-            }
-
-            let tb = "";
-            // SET FRUITS CATEGORY 
-            document.getElementById("fruits-header").innerText = `Fruits - ${fruit_count} Items`;
-            if(fruit_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < fruit_array.length; i++){
-                    let tmp = fruit_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("fruits-list").innerHTML = tb;
-            }else{
-                document.getElementById("fruits-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET VEGETABLES CATEGORY 
-            document.getElementById("veg-header").innerText = `Vegetables - ${veg_count} Items`;
-            if(veg_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < veg_array.length; i++){
-                    let tmp = veg_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("veg-list").innerHTML = tb;
-            }else{
-                document.getElementById("veg-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET PROTEIN CATEGORY 
-            document.getElementById("protein-header").innerText = `Protein - ${protein_count} Items`;
-            if(protein_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < protein_array.length; i++){
-                    let tmp = protein_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("protein-list").innerHTML = tb;
-            }else{
-                document.getElementById("protein-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET DAIRY CATEGORY 
-            document.getElementById("dairy-header").innerText = `Dairy - ${dairy_count} Items`;
-            if(dairy_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < dairy_array.length; i++){
-                    let tmp = dairy_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("dairy-list").innerHTML = tb;
-            }else{
-                document.getElementById("dairy-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET OTHERS CATEGORY 
-            document.getElementById("other-header").innerText = `Other - ${other_count} Items`;   
-            if(other_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < other_array.length; i++){
-                    let tmp = other_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("other-list").innerHTML = tb;
-            }else{
-                document.getElementById("other-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }  
-        }
-        function sort_by_recently_added(){
-            populate_items();
-        }
-        function sort_by_quantity(){
-            let items = JSON.parse(localStorage.getItem("items"));
-            let fruit_count = 0;
-            let veg_count = 0;
-            let protein_count = 0;
-            let dairy_count = 0;
-            let other_count = 0;
-            let fruit_array = new Array();
-            let veg_array = new Array();
-            let protein_array = new Array();
-            let dairy_array = new Array();
-            let other_array = new Array();
-           
-            for(i = 0; i < items.length; i++){
-                let tmp = items[i];
-                if(tmp.category == "Fruits"){
-                    fruit_count++;
-                    fruit_array.push(tmp);
-                }else if(tmp.category == "Vegetables"){
-                    veg_count++;
-                    veg_array.push(tmp);
-                }else if(tmp.category == "Protein"){
-                    protein_count++;
-                    protein_array.push(tmp);
-                }else if(tmp.category == "Dairy"){
-                    dairy_count++;
-                    dairy_array.push(tmp);
-                }else if(tmp.category == "Other"){
-                    other_count++;
-                    other_array.push(tmp);
-                }
-            }
-            fruit_array.sort((a, b) => a.quantity - b.quantity);
-            veg_array.sort((a, b) => a.quantity - b.quantity);
-            protein_array.sort((a, b) => a.quantity - b.quantity);
-            dairy_array.sort((a, b) => a.quantity - b.quantity);
-            other_array.sort((a, b) => a.quantity - b.quantity);
-
-            let tb = "";
-            // SET FRUITS CATEGORY 
-            document.getElementById("fruits-header").innerText = `Fruits - ${fruit_count} Items`;
-            if(fruit_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < fruit_array.length; i++){
-                    let tmp = fruit_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("fruits-list").innerHTML = tb;
-            }else{
-                document.getElementById("fruits-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET VEGETABLES CATEGORY 
-            document.getElementById("veg-header").innerText = `Vegetables - ${veg_count} Items`;
-            if(veg_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < veg_array.length; i++){
-                    let tmp = veg_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("veg-list").innerHTML = tb;
-            }else{
-                document.getElementById("veg-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET PROTEIN CATEGORY 
-            document.getElementById("protein-header").innerText = `Protein - ${protein_count} Items`;
-            if(protein_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < protein_array.length; i++){
-                    let tmp = protein_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("protein-list").innerHTML = tb;
-            }else{
-                document.getElementById("protein-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET DAIRY CATEGORY 
-            document.getElementById("dairy-header").innerText = `Dairy - ${dairy_count} Items`;
-            if(dairy_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < dairy_array.length; i++){
-                    let tmp = dairy_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("dairy-list").innerHTML = tb;
-            }else{
-                document.getElementById("dairy-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }            
-            // SET OTHERS CATEGORY 
-            document.getElementById("other-header").innerText = `Other - ${other_count} Items`;   
-            if(other_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < other_array.length; i++){
-                    let tmp = other_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("other-list").innerHTML = tb;
-            }else{
-                document.getElementById("other-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }  
-        }
-        function sort_expiration_date(){
-            let items = JSON.parse(localStorage.getItem("items"));
-            let fruit_count = 0;
-            let veg_count = 0;
-            let protein_count = 0;
-            let dairy_count = 0;
-            let other_count = 0;
-            let fruit_array = new Array();
-            let veg_array = new Array();
-            let protein_array = new Array();
-            let dairy_array = new Array();
-            let other_array = new Array();
-           
-            for(i = 0; i < items.length; i++){
-                let tmp = items[i];
-                if(tmp.category == "Fruits"){
-                    fruit_count++;
-                    fruit_array.push(tmp);
-                }else if(tmp.category == "Vegetables"){
-                    veg_count++;
-                    veg_array.push(tmp);
-                }else if(tmp.category == "Protein"){
-                    protein_count++;
-                    protein_array.push(tmp);
-                }else if(tmp.category == "Dairy"){
-                    dairy_count++;
-                    dairy_array.push(tmp);
-                }else if(tmp.category == "Other"){
-                    other_count++;
-                    other_array.push(tmp);
-                }
-            }
-            fruit_array.sort((a, b) => new Date(a.date) - new Date(b.date));
-            veg_array.sort((a, b) => new Date(a.date) - new Date(b.date));
-            protein_array.sort((a, b) => new Date(a.date) - new Date(b.date));
-            dairy_array.sort((a, b) => new Date(a.date) - new Date(b.date));
-            other_array.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-            let tb = "";
-            // SET FRUITS CATEGORY 
-            document.getElementById("fruits-header").innerText = `Fruits - ${fruit_count} Items`;
-            if(fruit_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < fruit_array.length; i++){
-                    let tmp = fruit_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("fruits-list").innerHTML = tb;
-            }else{
-                document.getElementById("fruits-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET VEGETABLES CATEGORY 
-            document.getElementById("veg-header").innerText = `Vegetables - ${veg_count} Items`;
-            if(veg_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < veg_array.length; i++){
-                    let tmp = veg_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("veg-list").innerHTML = tb;
-            }else{
-                document.getElementById("veg-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET PROTEIN CATEGORY 
-            document.getElementById("protein-header").innerText = `Protein - ${protein_count} Items`;
-            if(protein_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < protein_array.length; i++){
-                    let tmp = protein_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("protein-list").innerHTML = tb;
-            }else{
-                document.getElementById("protein-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET DAIRY CATEGORY 
-            document.getElementById("dairy-header").innerText = `Dairy - ${dairy_count} Items`;
-            if(dairy_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < dairy_array.length; i++){
-                    let tmp = dairy_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("dairy-list").innerHTML = tb;
-            }else{
-                document.getElementById("dairy-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET OTHERS CATEGORY 
-            document.getElementById("other-header").innerText = `Other - ${other_count} Items`;   
-            if(other_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < other_array.length; i++){
-                    let tmp = other_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("other-list").innerHTML = tb;
-            }else{
-                document.getElementById("other-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }  
-        }
-        function populate_items(){
-            let items = JSON.parse(localStorage.getItem("items"));
-            let fruit_count = 0;
-            let veg_count = 0;
-            let protein_count = 0;
-            let dairy_count = 0;
-            let other_count = 0;
-            let fruit_array = new Array();
-            let veg_array = new Array();
-            let protein_array = new Array();
-            let dairy_array = new Array();
-            let other_array = new Array();
-           
-            for(i = 0; i < items.length; i++){
-                let tmp = items[i];
-                if(tmp.category == "Fruits"){
-                    fruit_count++;
-                    fruit_array.push(tmp);
-                }else if(tmp.category == "Vegetables"){
-                    veg_count++;
-                    veg_array.push(tmp);
-                }else if(tmp.category == "Protein"){
-                    protein_count++;
-                    protein_array.push(tmp);
-                }else if(tmp.category == "Dairy"){
-                    dairy_count++;
-                    dairy_array.push(tmp);
-                }else if(tmp.category == "Other"){
-                    other_count++;
-                    other_array.push(tmp);
-                }
-            }
-            let tb = "";
-            // SET FRUITS CATEGORY 
-            document.getElementById("fruits-header").innerText = `Fruits - ${fruit_count} Items`;
-            if(fruit_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < fruit_array.length; i++){
-                    let tmp = fruit_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("fruits-list").innerHTML = tb;
-            }else{
-                document.getElementById("fruits-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET VEGETABLES CATEGORY 
-            document.getElementById("veg-header").innerText = `Vegetables - ${veg_count} Items`;
-            if(veg_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < veg_array.length; i++){
-                    let tmp = veg_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("veg-list").innerHTML = tb;
-            }else{
-                document.getElementById("veg-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET PROTEIN CATEGORY 
-            document.getElementById("protein-header").innerText = `Protein - ${protein_count} Items`;
-            if(protein_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < protein_array.length; i++){
-                    let tmp = protein_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("protein-list").innerHTML = tb;
-            }else{
-                document.getElementById("protein-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET DAIRY CATEGORY 
-            document.getElementById("dairy-header").innerText = `Dairy - ${dairy_count} Items`;
-            if(dairy_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < dairy_array.length; i++){
-                    let tmp = dairy_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("dairy-list").innerHTML = tb;
-            }else{
-                document.getElementById("dairy-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }
-            // SET OTHERS CATEGORY 
-            document.getElementById("other-header").innerText = `Other - ${other_count} Items`;   
-            if(other_count != 0){
-                tb = "";
-                tb += "<table> <tr>"
-                for(i = 0; i < other_array.length; i++){
-                    let tmp = other_array[i];
-                    tb += "<td>";
-                    tb += `<b>Name:</b> ${tmp.name}<br>` ;
-                    tb += `<b>Category:</b> ${tmp.category} <br>` ;
-                    tb += `<b>Quantity:</b> ${tmp.quantity}, <b>Units:</b> ${tmp.units}<br>`;
-                    tb += `<b>Expiration Date:</b> ${tmp.date} <br>`;
-                    tb += `<b>Storage:</b> ${tmp.storage} <br>`;
-                    tb += `<b>Additional Notes:</b> ${tmp.notes} <br>` ;
-                    tb += `&nbsp;&nbsp;<button id = "edit-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "edit_item(this)">Edit</button>&nbsp;&nbsp;`;
-                    tb += `<button id = "delete-button" data-name = "${tmp.name}" class = "button-styling" type = "button" onclick = "delete_item(this)">Delete</button>`; 
-                    tb += "</td>";
-                } 
-                tb += `</tr> </table>`;
-                document.getElementById("other-list").innerHTML = tb;
-            }else{
-                document.getElementById("other-list").innerHTML = `<p class = "no-items-header">None</p>`;
-            }  
-        }
-        function call_add_item(){
-            window.location.href = 'food_item.html';
-        }
-    </script>
+    <script src="pantry.js"></script> 
 </body>
 </html>

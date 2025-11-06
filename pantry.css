@@ -1,0 +1,361 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+h1, .section{
+    padding-left: 1rem;
+    font-family: 'DM Serif Text';
+}
+body{
+    font-family: 'Roboto Flex', Arial, sans-serif;
+}
+a {
+    padding-left:1rem;
+    font-family: 'Roboto Flex';
+}
+footer{
+    width: 640px;
+    height: 90px;
+    bottom : 0;
+    margin:auto;
+    position:fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    background-color: orange;
+  }
+.nav{
+    color:black;
+    text-decoration: none;
+}
+.nav:visited{
+    color:black;
+}
+.nav-img{
+    height:70px;
+}
+.nav:hover{
+    background-color:rgba(245, 245, 220, 0.682);
+}
+#nav-curr{
+    background-color: beige;
+}
+
+.food-cad-header{
+    text-align:center; 
+    background-color: beige;
+    color:black;
+    font-size: 1.5rem;
+    font-style: bold;
+}
+.no-items-header{
+    text-align:center; 
+    color:black;
+    font-size: 1.2rem;
+    font-style: bold;
+}
+.pantry-tab-setting{
+    padding-left: 2rem;
+    font-size:1.5rem;
+}
+.button-styling{
+    background: rgba(211, 211, 211, 0.657);
+    font-size: large;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 5px 10px;
+}
+
+.button-styling:hover {
+    background: #ffe4b5;
+}
+.button-styling.active {
+    background: #ffa500;
+    color: #fff;
+    border-color: #ffa500;
+}
+.button-styling-input{
+    font-size: large;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.button-styling-center{
+    font-size:large;
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+    padding: 5px 10px;
+}
+.button-styling-center:hover{
+    background: #ffe4b5;
+}
+.search-bar-style{
+    font-size:1.5rem;
+    margin: 0 auto;
+    display: inline-block;
+    text-align: center;
+}
+.centerSearch{
+    text-align: center;
+}
+.table-style{
+    overflow-x: auto;
+    width: 100%;
+}
+table {
+    border-collapse: collapse;
+    font-size:1.5rem;
+    min-width: 850px;
+    background-color: whitesmoke;
+}
+td {
+    border: 3px solid black; 
+    padding: 8px;
+}
+
+h1,h2{
+    text-align:center;
+}
+.device{
+    margin: auto;
+    width: 640px;
+    height: 960px;
+    overflow-y: auto;
+    background-color: orange;
+    position: relative;
+    font-size: 20px;
+}
+
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+
+/* Search */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.search-icon {
+    color: #888;
+    margin-right: 8px;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 1rem;
+    font-family: inherit;
+    width: 100px;
+}
+
+.container {
+    padding: 16px;
+}
+
+/* Filters */
+.filters-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 16px;
+    padding-top: 3px;
+    margin-bottom: 20px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+.filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.clear-btn {
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.filter-section {
+    margin-bottom: 12px;
+}
+.filter-label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+    font-size: x-large;
+}
+.filters-header h3 {
+    font-size: x-large;
+    font-weight: 600;
+}
+/* Badges */
+.badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.badge {
+    background: #f3f3f3;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: medium;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.badge-add {
+    background: #f3f3f3;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: medium;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.badge:hover {
+    background: #ffe4b5;
+}
+  
+.badge.active {
+    background: #ffa500;
+    color: #fff;
+    border-color: #ffa500;
+}
+.select-sortby-filters{
+    font-size: medium;
+}
+
+/* Select Filters */
+.filter-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+.filter-select-group label {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+    display: block;
+}
+.filter-select {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    font-size: medium;
+}
+
+/* Popup */
+.popup {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+.popup.hidden {
+    display: none;
+}
+
+.popup-content {
+    background: #fff;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    padding: 16px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.popup-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.popup-body {
+    margin-top: 24px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Pantry Grid */
+.pantry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.pantry-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  margin: 16px;
+}
+
+.recipe-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.recipe-card img {
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.recipe-title {
+  font-family: 'DM Serif Text', serif;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.recipe-meta {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+
+.button-style{
+    display: flex; 
+    justify-content: center; 
+    gap: 10px;
+}
+
+
