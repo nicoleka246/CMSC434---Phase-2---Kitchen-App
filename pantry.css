@@ -21,7 +21,7 @@ footer{
     justify-content: space-evenly;
     align-items: center;
     text-align: center;
-    background-color: orange;
+    background-color: #588157;
   }
 .nav{
     color:black;
@@ -66,12 +66,12 @@ footer{
 }
 
 .button-styling:hover {
-    background: #ffe4b5;
+    background: #a9d3a8;
 }
 .button-styling.active {
-    background: #ffa500;
+    background: #a9d3a8;
     color: #fff;
-    border-color: #ffa500;
+    border-color: #a9d3a8;
 }
 .button-styling-input{
     font-size: large;
@@ -87,7 +87,7 @@ footer{
     padding: 5px 10px;
 }
 .button-styling-center:hover{
-    background: #ffe4b5;
+    background: #a9d3a8;
 }
 .search-bar-style{
     font-size:1.5rem;
@@ -121,7 +121,7 @@ h1,h2{
     width: 640px;
     height: 960px;
     overflow-y: auto;
-    background-color: orange;
+    background-color: #a3b18a;
     position: relative;
     font-size: 20px;
 }
@@ -234,13 +234,13 @@ div {
     transition: background 0.2s;
 }
 .badge:hover {
-    background: #ffe4b5;
+    background: #a9d3a8;
 }
   
 .badge.active {
-    background: #ffa500;
+    background: #588157;
     color: #fff;
-    border-color: #ffa500;
+    border-color: #588157;
 }
 .select-sortby-filters{
     font-size: medium;
