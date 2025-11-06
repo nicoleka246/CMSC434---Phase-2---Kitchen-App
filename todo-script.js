@@ -61,8 +61,14 @@ function renderItems() {
     del.className = "sl-delete";
     del.type = "button";
     del.title = "Delete";
-    del.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    //to use w no internet, will later change to favicon as png
+    del.innerHTML = `
+      <svg viewBox="0 0 24 24">
+        <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm1 6h2v9h-2V9zm4 0h2v9h-2V9zM7 9h2v9H7V9z"/>
+      </svg>
+    `;
     del.addEventListener("click", () => removeItem(index));
+
     li.appendChild(left);
     li.appendChild(spacer);
     li.appendChild(del);
