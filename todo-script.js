@@ -1,6 +1,6 @@
 //local storage
 const LS_ITEMS_KEY = 'sl_items';
-const LS_FAVS_KEY  = 'sl_favorites';
+const LS_FAVS_KEY = 'sl_favorites';
 
 const load = (key, fallback) => {
   try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
@@ -8,25 +8,25 @@ const load = (key, fallback) => {
 };
 const save = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
-let items = load(LS_ITEMS_KEY, []);      
-let favorites = load(LS_FAVS_KEY, []);   
+let items = load(LS_ITEMS_KEY, []);
+let favorites = load(LS_FAVS_KEY, []);
 
-const listEl       = document.getElementById("sl-list");
-const formEl       = document.getElementById("sl-add-form");
-const inputEl      = document.getElementById("sl-item-input");
-const addFavsBtn   = document.getElementById("sl-add-favs");
-const editFavsBtn  = document.getElementById("sl-edit-favs");
+const listEl = document.getElementById("sl-list");
+const formEl = document.getElementById("sl-add-form");
+const inputEl = document.getElementById("sl-item-input");
+const addFavsBtn = document.getElementById("sl-add-favs");
+const editFavsBtn = document.getElementById("sl-edit-favs");
 
 // modal
-const favModal     = document.getElementById("sl-fav-modal");
+const favModal = document.getElementById("sl-fav-modal");
 const closeFavsBtn = document.getElementById("sl-close-favs");
-const favInput     = document.getElementById("sl-fav-input");
-const favAddBtn    = document.getElementById("sl-fav-add-btn");
-const favListEl    = document.getElementById("sl-fav-list");
-const favEmpty     = document.getElementById("sl-fav-empty");
+const favInput = document.getElementById("sl-fav-input");
+const favAddBtn = document.getElementById("sl-fav-add-btn");
+const favListEl = document.getElementById("sl-fav-list");
+const favEmpty = document.getElementById("sl-fav-empty");
 
 
-const clearBtn     = document.getElementById("sl-clear-btn");
+const clearBtn = document.getElementById("sl-clear-btn");
 
 // ------- Renderers -------
 function renderItems() {
@@ -61,13 +61,8 @@ function renderItems() {
     del.className = "sl-delete";
     del.type = "button";
     del.title = "Delete";
-    del.innerHTML = `
-      <svg viewBox="0 0 24 24">
-        <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm1 6h2v9h-2V9zm4 0h2v9h-2V9zM7 9h2v9H7V9z"/>
-      </svg>
-    `;
+    del.innerHTML = '<i class="fa-solid fa-trash"></i>';
     del.addEventListener("click", () => removeItem(index));
-
     li.appendChild(left);
     li.appendChild(spacer);
     li.appendChild(del);
