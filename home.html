@@ -16,74 +16,43 @@
             <span>User</span>
         </a>
         </div>
-    <div class="search-container">
-      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="m21 21-4.35-4.35"></path>
-      </svg>
-      <input 
-        type="search" 
-        id="search-input" 
-        class="search-input" 
-        placeholder="Search recipes or ingredients..."
-      >
-    </div>
+     <div class="search-container">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input 
+                type="search" 
+                id="search-input" 
+                class="search-input" 
+                onkeyup="search_for_item()"
+                placeholder="Search for ingredients...">
+            </div>
+        <p class = "section">Current Inventory</p>
         <div id = "current-inventory">
-            <p class = "section">Current Inventory</p>
             <!--Insert Images of Foods-->
             <!--left scroll image-->
             <div id = "food-row">
-              <button id = "left-scroll" class = "scroll"> 
-                <img src = "left-arrow.png" alt = "left scroll"> 
-              </button>
-            <a class = "food-item" href = "pantry.html">
-                <img class = "food-img" src = "food groups/dairy-products.png" alt = "dairy">
-                <span>Milk</span>
-            </a>
-            <a class = "food-item" href = "pantry.html">
-                <img class = "food-img" src = "food groups/bread (1).png" alt = "grain">
-                <span>Bread</span>
-            </a>
-            <a class = "food-item" href = "pantry.html">
-                <img class = "food-img" src = "food groups/dairy-products.png" alt = "dairy">
-                <span>Eggs</span>
-            </a>
-            <a class = "food-item" href = "pantry.html">
-                <img class = "food-img" src = "food groups/fruits.png" alt = "fruit">
-                <span>Apples</span>
-            </a>
-            <a class = "food-item" href = "pantry.html">
-                <img class = "food-img" src = "food groups/vegetable.png" alt = "vegetable">
-                <span>Carrots</span>
-            </a>
-            <a class = "food-item" href = "pantry.html">
-                <img class = "food-img" src = "food groups/dairy-products.png" alt = "dairy">
-                <span>Cheese</span>
-            </a>
-            <a class = "food-item" href = "pantry.html">
-                <img class = "food-img" src = "food groups/bread (1).png" alt = "grain">
-                <span>Rice</span>
-            </a>
-            <button id = "right-scroll" class = "scroll"> 
-              <img src = "right-arrow.png" alt = "right scroll"> 
-            </button>
+              <!--Food Will Be Added Here-->
+              <p id = "empty"> There are currently no food items in your pantry.</p>
             </div>
         </div>
+        <p class = "section">Personal Recipes</p>
         <div id = "personal-recipies">
-            <p class = "section">Personal Recipes</p>
             <ul> 
                 <li>Spaghetti ............. 2/4 Items </li>
                 <li>Chicken Pasta ............. 3/6 Items</li>
             </ul>
         </div>
-        <div id = "Shopping Reminders">
-            <p class = "section">Shopping Reminders</p>
+        <p class = "section">Shopping Reminders</p>
+        <div id = "shopping-reminders">
             <ul>
               <li>You need need <strong>three</strong> more items for Chicken Pasta</li>
             </ul>
         </div>
-        <div id = "Expiring Soon">
-          <p class = "section">Expiring Soon</p>
+        <p class = "section">Expiring Soon</p>
+        <div id = "expiring-soon">
+          <p id = "empty-exp">You currently have no food items expiring soon.</p>
         </div>
  <footer>
         <!-- HOME  -->
@@ -115,56 +84,100 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-    initItems();
-    addFoodIcon();     
-  });
+    getInvent();
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'items') getInvent();
+    });
+    window.addEventListener('pageshow', () => getInvent());
+});
 
-  function initItems() {
-    if (!localStorage.getItem('items')) {
-      localStorage.setItem('items', '[]');
-    }
-  }
-
-  function addFoodIcon() {
-    const container = document.getElementById('food-row'); 
+function getInvent() {
+    const container = document.getElementById('food-row');
     if (!container) return;
 
     const items = JSON.parse(localStorage.getItem('items') || '[]');
-    const recent = items.slice(0, 12);
+    container.querySelectorAll('.food-item, #empty').forEach(el => el.remove());
 
-    const rightArrow = document.getElementById('right-scroll');
-    recent.forEach(item => container.insertBefore(makeIcon(item), rightArrow));
-  }
+    if (items.length === 0) {
+        getEmptyMessage(container);
+        return;
+    }
 
-  function makeIcon(item){
+    items.slice().reverse().forEach(item => {
+        container.appendChild(makeIcon(item));
+    });
+}
+
+function makeIcon(item) {
     const a = document.createElement('a');
     a.className = 'food-item';
     a.href = 'pantry.html';
 
     const img = document.createElement('img');
     img.className = 'food-img';
-    img.alt = (item.category || 'item').toLowerCase();
-    img.src = pickIcon(item);
+    const category = item?.category || 'Other';
+    img.alt = category.toLowerCase();
+    img.src = pickIcon(category);
+    img.width = 56;
+    img.height = 56;
 
     const span = document.createElement('span');
-    span.textContent = item.name;
+    span.textContent = item?.name || 'Item';
 
     a.append(img, span);
     return a;
-  }
+}
 
-  function pickIcon(item) {
-    if (item.image) return item.image;
+function pickIcon(category) {
     const byCat = {
-      'Fruits':     'food groups/fruits.png',
-      'Vegetables': 'food groups/vegetable.png',
-      'Protein':    'food groups/proteins.png',
-      'Dairy':      'food groups/dairy-products.png',
-      'Grains':     'food groups/bread (1).png',
-      'Other':      'food groups/other.png'
+        'Fruits': 'food groups/fruits.png',
+        'Vegetables': 'food groups/vegetable.png',
+        'Protein': 'food groups/proteins.png',
+        'Dairy': 'food groups/dairy-products.png',
+        'Grains': 'food groups/bread (1).png',
+        'Other': 'food groups/other.png'
     };
-    return byCat[item.category];
-  }
+    return byCat[category] || byCat['Other'];
+}
 
-  </script>
+function getEmptyMessage(container) {
+    if (!container.querySelector('#empty')) {
+        const p = document.createElement('p');
+        p.id = 'empty';
+        p.textContent = 'There are currently no food items in your pantry.';
+        container.appendChild(p);
+    }
+}
+function getExp() {
+    const list = document.getElementById('expiring-list');
+    if (!list){
+      return;
+    }
+
+    list.innerHTML = '';
+
+    const items = JSON.parse(localStorage.getItem('items') || '[]');
+    const today = new Date();
+
+    items.forEach(item => {
+        if (!item.date) return;
+
+        const expDate = new Date(item.date);
+        const diffTime = expDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays > 0 && diffDays <= 7) {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} expires in ${diffDays} day${diffDays === 1 ? '' : 's'}`;
+            list.appendChild(li);
+        }
+    });
+
+    if (list.children.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'No items expiring within a week.';
+        list.appendChild(li);
+    }
+}
+</script>
 </html>

@@ -10,7 +10,9 @@ body {
   color: #2d2d2d; 
   font-weight: 200;
 }
-
+body{
+    font-family: 'Roboto Flex', Arial, sans-serif;
+}
 
 p,
 button,
@@ -21,7 +23,6 @@ a {
 }
 
 p {
-  background-color: beige;
   text-align: center;
 }
 
@@ -29,6 +30,7 @@ ul,
 li,
 span {
   font-family: 'Roboto Flex';
+  text-align: center;
 }
 
 .device {
@@ -97,11 +99,23 @@ input {
   font-size: 1.5rem;
 }
 
-.current-inventory {
+#current-inventory, #personal-recipies, #shopping-reminders, #expiring-soon{
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding-top: 3px;
+  margin-bottom: 20px;
+  margin-left: 16px;
+  margin-right: 16px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 24px;
+ 
+}
+#current-inventory:hover, #personal-recipies:hover, #shopping-reminders:hover, #expiring-soon:hover{
+  transform: scale(1.03);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 #food-row {
