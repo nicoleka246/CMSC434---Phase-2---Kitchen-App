@@ -12,8 +12,8 @@
         <div class = "content-container">       
             <div class = "pantry-tab-setting">
                 <p>(*) Required Field</p>
-                <label for="item-name">* Name:</label>
-                <input class = "button-styling-input" type="text" id="item-name" name="item-name" size="40">
+                <label for="item-name">* Name</label>
+                <input class = "button-styling-input" type="text" id="item-name" name="item-name" size="52">
                 <br> <br>
                 <label for="item-category">* Category</label>
                 <br><br>
@@ -60,13 +60,16 @@
                 <input type="radio" id="freezer_rb" value="Freezer" name="storage-choice">
                 <label for="freezer_rb">Freezer</label>
                 <br><br>
-                <label for="item-name">Additional Notes</label> <br>
-                <input class = "button-styling-input" type="text" id="item-notes" name="item-notes" size="45">
+                <label for="item-name">Additional Notes </label>
+                <input class = "button-styling-input" type="text" id="item-notes" name="item-notes" size="41">
                 <br>
                 <br>
                 <button id = "save-item-button" class = "button-styling-center" type="button" onclick = "save_new_item()">Save</button>
                 <br>
                 <button id = "cancel-item-button" class = "button-styling-center" type="button" onclick = "go_back_to_pantry()">Cancel</button>
+                <div id = "requiredMessage">
+                    
+                </div>
             </div>
         </div>
         <footer>

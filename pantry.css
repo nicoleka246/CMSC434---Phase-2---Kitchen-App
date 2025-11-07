@@ -64,7 +64,9 @@ footer{
     border-radius: 6px;
     padding: 5px 10px;
 }
-
+.emptyPadding{
+    padding-left: 16px;
+}
 .button-styling:hover {
     background: #a9d3a8;
 }
