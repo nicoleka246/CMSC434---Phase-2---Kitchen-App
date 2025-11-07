@@ -28,7 +28,7 @@ const favEmpty = document.getElementById("sl-fav-empty");
 
 const clearBtn = document.getElementById("sl-clear-btn");
 
-// ------- Renderers -------
+// ------- renderers -------
 function renderItems() {
   listEl.innerHTML = "";
   items.forEach((item, index) => {
