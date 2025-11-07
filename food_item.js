@@ -44,36 +44,46 @@ function save_new_item(){
     let storage_arr = document.getElementsByName('storage-choice');
     let storage_choice;
     let additional_notes = document.getElementById("item-notes").value;
+    let chose_category = false, chose_storage = false;
+
 
     for (i = 0; i < category_arr.length; i++) {
         if (category_arr[i].checked){
             category_choice = category_arr[i].value;
+            chose_category = true;
         }
     }
 
     for (i = 0; i < storage_arr.length; i++) {
         if (storage_arr[i].checked){
             storage_choice = storage_arr[i].value;
+            chose_storage = true;
         }
     }
-    let item = new Object();
-    item.name = name;
-    item.category = category_choice;
-    item.quantity = quan;
-    item.units = units;
-    item.date = date;
-    item.storage = storage_choice;
-    item.notes = additional_notes;
-    console.log(item);
-    let items = JSON.parse(localStorage.getItem("items"));
+    if(name.trim() != "" && chose_category && chose_storage && quan.trim() != ""){
+        let item = new Object();
+        item.name = name;
+        item.category = category_choice;
+        item.quantity = quan;
+        item.units = units;
+        item.date = date;
+        item.storage = storage_choice;
+        item.notes = additional_notes;
+        console.log(item);
+        let items = JSON.parse(localStorage.getItem("items"));
 
-    if(localStorage.getItem("editing-existing-item") !== null){
-        let index = localStorage.getItem("editing-existing-item");
-        items[index] = item;
-        localStorage.removeItem("editing-existing-item");
+        if(localStorage.getItem("editing-existing-item") !== null){
+            let index = localStorage.getItem("editing-existing-item");
+            items[index] = item;
+            localStorage.removeItem("editing-existing-item");
+        }else{
+            items.push(item);
+        }
+        localStorage.setItem("items", JSON.stringify(items));
+        window.location.href = 'pantry.html';
     }else{
-        items.push(item);
+        let requiredMessage = document.getElementById("requiredMessage");
+        requiredMessage.innerHTML = "<h3>Please fill in every required (*) field</h3>"
     }
-    localStorage.setItem("items", JSON.stringify(items));
-    window.location.href = 'pantry.html';
+    
 }
