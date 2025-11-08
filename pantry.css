@@ -1,45 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
-h1, .section{
-    padding-left: 1rem;
-    font-family: 'DM Serif Text';
+h1,
+.section {
+  padding-left: 1rem;
+  font-family: 'DM Serif Text';
+}
+
+body {
+  color: #2d2d2d; 
+  font-weight: 200;
 }
 body{
     font-family: 'Roboto Flex', Arial, sans-serif;
 }
+
+p,
+button,
+input,
 a {
-    padding-left:1rem;
-    font-family: 'Roboto Flex';
+  padding-left: 1rem;
+  font-family: 'Roboto Flex';
 }
+
+p {
+  text-align: center;
+}
+
+ul,
+li,
+span {
+  font-family: 'Roboto Flex';
+  text-align: center;
+}
+/*Nav Bar Code*/
 footer {
-    width: 640px;
-    height: 90px;
-    bottom: 0;
-    margin: auto;
-    position: fixed;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    text-align: center;
-    background-color: #588157;
-    padding-top: 1rem;
-  }
-  
-.nav{
-    color:black;
-    text-decoration: none;
+  width: 640px;
+  height: 90px;
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  background-color: #588157;
+  font-size: 16px;
 }
-.nav:visited{
-    color:black;
+.nav {
+  flex: 1;
+  color: black;
+  text-decoration: none;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
 }
-.nav-img{
-    height:70px;
+
+.nav:visited {
+  color: black;
+  padding-top: 0.5rem;
 }
-.nav:hover{
-    background-color:rgba(245, 245, 220, 0.682);
+
+.nav-img {
+  height: 55px;
+  margin-bottom: 4px;
 }
-#nav-curr{
-    background-color: beige;
+
+.nav:hover {
+  background-color: rgba(245, 245, 220, 0.682);
+}
+
+#nav-curr {
+  background-color: beige;
 }
 
 .food-cad-header{

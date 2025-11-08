@@ -53,7 +53,12 @@
         <p class = "section">Expiring Soon</p>
         <div id = "expiring-soon">
           <p id = "empty-exp">You currently have no food items expiring soon.</p>
+          <ul id = "exp-lst">
+          </ul>
         </div>
+<br>
+<br>
+<br>
  <footer>
         <!-- HOME  -->
         <a class = "nav"  id = "nav-curr" href="home.html">
@@ -85,10 +90,17 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
     getInvent();
+    getExp();
     window.addEventListener('storage', (e) => {
-        if (e.key === 'items') getInvent();
+        if (e.key === 'items') {
+            getInvent();
+            getExp();
+        }
     });
-    window.addEventListener('pageshow', () => getInvent());
+    window.addEventListener('pageshow', () => {
+        getInvent();
+        getExp();
+    });
 });
 
 function getInvent() {
@@ -148,11 +160,11 @@ function getEmptyMessage(container) {
         container.appendChild(p);
     }
 }
+
 function getExp() {
-    const list = document.getElementById('expiring-list');
-    if (!list){
-      return;
-    }
+    const list = document.getElementById('exp-lst');
+    const emptyExp = document.getElementById('empty-exp');
+    if (!list) return;
 
     list.innerHTML = '';
 
@@ -167,17 +179,15 @@ function getExp() {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
         if (diffDays > 0 && diffDays <= 7) {
-            const li = document.createElement('li');
-            li.textContent = `${item.name} expires in ${diffDays} day${diffDays === 1 ? '' : 's'}`;
-            list.appendChild(li);
+            list.innerHTML += `<li>${item.name} expires in <strong>${diffDays}</strong> day(s)</li>`;
         }
     });
 
-    if (list.children.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'No items expiring within a week.';
-        list.appendChild(li);
-    }
+        if (list.children.length === 0) {
+            if (emptyExp) emptyExp.style.display = '';
+        } else {
+            if (emptyExp) emptyExp.style.display = 'none';
+        }
 }
 </script>
 </html>
