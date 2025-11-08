@@ -16,7 +16,28 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+body{
+    font-family: 'Roboto Flex', Arial, sans-serif;
+}
 
+p,
+button,
+input,
+a {
+  padding-left: 1rem;
+  font-family: 'Roboto Flex';
+}
+
+p {
+  text-align: center;
+}
+
+ul,
+li,
+span {
+  font-family: 'Roboto Flex';
+  text-align: center;
+}
 /* Container */
 .container {
   width: 640px;
@@ -24,7 +45,7 @@ body {
   margin: 0 auto;
   padding: 16px;
   padding-bottom: 120px; 
-  background-color: orange;
+  background-color: #a3b18a;
   overflow-y: auto;      
   overflow-x: hidden; 
 }
@@ -249,12 +270,11 @@ body {
 .hidden {
   display: none !important;
 }
-/*Nav Bar CSS*/ 
+/*Nav Bar Code*/
 footer {
   width: 640px;
   height: 90px;
   bottom: 0;
-  margin: auto;
   position: fixed;
   display: flex;
   flex-direction: row;
@@ -262,34 +282,39 @@ footer {
   align-items: center;
   text-align: center;
   background-color: #588157;
-  padding-top: 1rem;
 }
 
-.nav{
-    color:black;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center;
-    text-decoration: none;
-    padding: 0;              
-    margin: 0;
-    text-align: center; 
+.nav {
+  flex: 1;
+  color: black;
+  text-decoration: none;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
 }
-.nav:visited{
-    color:black;
+
+.nav:visited {
+  color: black;
+  padding-top: 0.5rem;
 }
-.nav-img{
- height:70px;
+
+.nav-img {
+  height: 55px;
+  margin-bottom: 4px;
 }
-.nav:hover{
-    background-color:rgba(245, 245, 220, 0.682);
+
+.nav:hover {
+  background-color: rgba(245, 245, 220, 0.682);
 }
-#nav-curr{
-    background-color: beige;
+
+#nav-curr {
+  background-color: beige;
 }
-footer a{
-  padding-left: 1rem;
+a{
+  font-weight:200;
 }
 
 
