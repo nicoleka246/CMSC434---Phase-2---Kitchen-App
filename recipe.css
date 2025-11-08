@@ -14,11 +14,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
-body{
-    font-family: 'Roboto Flex', Arial, sans-serif;
-}
+
 
 p,
 button,
@@ -314,7 +311,7 @@ footer {
   background-color: beige;
 }
 a{
-  font-weight:200;
+  font-weight: 200;
 }
 
 
