@@ -133,6 +133,7 @@ input {
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
+  height: 125px;
 }
 
 .food-item span {
@@ -493,4 +494,11 @@ footer {
   border: none;
   margin: 0;
   padding: 0;
+}
+
+.food-item.highlight {
+  background: #d4eed4bd;
+  outline: 2px solid #143701;
+  border-radius: 10px;
+  padding-left:10px;
 }
