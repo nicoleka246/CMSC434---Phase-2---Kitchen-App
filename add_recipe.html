@@ -122,24 +122,28 @@
 // On page load, check if editing an existing recipe
 window.addEventListener("DOMContentLoaded", () => {
 const editingIndex = localStorage.getItem("editing-existing-recipe");
-if (editingIndex !== null) {
-    const recipes = JSON.parse(localStorage.getItem("recipes")) || [];
-    const recipe = recipes[editingIndex];
-    if (!recipe) return;
-    document.getElementById("recipe-title").value = recipe.title;
-    document.getElementById("recipe-ingredients").value = recipe.ingredients.join("\n");
-    document.getElementById("recipe-instructions").value = recipe.instructions;
-    document.getElementById("item-notes").value = recipe.notes;
-    document.getElementById("cuisine-select").value = recipe.cuisine;
-    document.getElementById("time-select").value = mapTimeToSelect(recipe.time);
-    document.getElementById("difficulty-select").value = recipe.difficulty;
-    const dietary_arr = document.getElementsByName("dietary[]");
-    dietary_arr.forEach(cb => {
-        if (recipe.diet.includes(cb.value)) {
-            cb.checked = true;
-        }
-    });
-}
+    const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+    if (editingIndex !== null) {
+        const recipe = storedRecipes[editingIndex];
+        document.getElementById("recipe-title").value = recipe.title;
+        document.getElementById("recipe-ingredients").value = recipe.ingredients.join("\n");
+        document.getElementById("recipe-instructions").value = recipe.instructions;
+        // Dietary checkboxes
+        const dietary_arr = document.getElementsByName("dietary[]");
+        dietary_arr.forEach(cb => {
+            cb.checked = recipe.diet.includes(cb.value);
+        });
+        // Cuisine select
+        document.getElementById("cuisine-select").value = recipe.cuisine;
+        // Time select (convert minutes back to option)
+        let timeOption = "under-15";
+        if (recipe.time === 20) timeOption = "15-30";
+        else if (recipe.time === 45) timeOption = "30-60";
+        else if (recipe.time === 90) timeOption = "over-60";
+        document.getElementById("time-select").value = timeOption;
+        // Difficulty select
+        document.getElementById("difficulty-select").value = recipe.difficulty;
+    }
 });
 
 // Helper to map time in minutes to select value
@@ -163,15 +167,38 @@ function saveRecipe() {
     for (let i = 0; i < dietary_arr.length; i++) {
         if (dietary_arr[i].checked) diet.push(dietary_arr[i].value);
     }
-    if (title.trim() && ingredients.trim() && instructions.trim()) {
-        let ingredients_arr = ingredients.split("\n").map(i => i.trim()).filter(i => i);
-        let time_minutes = 0;
-        if (time === "under-15") time_minutes = 10;
-        else if (time === "15-30") time_minutes = 20;
-        else if (time === "30-60") time_minutes = 45;
-        else if (time === "over-60") time_minutes = 90;
-        let storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
-        const allRecipes = [...defaultRecipes, ...storedRecipes];
+    // Validate required fields
+    if (!title.trim() || !ingredients.trim() || !instructions.trim()) {
+        document.getElementById("requiredMessage").innerHTML =
+            "<h3>Please fill in all required (*) fields</h3>";
+        return;
+    }
+    let ingredients_arr = ingredients.split("\n").map(i => i.trim()).filter(i => i);
+    let time_minutes = 0;
+    if (time === "under-15") time_minutes = 10;
+    else if (time === "15-30") time_minutes = 20;
+    else if (time === "30-60") time_minutes = 45;
+    else if (time === "over-60") time_minutes = 90;
+    let storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+    const allRecipes = [...defaultRecipes, ...storedRecipes];
+    // Check if editing an existing recipe
+    const editingIndex = localStorage.getItem("editing-existing-recipe");
+    if (editingIndex !== null) {
+        // Update existing recipe
+        const recipeId = storedRecipes[editingIndex].id;
+        storedRecipes[editingIndex] = {
+            id: recipeId,
+            title: title,
+            diet: diet,
+            cuisine: cuisine,
+            time: time_minutes,
+            difficulty: difficulty,
+            ingredients: ingredients_arr,
+            instructions: instructions
+        };
+        localStorage.removeItem("editing-existing-recipe"); // clear flag
+    } else {
+        // Create new recipe
         let newId = allRecipes.length ? Math.max(...allRecipes.map(r => r.id)) + 1 : 1;
         let recipe = {
             id: newId,
@@ -181,15 +208,12 @@ function saveRecipe() {
             time: time_minutes,
             difficulty: difficulty,
             ingredients: ingredients_arr,
-            instructions: instructions,
+            instructions: instructions
         };
         storedRecipes.push(recipe);
-        localStorage.setItem("recipes", JSON.stringify(storedRecipes));
-        window.location.href = "recipe.html";
-    } else {
-        document.getElementById("requiredMessage").innerHTML =
-            "<h3>Please fill in all required (*) fields</h3>";
     }
+    localStorage.setItem("recipes", JSON.stringify(storedRecipes));
+    window.location.href = "recipe.html";
 }
 </script>
 </body>
