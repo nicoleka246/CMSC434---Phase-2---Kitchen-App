@@ -1,6 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Roboto+Flex:wght@300;400;600&display=swap');
-
-
 body {
   font-family: 'Roboto Flex', Arial, sans-serif;
   color: #222;
@@ -360,4 +358,6 @@ footer {
 #nav-curr {
   background-color: beige;
 }
-
+#nav-s{
+  font-weight:200;
+}
