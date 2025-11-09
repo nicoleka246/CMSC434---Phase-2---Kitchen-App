@@ -477,8 +477,8 @@ footer {
 }
 
 .food-item.highlight {
-  background: #d4eed4bd;
-  outline: 2px solid #143701;
+  background: #f4ed8cbd;
+  outline: 2px solid #f3e303;
   border-radius: 10px;
   padding-left: 10px;
 }

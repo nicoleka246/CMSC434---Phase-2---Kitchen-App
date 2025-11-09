@@ -50,8 +50,8 @@
         </div>
         <p class = "section">Shopping Reminders</p>
         <div id = "shopping-reminders">
-            <ul>
-              <li>You need need <strong>three</strong> more items for Chicken Pasta</li>
+            <ul id ="shopping-list">
+              
             </ul>
         </div>
         <p class = "section">Expiring Soon</p>
@@ -98,18 +98,22 @@
     getInvent();
     getExp();
     getRecipes();
+    getShopRemind();
     window.addEventListener('storage', (e) => {
         if (e.key === 'items') {
             getInvent();
             getExp();
+            getShopRemind();
         } else if (e.key === 'recipes') {
             getRecipes();
+            getShopRemind();
         }
     });
     window.addEventListener('pageshow', () => {
         getInvent();
         getExp();
         getRecipes();
+        getShopRemind();
     });
 });
 
@@ -210,6 +214,25 @@ function getRecipes() {
   const names = [...prepopulated,...recs.map(r => r.title)].filter(Boolean);
  recList.innerHTML = names.map(name => `<li>${name}</li>`).join('');
 
+}
+function getShopRemind() {
+  const saved = JSON.parse(localStorage.getItem('recipes') || '[]');
+  const recs = (window.defaultRecipes || []).concat(saved);
+  const invent = JSON.parse(localStorage.getItem('items') || '[]');
+  const pantryNames = new Set(
+    invent.map(i => (i.name || '').toLowerCase().trim())
+  );
+  let list = document.querySelector('#shopping-list');
+  list.innerHTML = '';
+  recs.forEach(recipe => {
+    const missing = (recipe.ingredients || []).filter(
+      ing => !pantryNames.has((ing || '').toLowerCase().trim())
+    );
+    const count = missing.length;
+    const li = document.createElement('li');
+    li.innerHTML = `You are missing <strong>${count}</strong> ingredient${count === 1 ? '' : 's'} for ${recipe.title}`;
+    list.appendChild(li);
+  });
 }
 function search_for_item() {
   const search = document.getElementById('search-input').value.toLowerCase();
