@@ -112,9 +112,6 @@ function renderFavorites() {
     li.appendChild(remove);
     favListEl.appendChild(li);
   });
-
-  // persist 
-  save(LS_FAVS_KEY, favorites);
 }
 
 function addItem(text) {
@@ -137,8 +134,10 @@ function removeItem(i) {
 function addAllFavorites() {
   if (!favorites.length) return;
   favorites.forEach(f => {
-    const t = (f || "").trim();
-    if (t) items.push({ text: t, done: false });
+    const t = f.trim();
+    if (t) {
+      items.push({ text: t, done: false });
+    }
   });
   renderItems();
 }
@@ -157,7 +156,7 @@ editFavsBtn.addEventListener("click", () => {
   renderFavorites();
   if (favInput) {
     favInput.value = "";
-    setTimeout(() => favInput.focus(), 0);
+    favInput.focus();
   }
 });
 
