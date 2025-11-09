@@ -13,7 +13,7 @@ body {
   background-color: #a3b18a;
   margin: auto;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .content{
@@ -320,13 +320,11 @@ div {
 
 
 
-/*Nav Bar CSS*/ 
+/*Nav Bar Code*/
 footer {
-  font-family: 'Roboto Flex', Arial, sans-serif;
   width: 640px;
   height: 90px;
   bottom: 0;
-  margin: auto;
   position: fixed;
   display: flex;
   flex-direction: row;
@@ -334,28 +332,32 @@ footer {
   align-items: center;
   text-align: center;
   background-color: #588157;
-  padding-top: 1rem;
+  font-weight:200;
+  font-size:16px;
 }
 
-.nav{
-  color:black;
+.nav {
+  flex: 1;
+  color: black;
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
 }
-.nav:visited{
-  color:black;
-  padding-top: 0.5rem;
+
+.nav-img {
+  height: 55px;
+  margin-bottom: 4px;
 }
-.nav-img{
-  height:70px;
+
+.nav:hover {
+  background-color: rgba(245, 245, 220, 0.682);
 }
-.nav:hover{
-  background-color:rgba(245, 245, 220, 0.682);
-}
-#nav-curr{
-    background-color: beige;
-    width: 100px;
-}
-footer a{
-  padding-left: 1rem;
+
+#nav-curr {
+  background-color: beige;
 }
 
