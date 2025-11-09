@@ -16,10 +16,12 @@ body {
 
 .content{
   height: 100%;  
+  overflow-y: scroll; 
   padding: 20px;
   padding-bottom: 120px; 
   box-sizing: border-box;
- 
+  scrollbar-width: none; 
+
 }
 
 /* Header */
@@ -97,10 +99,23 @@ body {
 }
 
 .filter-label {
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 800;
+  font-size: 2rem;
   margin-bottom: 6px;
   display: block;
+}
+
+.filters-content .filter-label {
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.filter-select-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px; /* spacing between filters */
 }
 
 /* Badges */
@@ -115,7 +130,8 @@ body {
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 5px 10px;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
+  font-weight: bold;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -236,7 +252,6 @@ div {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
-  padding-bottom: 110px;
 }
 
 .recipe-card {
@@ -309,13 +324,12 @@ div {
 
 .popup-body {
   margin-top: 24px;
+  font-size: 1.4rem;
 }
 
 .hidden {
   display: none !important;
 }
-
-
 
 /*Nav Bar Code*/
 footer {
@@ -359,4 +373,12 @@ footer {
 }
 #nav-s{
   font-weight:200;
+}
+
+.edit-recipe-btn, .delete-recipe-btn, .add-to-shopping-list-btn{
+  background: rgba(211, 211, 211, 0.657);
+  font-size: large;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 5px 10px;
 }
