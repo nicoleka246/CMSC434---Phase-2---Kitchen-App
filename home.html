@@ -39,7 +39,7 @@
         </div>
         <p class = "section">Personal Recipes</p>
         <div id = "personal-recipies">
-            <ul> 
+            <ul id = "recipe-list"> 
                 <li>Vegan Tacos</li>
                 <li>Chicken Alfredo</li>
                 <li>Greek Salad</li>
@@ -97,21 +97,24 @@
     document.addEventListener('DOMContentLoaded', () => {
     getInvent();
     getExp();
+    getRecipes();
     window.addEventListener('storage', (e) => {
         if (e.key === 'items') {
             getInvent();
             getExp();
+        } else if (e.key === 'recipes') {
+            getRecipes();
         }
     });
     window.addEventListener('pageshow', () => {
         getInvent();
         getExp();
+        getRecipes();
     });
 });
 
 function getInvent() {
     const container = document.getElementById('food-row');
-    if (!container) return;
 
     const items = JSON.parse(localStorage.getItem('items') || '[]');
     container.querySelectorAll('.food-item, #empty').forEach(el => el.remove());
@@ -170,7 +173,6 @@ function getEmptyMessage(container) {
 function getExp() {
     const list = document.getElementById('exp-lst');
     const emptyExp = document.getElementById('empty-exp');
-    if (!list) return;
 
     list.innerHTML = '';
 
@@ -188,12 +190,26 @@ function getExp() {
             list.innerHTML += `<li>${item.name} expires in <strong>${diffDays}</strong> day(s)</li>`;
         }
     });
-
         if (list.children.length === 0) {
             if (emptyExp) emptyExp.style.display = '';
         } else {
             if (emptyExp) emptyExp.style.display = 'none';
         }
+}
+function getRecipes() {
+  const recList = document.getElementById('recipe-list');
+  const prepopulated = [
+    "Vegan Tacos",
+    "Chicken Alfredo",
+    "Greek Salad",
+    "Avocado Toast",
+    "Butter Chicken",
+    "French Crepes"
+  ];
+  const recs = JSON.parse(localStorage.getItem('recipes') || '[]');
+  const names = [...prepopulated,...recs.map(r => r.title)].filter(Boolean);
+ recList.innerHTML = names.map(name => `<li>${name}</li>`).join('');
+
 }
 function search_for_item() {
   const search = document.getElementById('search-input').value.toLowerCase();
