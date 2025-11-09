@@ -1,9 +1,9 @@
 // Data (will be replaced with API later)
-const recipes = [
+// Data (will be replaced with API later)
+const defaultRecipes = [
   {
     id: 1,
     title: "Vegan Tacos",
-    image: "food/taco.jpg",
     diet: ["Vegan"],
     cuisine: "Mexican",
     time: 25,
@@ -14,7 +14,6 @@ const recipes = [
   {
     id: 2,
     title: "Chicken Alfredo",
-    image: "food/pasta.avif",
     diet: ["Dairy-Free"],
     cuisine: "Italian",
     time: 40,
@@ -25,7 +24,6 @@ const recipes = [
   {
     id: 3,
     title: "Greek Salad",
-    image: "food/greek_salad.png",
     diet: ["Vegetarian", "Gluten-Free"],
     cuisine: "Mediterranean",
     time: 15,
@@ -36,7 +34,6 @@ const recipes = [
   {
     id: 4,
     title: "Avocado Toast",
-    image: "food/avocado_toast.png",
     diet: ["Vegan"],
     cuisine: "American",
     time: 10,
@@ -47,7 +44,6 @@ const recipes = [
   {
     id: 5,
     title: "Butter Chicken",
-    image: "food/butter_chicken.png",
     diet: [],
     cuisine: "Indian",
     time: 50,
@@ -58,7 +54,6 @@ const recipes = [
   {
     id: 6,
     title: "French Crepes",
-    image: "food/crepes.png",
     diet: ["Vegetarian"],
     cuisine: "French",
     time: 20,
@@ -67,6 +62,10 @@ const recipes = [
     instructions: "Mix batter, cook thin layers on pan, and add your favorite filling.",
   },
 ];
+
+// Combine default + stored recipes
+const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+const recipes = [...defaultRecipes, ...storedRecipes];
 
 let pantryItems = ["Tortillas", "Garlic"];
 
@@ -192,6 +191,8 @@ function filterRecipes() {
 
 // Render Functions
 function renderRecipes() {
+  // Always get the latest recipes from localStorage
+  const recipes = JSON.parse(localStorage.getItem("recipes")) || [];
   const filteredRecipes = filterRecipes();
   if (filteredRecipes.length === 0) {
     recipeGrid.innerHTML = "";
@@ -208,11 +209,10 @@ function renderRecipes() {
 function createRecipeCard(recipe) {
   return `
     <div class="recipe-card" data-id="${recipe.id}">
-      <img src="${recipe.image}" alt="${recipe.title}">
       <div class="card-info">
         <h3>${recipe.title}</h3>
         <p>${recipe.cuisine} • ${recipe.time} min • ${recipe.difficulty}</p>
-        <div class="badges">${recipe.diet.map((d) => `<span>${d}</span>`).join("")}</div>
+        <div class="badges">${recipe.diet.map((d) => `<span>${d}</span>`).join(", ")}</div>
       </div>
     </div>
   `;
@@ -239,7 +239,34 @@ function renderPopup(recipe) {
     <h3>Shopping List</h3>
     <p><strong>In Pantry:</strong> ${available.join(", ") || "None"}</p>
     <p><strong>Need to Buy:</strong> ${missing.join(", ") || "All set!"}</p>
+    </div>
+      <button class="edit-recipe-btn" onclick="editRecipe(${recipe.id})">Edit</button>
+       <button class="delete-recipe-btn" onclick="deleteRecipe(${recipe.id})">Delete</button>
+    </div>
   `;
+}
+
+function editRecipe(recipeId) {
+  const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+    const recipeIndex = storedRecipes.findIndex(r => r.id === recipeId);
+    if (recipeIndex === -1) return;
+    localStorage.setItem("editing-existing-recipe", recipeIndex);
+    window.location.href = "add_recipe.html";
+}
+
+function deleteRecipe(recipeId) {
+  let storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+  storedRecipes = storedRecipes.filter(r => r.id != recipeId);
+  localStorage.setItem("recipes", JSON.stringify(storedRecipes));
+  closePopup();
+  const card = document.querySelector(`.recipe-card[data-id="${recipeId}"]`);
+  if (card) card.remove();
+  renderRecipes();
+}
+
+function startNewRecipe() {
+    localStorage.removeItem("editing-existing-recipe");
+    window.location.href = "add_recipe.html";
 }
 
 // Start
