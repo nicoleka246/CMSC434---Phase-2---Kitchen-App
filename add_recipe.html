@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="recipe.css">
+    <title>Add Recipe</title>
+</head>
+<body>
+    <div class = "device">
+        <h1>Add Recipe </h1>
+        <div id="requiredMessage"></div>
+        <div class = "content-container">  
+
+            <label for="recipe-title">* Name</label>
+            <input class="button-styling-input" type="text" id="recipe-title" name="recipe-title" size="41">
+            <br><br>
+
+            <fieldset style="border: 1px solid #ddd; padding: 10px; border-radius: 6px; margin-bottom: 20px;">
+            <legend>Recipe Details</legend>
+
+            <!-- Dietary -->
+            <label for="dietary"> Dietary:</label><br>
+            <input type="checkbox" id="vegan" value="Vegan" name="dietary[]">
+            <label for="vegan">Vegan</label>
+            <input type="checkbox" id="vegetarian" value="Vegetarian" name="dietary[]">
+            <label for="vegetarian">Vegetarian</label>
+            <input type="checkbox" id="glutenfree" value="Gluten-Free" name="dietary[]">
+            <label for="glutenfree">Gluten-Free</label>
+            <input type="checkbox" id="keto" value="Keto" name="dietary[]">
+            <label for="keto">Keto</label>
+            <input type="checkbox" id="paleo" value="Paleo" name="dietary[]">
+            <label for="paleo">Paleo</label>
+            <input type="checkbox" id="dairyfree" value="Dairy-Free" name="dietary[]">
+            <label for="dairyfree">Dairy-Free</label>
+            <br><br>
+
+            <!-- Cuisine -->
+            <label for="cuisine-select">* Cuisine:</label>
+            <select class="button-styling-input" id="cuisine-select" name="cuisine">
+                <option value="">Any</option>
+                <option value="Italian">Italian</option>
+                <option value="Mexican">Mexican</option>
+                <option value="Asian">Asian</option>
+                <option value="Mediterranean">Mediterranean</option>
+                <option value="American">American</option>
+                <option value="Indian">Indian</option>
+                <option value="French">French</option>
+            </select>
+            <br><br>
+
+            <!-- Time -->
+            <label for="time-select">* Time:</label>
+            <select class="button-styling-input" id="time-select" name="time">
+                <option value="">Any</option>
+                <option value="under-15">Under 15 min</option>
+                <option value="15-30">15-30 min</option>
+                <option value="30-60">30-60 min</option>
+                <option value="over-60">Over 60 min</option>
+            </select>
+            <br><br>
+
+            <!-- Difficulty -->
+            <label for="difficulty-select">* Difficulty:</label>
+            <select class="button-styling-input" id="difficulty-select" name="difficulty">
+                <option value="">Any</option>
+                <option value="beginner">Beginner</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            </fieldset>
+
+            <!-- Ingredients -->
+            <label for="recipe-ingredients">* Ingredients</label>
+            <br>
+            <textarea class="button-styling-input" id="recipe-ingredients" name="ingredients" rows="5" placeholder="List ingredients here, one per line"></textarea>
+            <br><br>
+
+            <!-- Instructions -->
+            <label for="recipe-instructions">* Instructions</label>
+            <br>
+            <textarea class="button-styling-input" id="recipe-instructions" name="instructions" rows="6" placeholder="Step by step instructions"></textarea>
+            <br><br>
+            
+            <!-- Buttons -->
+            <button id="save-item-button" class="button-styling-center" type="button" onclick="saveRecipe()">Save</button>
+            <br>
+            <button id="cancel-item-button" class="button-styling-center" type="button" onclick="window.location.href='recipe.html'">Cancel</button>
+        </div>
+
+    <footer>
+    <!-- HOME  -->
+      <a class= "nav" href="home.html">
+        <img class= "nav-img" src="home.png" alt = "home">
+        <span>Home</span>
+    </a>
+    <!-- PANTRY -->
+    <a  class= "nav"  href= "pantry.html">
+        <img class= "nav-img" src= "pantry.png" alt = "pantry">
+        <span>Pantry</span>
+    </a>
+    <!-- RECIPES -->
+      <a  class = "nav" id = "nav-curr" href = "recipe.html">
+        <img class = "nav-img" src = "recipe.png" alt = "recipe">
+        <span>Recipes</span>
+    </a>
+    <!-- PROFILE -->
+      <a class = "nav" href ="profile.html">
+        <img class = "nav-img" src = "profile.png" alt = "profile">
+        <span>Profile</span>
+      </a>
+    <!-- TODO-->
+      <a class = "nav" href="todo.html">
+        <img class = "nav-img" src = "todo.png" alt = "todo">
+        <span>ToDo</span>
+    </a>
+    </footer>
+    </div>
+<script src="recipe.js"></script>
+<script>
+
+// On page load, check if editing an existing recipe
+window.addEventListener("DOMContentLoaded", () => {
+const editingIndex = localStorage.getItem("editing-existing-recipe");
+if (editingIndex !== null) {
+    const recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+    const recipe = recipes[editingIndex];
+    if (!recipe) return;
+    document.getElementById("recipe-title").value = recipe.title;
+    document.getElementById("recipe-ingredients").value = recipe.ingredients.join("\n");
+    document.getElementById("recipe-instructions").value = recipe.instructions;
+    document.getElementById("item-notes").value = recipe.notes;
+    document.getElementById("cuisine-select").value = recipe.cuisine;
+    document.getElementById("time-select").value = mapTimeToSelect(recipe.time);
+    document.getElementById("difficulty-select").value = recipe.difficulty;
+    const dietary_arr = document.getElementsByName("dietary[]");
+    dietary_arr.forEach(cb => {
+        if (recipe.diet.includes(cb.value)) {
+            cb.checked = true;
+        }
+    });
+}
+});
+
+// Helper to map time in minutes to select value
+function mapTimeToSelect(time) {
+    if (time < 15) return "under-15";
+    if (time <= 30) return "15-30";
+    if (time <= 60) return "30-60";
+    return "over-60";
+}
+
+// Save Recipe Function
+function saveRecipe() {
+    let title = document.getElementById("recipe-title").value;
+    let dietary_arr = document.getElementsByName("dietary[]");
+    let cuisine = document.getElementById("cuisine-select").value;
+    let time = document.getElementById("time-select").value;
+    let difficulty = document.getElementById("difficulty-select").value;
+    let ingredients = document.getElementById("recipe-ingredients").value;
+    let instructions = document.getElementById("recipe-instructions").value;
+    let diet = [];
+    for (let i = 0; i < dietary_arr.length; i++) {
+        if (dietary_arr[i].checked) diet.push(dietary_arr[i].value);
+    }
+    if (title.trim() && ingredients.trim() && instructions.trim()) {
+        let ingredients_arr = ingredients.split("\n").map(i => i.trim()).filter(i => i);
+        let time_minutes = 0;
+        if (time === "under-15") time_minutes = 10;
+        else if (time === "15-30") time_minutes = 20;
+        else if (time === "30-60") time_minutes = 45;
+        else if (time === "over-60") time_minutes = 90;
+        let storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+        const allRecipes = [...defaultRecipes, ...storedRecipes];
+        let newId = allRecipes.length ? Math.max(...allRecipes.map(r => r.id)) + 1 : 1;
+        let recipe = {
+            id: newId,
+            title: title,
+            diet: diet,
+            cuisine: cuisine,
+            time: time_minutes,
+            difficulty: difficulty,
+            ingredients: ingredients_arr,
+            instructions: instructions,
+        };
+        storedRecipes.push(recipe);
+        localStorage.setItem("recipes", JSON.stringify(storedRecipes));
+        window.location.href = "recipe.html";
+    } else {
+        document.getElementById("requiredMessage").innerHTML =
+            "<h3>Please fill in all required (*) fields</h3>";
+    }
+}
+</script>
+</body>
+</html>
