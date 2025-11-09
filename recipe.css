@@ -16,12 +16,10 @@ body {
 
 .content{
   height: 100%;  
-  overflow-y: scroll; 
   padding: 20px;
   padding-bottom: 120px; 
   box-sizing: border-box;
-  scrollbar-width: none; 
-
+ 
 }
 
 /* Header */
@@ -238,6 +236,7 @@ div {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
+  padding-bottom: 110px;
 }
 
 .recipe-card {
