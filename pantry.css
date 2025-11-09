@@ -395,4 +395,10 @@ div {
     gap: 10px;
 }
 
+.content-container{
+    margin: auto;
+    width: 600px;
+    padding-bottom: 100px;
+}
+
 
