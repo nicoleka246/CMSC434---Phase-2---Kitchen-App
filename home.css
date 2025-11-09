@@ -20,6 +20,7 @@ input,
 a {
   padding-left: 1rem;
   font-family: 'Roboto Flex';
+  font-size: 20px;
 }
 
 p {
@@ -31,8 +32,11 @@ li,
 span {
   font-family: 'Roboto Flex';
   text-align: center;
+  font-size:20px;
 }
-
+#nav-s{
+  font-size: 16px;
+}
 .device {
   width: 640px;
   height: 960px;
@@ -75,14 +79,22 @@ span {
   margin-bottom: 20px;
   margin: auto;
   width: 500px;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; 
 }
-
+#c{
+   margin-top: 60px;
+}
 .search-icon {
+ 
   color: #888;
   margin-right: 8px;
 }
 
 .search-input {
+
   border: none;
   outline: none;
   flex: 1;
