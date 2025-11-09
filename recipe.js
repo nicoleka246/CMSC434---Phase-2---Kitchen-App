@@ -1,5 +1,4 @@
 // Data (will be replaced with API later)
-// Data (will be replaced with API later)
 const defaultRecipes = [
   {
     id: 1,
@@ -67,8 +66,6 @@ const defaultRecipes = [
 const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
 const recipes = [...defaultRecipes, ...storedRecipes];
 
-let pantryItems = ["Tortillas", "Garlic"];
-
 // State
 const state = {
   searchQuery: "",
@@ -96,6 +93,7 @@ const closePopupBtn = document.getElementById("close-popup");
 
 // Init
 function init() {
+  loadPantryItems();
   setupEventListeners();
   renderRecipes(); // show recipes on load
 }
@@ -135,12 +133,23 @@ function setupEventListeners() {
   recipePopup.querySelector(".popup-overlay").addEventListener("click", closePopup);
 }
 
+function loadPantryItems() {
+  const items = localStorage.getItem("items");
+  if (items) {
+    state.pantryItems = JSON.parse(items);
+  } else {
+    state.pantryItems = [];
+  }
+  console.log("Pantry Items:", state.pantryItems);
+}
+
 // Filter Functions
 function toggleDiet(diet) {
   const index = state.selectedDiets.indexOf(diet);
   if (index > -1) state.selectedDiets.splice(index, 1);
   else state.selectedDiets.push(diet);
 }
+
 function clearAllFilters() {
   state.selectedDiets = [];
   state.selectedCuisine = "";
@@ -155,6 +164,7 @@ function clearAllFilters() {
   renderRecipes();
   updateClearButton();
 }
+
 function updateClearButton() {
   const hasFilters =
     state.selectedDiets.length > 0 ||
@@ -163,6 +173,7 @@ function updateClearButton() {
     state.selectedDifficulty;
   clearFiltersBtn.classList.toggle("hidden", !hasFilters);
 }
+
 function filterRecipes() {
   return recipes.filter((recipe) => {
     const matchesSearch =
@@ -206,6 +217,7 @@ function renderRecipes() {
     card.addEventListener("click", () => openPopup(card.dataset.id))
   );
 }
+
 function createRecipeCard(recipe) {
   return `
     <div class="recipe-card" data-id="${recipe.id}">
@@ -231,19 +243,54 @@ function closePopup() {
   document.body.style.overflow = "";
 }
 function renderPopup(recipe) {
-  const available = recipe.ingredients.filter((ing) => pantryItems.includes(ing));
-  const missing = recipe.ingredients.filter((ing) => !pantryItems.includes(ing));
+  const pantryNames = state.pantryItems.map(item => item.name.toLowerCase().trim());
+  const available = recipe.ingredients.filter(ing =>
+    pantryNames.includes(ing.toLowerCase().trim())
+  );
+  const missing = recipe.ingredients.filter(ing =>
+    !pantryNames.includes(ing.toLowerCase().trim())
+  );
   popupBody.innerHTML = `
     <h2>${recipe.title}</h2>
     <p>${recipe.instructions}</p>
     <h3>Shopping List</h3>
     <p><strong>In Pantry:</strong> ${available.join(", ") || "None"}</p>
     <p><strong>Need to Buy:</strong> ${missing.join(", ") || "All set!"}</p>
-    </div>
-      <button class="edit-recipe-btn" onclick="editRecipe(${recipe.id})">Edit</button>
-       <button class="delete-recipe-btn" onclick="deleteRecipe(${recipe.id})">Delete</button>
+    <div>
+      <button class="edit-recipe-btn">Edit</button>
+      <button class="delete-recipe-btn">Delete</button>
+      <button class="add-to-shopping-list-btn">Add Missing Items to Shopping List</button>
     </div>
   `;
+  // Button Listeners
+  const editBtn = popupBody.querySelector(".edit-recipe-btn");
+  editBtn.addEventListener("click", () => editRecipe(recipe.id));
+  const deleteBtn = popupBody.querySelector(".delete-recipe-btn");
+  deleteBtn.addEventListener("click", () => deleteRecipe(recipe.id));
+  const addBtn = popupBody.querySelector(".add-to-shopping-list-btn");
+  const isDefault = defaultRecipes.some(r => r.id === recipe.id);
+  editBtn.addEventListener("click", () => editRecipe(recipe.id));
+  // Delete button: only for user-added recipes
+  if (isDefault) {
+    deleteBtn.style.display = "none";
+  } else {
+    deleteBtn.addEventListener("click", () => deleteRecipe(recipe.id));
+  }
+  // Add to shopping list button
+  addBtn.addEventListener("click", () => {
+    if (!missing || missing.length === 0) {
+      alert("No missing ingredients to add!");
+      return;
+    }
+    let shoppingList = JSON.parse(localStorage.getItem("sl_items")) || [];
+    missing.forEach(item => {
+      const exists = shoppingList.some(i => i.text.toLowerCase() === item.toLowerCase());
+      if (!exists) shoppingList.push({ text: item, done: false });
+    });
+    localStorage.setItem("sl_items", JSON.stringify(shoppingList));
+    alert("Missing ingredients added to your shopping list!");
+    window.location.href = "todo.html";
+  });
 }
 
 function editRecipe(recipeId) {
