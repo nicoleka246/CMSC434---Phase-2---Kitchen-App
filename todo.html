@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shopping List</title>
 
   <link rel="stylesheet" href="home.css" />
-  
+
 </head>
+
 <body>
   <div class="device">
     <header class="header">
@@ -20,26 +22,20 @@
     <main class="sl">
       <!-- add item row -->
       <form class="sl-add" id="sl-add-form" autocomplete="off">
-        <input
-          id="sl-item-input"
-          class="sl-input"
-          type="text"
-          placeholder="Add an item…"
-          required
-        />
+        <input id="sl-item-input" class="sl-input" type="text" placeholder="Add an item…" required />
         <button id="sl-add-btn" class="sl-btn sl-btn--primary" type="submit">Add</button>
         <button id="sl-add-favs" class="sl-btn" type="button" title="Add all favorites">
           Load Favorites
         </button>
       </form>
 
-      
+
       <p class="sl-hint">Press Enter to add. Click the checkbox to mark done; use the trash to delete.</p>
 
       <div class="sl-list-wrapper">
-        <ul id="sl-list" class="sl-list" ></ul>
+        <ul id="sl-list" class="sl-list"></ul>
       </div>
-      
+
     </main>
 
     <!-- favorites modal -->
@@ -52,7 +48,7 @@
 
         <div class="sl-modal__body">
           <div class="sl-fav-add">
-            <input id="sl-fav-input" class="sl-input" type="text" placeholder="Add a favorite…"/>
+            <input id="sl-fav-input" class="sl-input" type="text" placeholder="Add a favorite…" />
             <button id="sl-fav-add-btn" class="sl-btn sl-btn--primary" type="button">Add</button>
           </div>
 
@@ -92,4 +88,5 @@
 
   <script src="todo-script.js"></script>
 </body>
+
 </html>
