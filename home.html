@@ -39,15 +39,19 @@
         </div>
         <p class = "section">Personal Recipes</p>
         <div id = "personal-recipies">
-            <ul> 
-                <li>Spaghetti ............. 2/4 Items </li>
-                <li>Chicken Pasta ............. 3/6 Items</li>
+            <ul id = "recipe-list"> 
+                <li>Vegan Tacos</li>
+                <li>Chicken Alfredo</li>
+                <li>Greek Salad</li>
+                <li>Avocado Toast</li>
+                <li>Butter Chicken</li>
+                <li>French Crepes</li>
             </ul>
         </div>
         <p class = "section">Shopping Reminders</p>
         <div id = "shopping-reminders">
-            <ul>
-              <li>You need need <strong>three</strong> more items for Chicken Pasta</li>
+            <ul id ="shopping-list">
+              
             </ul>
         </div>
         <p class = "section">Expiring Soon</p>
@@ -93,21 +97,28 @@
     document.addEventListener('DOMContentLoaded', () => {
     getInvent();
     getExp();
+    getRecipes();
+    getShopRemind();
     window.addEventListener('storage', (e) => {
         if (e.key === 'items') {
             getInvent();
             getExp();
+            getShopRemind();
+        } else if (e.key === 'recipes') {
+            getRecipes();
+            getShopRemind();
         }
     });
     window.addEventListener('pageshow', () => {
         getInvent();
         getExp();
+        getRecipes();
+        getShopRemind();
     });
 });
 
 function getInvent() {
     const container = document.getElementById('food-row');
-    if (!container) return;
 
     const items = JSON.parse(localStorage.getItem('items') || '[]');
     container.querySelectorAll('.food-item, #empty').forEach(el => el.remove());
@@ -166,7 +177,6 @@ function getEmptyMessage(container) {
 function getExp() {
     const list = document.getElementById('exp-lst');
     const emptyExp = document.getElementById('empty-exp');
-    if (!list) return;
 
     list.innerHTML = '';
 
@@ -184,12 +194,45 @@ function getExp() {
             list.innerHTML += `<li>${item.name} expires in <strong>${diffDays}</strong> day(s)</li>`;
         }
     });
-
         if (list.children.length === 0) {
             if (emptyExp) emptyExp.style.display = '';
         } else {
             if (emptyExp) emptyExp.style.display = 'none';
         }
+}
+function getRecipes() {
+  const recList = document.getElementById('recipe-list');
+  const prepopulated = [
+    "Vegan Tacos",
+    "Chicken Alfredo",
+    "Greek Salad",
+    "Avocado Toast",
+    "Butter Chicken",
+    "French Crepes"
+  ];
+  const recs = JSON.parse(localStorage.getItem('recipes') || '[]');
+  const names = [...prepopulated,...recs.map(r => r.title)].filter(Boolean);
+ recList.innerHTML = names.map(name => `<li>${name}</li>`).join('');
+
+}
+function getShopRemind() {
+  const saved = JSON.parse(localStorage.getItem('recipes') || '[]');
+  const recs = (window.defaultRecipes || []).concat(saved);
+  const invent = JSON.parse(localStorage.getItem('items') || '[]');
+  const pantryNames = new Set(
+    invent.map(i => (i.name || '').toLowerCase().trim())
+  );
+  let list = document.querySelector('#shopping-list');
+  list.innerHTML = '';
+  recs.forEach(recipe => {
+    const missing = (recipe.ingredients || []).filter(
+      ing => !pantryNames.has((ing || '').toLowerCase().trim())
+    );
+    const count = missing.length;
+    const li = document.createElement('li');
+    li.innerHTML = `You are missing <strong>${count}</strong> ingredient${count === 1 ? '' : 's'} for ${recipe.title}`;
+    list.appendChild(li);
+  });
 }
 function search_for_item() {
   const search = document.getElementById('search-input').value.toLowerCase();

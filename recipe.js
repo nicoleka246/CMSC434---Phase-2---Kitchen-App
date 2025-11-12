@@ -1,9 +1,8 @@
 // Data (will be replaced with API later)
-const recipes = [
+const defaultRecipes = [
   {
     id: 1,
     title: "Vegan Tacos",
-    image: "food/taco.jpg",
     diet: ["Vegan"],
     cuisine: "Mexican",
     time: 25,
@@ -14,7 +13,6 @@ const recipes = [
   {
     id: 2,
     title: "Chicken Alfredo",
-    image: "food/pasta.avif",
     diet: ["Dairy-Free"],
     cuisine: "Italian",
     time: 40,
@@ -25,7 +23,6 @@ const recipes = [
   {
     id: 3,
     title: "Greek Salad",
-    image: "food/greek_salad.png",
     diet: ["Vegetarian", "Gluten-Free"],
     cuisine: "Mediterranean",
     time: 15,
@@ -36,7 +33,6 @@ const recipes = [
   {
     id: 4,
     title: "Avocado Toast",
-    image: "food/avocado_toast.png",
     diet: ["Vegan"],
     cuisine: "American",
     time: 10,
@@ -47,7 +43,6 @@ const recipes = [
   {
     id: 5,
     title: "Butter Chicken",
-    image: "food/butter_chicken.png",
     diet: [],
     cuisine: "Indian",
     time: 50,
@@ -58,7 +53,6 @@ const recipes = [
   {
     id: 6,
     title: "French Crepes",
-    image: "food/crepes.png",
     diet: ["Vegetarian"],
     cuisine: "French",
     time: 20,
@@ -68,7 +62,9 @@ const recipes = [
   },
 ];
 
-let pantryItems = ["Tortillas", "Garlic"];
+// Combine default + stored recipes
+const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+const recipes = [...defaultRecipes, ...storedRecipes];
 
 // State
 const state = {
@@ -97,6 +93,7 @@ const closePopupBtn = document.getElementById("close-popup");
 
 // Init
 function init() {
+  loadPantryItems();
   setupEventListeners();
   renderRecipes(); // show recipes on load
 }
@@ -136,12 +133,23 @@ function setupEventListeners() {
   recipePopup.querySelector(".popup-overlay").addEventListener("click", closePopup);
 }
 
+function loadPantryItems() {
+  const items = localStorage.getItem("items");
+  if (items) {
+    state.pantryItems = JSON.parse(items);
+  } else {
+    state.pantryItems = [];
+  }
+  console.log("Pantry Items:", state.pantryItems);
+}
+
 // Filter Functions
 function toggleDiet(diet) {
   const index = state.selectedDiets.indexOf(diet);
   if (index > -1) state.selectedDiets.splice(index, 1);
   else state.selectedDiets.push(diet);
 }
+
 function clearAllFilters() {
   state.selectedDiets = [];
   state.selectedCuisine = "";
@@ -156,6 +164,7 @@ function clearAllFilters() {
   renderRecipes();
   updateClearButton();
 }
+
 function updateClearButton() {
   const hasFilters =
     state.selectedDiets.length > 0 ||
@@ -164,6 +173,7 @@ function updateClearButton() {
     state.selectedDifficulty;
   clearFiltersBtn.classList.toggle("hidden", !hasFilters);
 }
+
 function filterRecipes() {
   return recipes.filter((recipe) => {
     const matchesSearch =
@@ -192,6 +202,8 @@ function filterRecipes() {
 
 // Render Functions
 function renderRecipes() {
+  // Always get the latest recipes from localStorage
+  const recipes = JSON.parse(localStorage.getItem("recipes")) || [];
   const filteredRecipes = filterRecipes();
   if (filteredRecipes.length === 0) {
     recipeGrid.innerHTML = "";
@@ -205,14 +217,14 @@ function renderRecipes() {
     card.addEventListener("click", () => openPopup(card.dataset.id))
   );
 }
+
 function createRecipeCard(recipe) {
   return `
     <div class="recipe-card" data-id="${recipe.id}">
-      <img src="${recipe.image}" alt="${recipe.title}">
       <div class="card-info">
         <h3>${recipe.title}</h3>
         <p>${recipe.cuisine} • ${recipe.time} min • ${recipe.difficulty}</p>
-        <div class="badges">${recipe.diet.map((d) => `<span>${d}</span>`).join("")}</div>
+        <div class="badges">${recipe.diet.map((d) => `<span>${d}</span>`).join(", ")}</div>
       </div>
     </div>
   `;
@@ -231,15 +243,77 @@ function closePopup() {
   document.body.style.overflow = "";
 }
 function renderPopup(recipe) {
-  const available = recipe.ingredients.filter((ing) => pantryItems.includes(ing));
-  const missing = recipe.ingredients.filter((ing) => !pantryItems.includes(ing));
+  const pantryNames = state.pantryItems.map(item => item.name.toLowerCase().trim());
+  const available = recipe.ingredients.filter(ing =>
+    pantryNames.includes(ing.toLowerCase().trim())
+  );
+  const missing = recipe.ingredients.filter(ing =>
+    !pantryNames.includes(ing.toLowerCase().trim())
+  );
   popupBody.innerHTML = `
     <h2>${recipe.title}</h2>
     <p>${recipe.instructions}</p>
     <h3>Shopping List</h3>
     <p><strong>In Pantry:</strong> ${available.join(", ") || "None"}</p>
     <p><strong>Need to Buy:</strong> ${missing.join(", ") || "All set!"}</p>
+    <div>
+      <button class="edit-recipe-btn">Edit</button>
+      <button class="delete-recipe-btn">Delete</button>
+      <button class="add-to-shopping-list-btn">Add Missing Items to Shopping List</button>
+    </div>
   `;
+  // Button Listeners
+  const editBtn = popupBody.querySelector(".edit-recipe-btn");
+  editBtn.addEventListener("click", () => editRecipe(recipe.id));
+  const deleteBtn = popupBody.querySelector(".delete-recipe-btn");
+  deleteBtn.addEventListener("click", () => deleteRecipe(recipe.id));
+  const addBtn = popupBody.querySelector(".add-to-shopping-list-btn");
+  const isDefault = defaultRecipes.some(r => r.id === recipe.id);
+  editBtn.addEventListener("click", () => editRecipe(recipe.id));
+  // Delete button: only for user-added recipes
+  if (isDefault) {
+    deleteBtn.style.display = "none";
+  } else {
+    deleteBtn.addEventListener("click", () => deleteRecipe(recipe.id));
+  }
+  // Add to shopping list button
+  addBtn.addEventListener("click", () => {
+    if (!missing || missing.length === 0) {
+      alert("No missing ingredients to add!");
+      return;
+    }
+    let shoppingList = JSON.parse(localStorage.getItem("sl_items")) || [];
+    missing.forEach(item => {
+      const exists = shoppingList.some(i => i.text.toLowerCase() === item.toLowerCase());
+      if (!exists) shoppingList.push({ text: item, done: false });
+    });
+    localStorage.setItem("sl_items", JSON.stringify(shoppingList));
+    alert("Missing ingredients added to your shopping list!");
+    window.location.href = "todo.html";
+  });
+}
+
+function editRecipe(recipeId) {
+  const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+    const recipeIndex = storedRecipes.findIndex(r => r.id === recipeId);
+    if (recipeIndex === -1) return;
+    localStorage.setItem("editing-existing-recipe", recipeIndex);
+    window.location.href = "add_recipe.html";
+}
+
+function deleteRecipe(recipeId) {
+  let storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+  storedRecipes = storedRecipes.filter(r => r.id != recipeId);
+  localStorage.setItem("recipes", JSON.stringify(storedRecipes));
+  closePopup();
+  const card = document.querySelector(`.recipe-card[data-id="${recipeId}"]`);
+  if (card) card.remove();
+  renderRecipes();
+}
+
+function startNewRecipe() {
+    localStorage.removeItem("editing-existing-recipe");
+    window.location.href = "add_recipe.html";
 }
 
 // Start
