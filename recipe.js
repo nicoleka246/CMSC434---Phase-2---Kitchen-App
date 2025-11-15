@@ -62,9 +62,8 @@ const defaultRecipes = [
   },
 ];
 
-// Combine default + stored recipes
-const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
-const recipes = [...defaultRecipes, ...storedRecipes];
+// Load recipes
+const recipes = loadRecipes();
 
 // State
 const state = {
@@ -95,7 +94,21 @@ const closePopupBtn = document.getElementById("close-popup");
 function init() {
   loadPantryItems();
   setupEventListeners();
-  renderRecipes(); // show recipes on load
+  loadRecipes()
+  renderRecipes(); 
+}
+
+function loadRecipes() {
+  let storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+  const defaults = defaultRecipes.map(r => ({ ...r, type: "default" }));
+  defaults.forEach(defaultRecipe => {
+    const exists = storedRecipes.some(r => r.id === defaultRecipe.id);
+    if (!exists) {
+      storedRecipes.push(defaultRecipe);
+    }
+  });
+  localStorage.setItem("recipes", JSON.stringify(storedRecipes));
+  return storedRecipes;
 }
 
 // Event Listeners
@@ -216,6 +229,7 @@ function renderRecipes() {
   document.querySelectorAll(".recipe-card").forEach((card) =>
     card.addEventListener("click", () => openPopup(card.dataset.id))
   );
+  console.log("recipes: " , recipes)
 }
 
 function createRecipeCard(recipe) {
@@ -295,10 +309,11 @@ function renderPopup(recipe) {
 
 function editRecipe(recipeId) {
   const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
-    const recipeIndex = storedRecipes.findIndex(r => r.id === recipeId);
-    if (recipeIndex === -1) return;
-    localStorage.setItem("editing-existing-recipe", recipeIndex);
-    window.location.href = "add_recipe.html";
+  const recipeIndex = storedRecipes.findIndex(r => r.id === recipeId);
+  if (recipeIndex === -1) 
+    return;
+  localStorage.setItem("editing-existing-recipe", recipeIndex);
+  window.location.href = "add_recipe.html";
 }
 
 function deleteRecipe(recipeId) {
@@ -309,6 +324,7 @@ function deleteRecipe(recipeId) {
   const card = document.querySelector(`.recipe-card[data-id="${recipeId}"]`);
   if (card) card.remove();
   renderRecipes();
+  window.location.href = "recipe.html";
 }
 
 function startNewRecipe() {
