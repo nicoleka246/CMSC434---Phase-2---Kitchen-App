@@ -339,8 +339,6 @@ footer {
   align-items: center;
   text-align: center;
   background-color: #588157;
-  font-weight:200;
-  font-size:16px;
 }
 
 .nav {
@@ -367,8 +365,8 @@ footer {
 #nav-curr {
   background-color: beige;
 }
-#nav-s{
-  font-weight:200;
+#nav-s {
+  font-size: 16px;
 }
 
 .edit-recipe-btn, .delete-recipe-btn, .add-to-shopping-list-btn{
