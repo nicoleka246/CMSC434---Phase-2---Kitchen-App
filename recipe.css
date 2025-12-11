@@ -21,9 +21,16 @@ body {
   padding-bottom: 300px; 
 }
 
-/* Header */
 .header {
   text-align: center;
+  margin: 0; 
+  padding: 0;  
+}
+
+.header h1 {
+   font-size: 40px;
+  margin: 0;  
+  padding: 0;
 }
 
 .title {
@@ -39,7 +46,7 @@ body {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 8px 12px;
-  margin-bottom: 20px
+  margin-bottom: 10px
 }
 
 .search-icon {
@@ -60,15 +67,15 @@ body {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 10px;
-  padding: 16px;
-  margin-bottom: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .filters-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+
 }
 
 .filters-header h3 {
@@ -91,10 +98,6 @@ body {
   color: #000;
 }
 
-.filter-section {
-  margin-bottom: 12px;
-}
-
 .filter-label {
   font-weight: 800;
   font-size: 2rem;
@@ -102,61 +105,15 @@ body {
   display: block;
 }
 
-.filters-content .filter-label {
-  font-size: 18px;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.filter-select-group {
-  display: flex;
-  flex-direction: column;
-  margin-right: 16px; /* spacing between filters */
-}
-
-/* Badges */
-.badge-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.badge {
-  background: #f3f3f3;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 5px 10px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.badge:hover {
-  background: #a3b18a;
-}
-
-.badge.active {
-  background: #a3b18a;
-  color: #fff;
-  border-color: #a3b18a;
-}
-
-/* Select Filters */
-.filter-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.filter-select-group label {
-  font-size: 0.9rem;
-  margin-bottom: 4px;
-  display: block;
+.filters-content {
+  display: flex;     
+  flex-wrap: wrap; 
+  gap: 16px;   
+  align-items: flex-start;
 }
 
 .filter-select {
+  max-width: 130px;
   width: 100%;
   padding: 6px 8px;
   border: 1px solid #ccc;
@@ -165,10 +122,40 @@ body {
   font-size: 0.9rem;
 }
 
+.filter-select-group label {
+  font-size: 1rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.filters-header {
+  margin: 0;
+  margin-top: -20px;
+  margin-bottom: -10px;
+}
+
 /* Add Recipe */
 .add-recipe-container {
   text-align: center;
   margin-bottom: 20px;
+}
+
+#add-recipe-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background-color: white; 
+  color: black;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .button-styling{
@@ -246,16 +233,30 @@ div {
 /* Recipe Grid */
 .recipe-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .recipe-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .recipe-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .recipe-card {
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 10px;
-  padding: 12px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 8px;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -265,22 +266,25 @@ div {
 }
 
 .recipe-card img {
-  height: 80px;
+  height: 200px;
+  width: 150px;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin-bottom: -15px;
 }
 
 .recipe-title {
   font-family: 'DM Serif Text', serif;
-  font-size: 1.1rem;
-  margin-bottom: 6px;
+  font-size: 20px;
   color: #333;
+  margin-bottom: -15px;
 }
 
 .recipe-meta {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: #777;
+  flex-direction: wrap;
+  margin-bottom: 0px;
 }
 
 /* Popup */
@@ -307,6 +311,8 @@ div {
   position: relative;
   max-height: 80vh;
   overflow-y: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .popup-close {
@@ -381,4 +387,9 @@ footer {
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 5px 10px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }

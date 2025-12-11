@@ -1,62 +1,67 @@
-// Data (will be replaced with API later)
 const defaultRecipes = [
   {
     id: 1,
+    photo: "food/taco.jpg",
     title: "Vegan Tacos",
     diet: ["Vegan"],
     cuisine: "Mexican",
     time: 25,
-    difficulty: "beginner",
+    difficulty: "Beginner",
     ingredients: ["Tortillas", "Black beans", "Avocado", "Lime"],
     instructions: "Assemble all ingredients and enjoy!",
   },
   {
     id: 2,
+    photo: "food/pasta.png",
     title: "Chicken Alfredo",
-    diet: ["Dairy-Free"],
+    diet: ["Gluten-Free"],
     cuisine: "Italian",
     time: 40,
-    difficulty: "medium",
+    difficulty: "Medium",
     ingredients: ["Pasta", "Chicken", "Cream", "Garlic"],
     instructions: "Cook pasta, make sauce, mix together.",
   },
   {
     id: 3,
+    photo: "food/greek-salad.png",
     title: "Greek Salad",
-    diet: ["Vegetarian", "Gluten-Free"],
+    diet: ["Vegetarian"],
     cuisine: "Mediterranean",
     time: 15,
-    difficulty: "beginner",
+    difficulty: "Beginner",
     ingredients: ["Cucumber", "Tomatoes", "Feta", "Olives", "Olive oil"],
     instructions: "Chop vegetables, mix in bowl, drizzle with olive oil.",
   },
   {
     id: 4,
+    photo: "food/toast.png",
     title: "Avocado Toast",
     diet: ["Vegan"],
     cuisine: "American",
     time: 10,
-    difficulty: "beginner",
+    difficulty: "Beginner",
     ingredients: ["Bread", "Avocado", "Lemon", "Salt", "Pepper"],
     instructions: "Toast bread, mash avocado, and top with lemon juice and pepper.",
   },
   {
     id: 5,
+    photo: "food/butter_chicken.png",
     title: "Butter Chicken",
-    diet: [],
+    diet: ["Gluten-Free"],
     cuisine: "Indian",
     time: 50,
-    difficulty: "hard",
+    difficulty: "Hard",
     ingredients: ["Chicken", "Butter", "Tomatoes", "Cream", "Spices"],
     instructions: "Cook chicken in sauce until rich and flavorful.",
   },
   {
     id: 6,
+    photo: "food/crepes.png",
     title: "French Crepes",
     diet: ["Vegetarian"],
     cuisine: "French",
     time: 20,
-    difficulty: "medium",
+    difficulty: "Medium",
     ingredients: ["Flour", "Eggs", "Milk", "Butter"],
     instructions: "Mix batter, cook thin layers on pan, and add your favorite filling.",
   },
@@ -77,7 +82,7 @@ const state = {
 
 // Dom elements
 const searchInput = document.getElementById("search-input");
-const dietBadges = document.getElementById("diet-badges");
+const dietBadges = document.getElementById("diet-select");
 const cuisineSelect = document.getElementById("cuisine-select");
 const timeSelect = document.getElementById("time-select");
 const difficultySelect = document.getElementById("difficulty-select");
@@ -233,12 +238,14 @@ function renderRecipes() {
 }
 
 function createRecipeCard(recipe) {
+  console.log("recipe photo: ", recipe.photo);
+  const imgSrc = recipe.photo ? `${recipe.photo}` : "home.png";
   return `
     <div class="recipe-card" data-id="${recipe.id}">
       <div class="card-info">
-        <h3>${recipe.title}</h3>
-        <p>${recipe.cuisine} • ${recipe.time} min • ${recipe.difficulty}</p>
-        <div class="badges">${recipe.diet.map((d) => `<span>${d}</span>`).join(", ")}</div>
+        <img src="${imgSrc}" alt="${recipe.photo}">
+        <h3 class="recipe-title">${recipe.title}</h3>
+        <p class="recipe-meta">${recipe.cuisine} • ${recipe.time} min • ${recipe.difficulty} • ${recipe.diet.map((d) => `<span>${d}</span>`).join(", ")}</p>
       </div>
     </div>
   `;
@@ -265,6 +272,7 @@ function renderPopup(recipe) {
     !pantryNames.includes(ing.toLowerCase().trim())
   );
   popupBody.innerHTML = `
+    <img src="${recipe.photo}" alt="${recipe.photo}">
     <h2>${recipe.title}</h2>
     <p>${recipe.instructions}</p>
     <h3>Shopping List</h3>
@@ -333,4 +341,5 @@ function startNewRecipe() {
 }
 
 // Start
+//localStorage.removeItem("recipes");
 init();

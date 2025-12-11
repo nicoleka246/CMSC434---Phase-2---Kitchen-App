@@ -11,7 +11,12 @@
     <div class = content>
       <!-- Header -->
       <header class="header">
-        <h1 class="title">Recipe Catalog</h1>
+        <h1 class="title">Recipe Catalog</h1> 
+        <div class="add-recipe-container">
+          <button id="add-recipe-btn" onclick="startNewRecipe()" title="Add Recipe">
+            +
+          </button>
+        </div>
       </header>
       <!-- Search Bar -->
       <div class="search-container">
@@ -22,32 +27,32 @@
         <input type="search" id="search-input" class="search-input" placeholder="Search recipes...">
       </div>
       <!-- Filters -->
-      <div class="filters-card">
-        <div class="filters-header">
-          <h2>Filters</h2>
-          <button id="clear-filters" class="clear-btn">
-            Clear all
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-        <div class="filters-content">
-          <!-- Dietary Filters -->
-          <div class="filter-section">
-            <label class="filter-label">Dietary</label>
-            <div id="diet-badges" class="badge-group">
-              <button class="badge" data-diet="Vegan">Vegan</button>
-              <button class="badge" data-diet="Vegetarian">Vegetarian</button>
-              <button class="badge" data-diet="Gluten-Free">Gluten-Free</button>
-              <button class="badge" data-diet="Keto">Keto</button>
-              <button class="badge" data-diet="Paleo">Paleo</button>
-              <button class="badge" data-diet="Dairy-Free">Dairy-Free</button>
-            </div>
+      <div class="filters-card"> 
+          <div class="filters-header">
+            <h2>Filters</h2>
+            <button id="clear-filters" class="clear-btn">
+              Clear all
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button> 
           </div>
-          <!-- Cuisine Filters -->
-          <div class="filter-row">
+          <!-- Filters -->
+           <div class="filters-content" id="filters-content">
+          <div class="filter row"></div>
+            <div class="filter-select-group">
+              <label class="filter-label">Diet</label>
+              <select id="diet-select" class="filter-select">
+                <option value="">Any</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Gluten-Free">Gluten-Free</option>
+                <option value="Keto">Keto</option>
+                <option value="Paleo">Paleo</option>
+                <option value="Dairy-Free">Dairy-Free</option>
+              </select>
+            </div>
             <div class="filter-select-group">
               <label class="filter-label">Cuisine</label>
               <select id="cuisine-select" class="filter-select">
@@ -82,19 +87,10 @@
                 <option value="hard">Hard</option>
               </select>
             </div>
-          </div>
+      
         </div>
       </div>
     
-      <div class="add-recipe-container">
-        <button id="add-recipe-btn" class="badge" onclick="startNewRecipe()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-          Add Recipe
-        </button>
-      </div>
 
       <!-- Recipe Grid -->
       <div id="recipe-grid" class="recipe-grid">
@@ -121,12 +117,7 @@
         </div>
       </div>
     </div>
-    
-<br>
-<br>
-<br>
-<br>
-<footer>
+   <footer>
         <!-- HOME  -->
         <a class = "nav"   href="home.html">
           <img class = "nav-img" src="home.png" alt = "home">
@@ -153,7 +144,7 @@
             <span id = "nav-s">Shopping List</span>
         </a>
     </footer>
-</div>
-<script src="recipe.js"></script>
+  </div>
+  <script src="recipe.js"></script>
 </body>
 </html>
