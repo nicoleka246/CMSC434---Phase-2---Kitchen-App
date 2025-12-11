@@ -26,7 +26,8 @@ const favListEl = document.getElementById("sl-fav-list");
 const favEmpty = document.getElementById("sl-fav-empty");
 
 
-const clearBtn = document.getElementById("sl-clear-btn");
+const clearCompletedBtn = document.getElementById("sl-clear-completed");
+const clearAllBtn = document.getElementById("sl-clear-all");
 
 //toast
 function showToast(message, duration = 2500) {
@@ -202,8 +203,8 @@ favModal.addEventListener("click", (e) => {
   if (e.target === favModal) favModal.classList.remove("sl-modal--open");
 });
 
-if (clearBtn) {
-  clearBtn.addEventListener("click", () => {
+if (clearCompletedBtn) {
+  clearCompletedBtn.addEventListener("click", () => {
     if (items.length === 0){
       showToast("Shopping list is empty.");
       return;
@@ -219,6 +220,21 @@ if (clearBtn) {
       items = items.filter(item => !item.done);
       renderItems();
       showToast("All completed items cleared.")
+    }
+  });
+}
+
+if (clearAllBtn) {
+  clearAllBtn.addEventListener("click", () => {
+    if (items.length === 0){
+      showToast("Shopping list is empty.");
+      return;
+    }
+
+    if (confirm("Clear all items?")) {
+      items = [];
+      renderItems();
+      showToast("All items cleared.")
     }
   });
 }
