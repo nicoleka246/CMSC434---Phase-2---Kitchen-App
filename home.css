@@ -303,6 +303,12 @@ footer {
   color: rgb(102, 101, 101);
 }
 
+.sl-delete-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
 /* favorites modal */
 .sl-modal {
   position: fixed;
