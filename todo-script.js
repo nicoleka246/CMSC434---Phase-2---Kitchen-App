@@ -31,6 +31,20 @@ const clearAllBtn = document.getElementById("sl-clear-all");
 
 const emptyMessage = document.getElementById("sl-empty-message");
 
+// menu
+const menuBtn = document.getElementById("sl-menu-btn");
+const menu = document.getElementById("sl-menu");
+
+menuBtn.addEventListener("click", () => {
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", (e) => {
+  if (!menu.contains(e.target) && e.target !== menuBtn) {
+    menu.style.display = "none";
+  }
+});
+
 //toast
 function showToast(message, duration = 2500) {
   const toast = document.getElementById("toast");
@@ -186,6 +200,9 @@ formEl.addEventListener("submit", (e) => {
 addFavsBtn.addEventListener("click", addAllFavorites);
 
 editFavsBtn.addEventListener("click", () => {
+
+  menu.style.display = "none";
+  
   favModal.classList.add("sl-modal--open");
   renderFavorites();
   if (favInput) {
@@ -213,6 +230,7 @@ favModal.addEventListener("click", (e) => {
 
 if (clearCompletedBtn) {
   clearCompletedBtn.addEventListener("click", () => {
+
     if (items.length === 0){
       showToast("Shopping list is empty.");
       return;
