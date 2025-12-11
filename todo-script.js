@@ -186,7 +186,7 @@ if (clearBtn) {
       return;
     }
 
-    if (confirm("Clear all checked items?")) {
+    if (confirm("Clear completed items?")) {
       items = items.filter(item => !item.done);
       renderItems();
     }
