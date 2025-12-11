@@ -180,7 +180,10 @@ function removeItem(i) {
 }
 
 function addAllFavorites() {
-  if (!favorites.length) return;
+  if (!favorites.length){
+    showToast("Favorites list is empty.");
+    return;
+  }
   favorites.forEach(f => {
     const t = f.trim();
     if (t) {
@@ -203,7 +206,7 @@ editFavsBtn.addEventListener("click", () => {
 
   menu.style.display = "none";
   
-  favModal.classList.add("sl-modal--open");
+  favModal.classList.add("sl-modal-open");
   renderFavorites();
   if (favInput) {
     favInput.value = "";
@@ -212,7 +215,7 @@ editFavsBtn.addEventListener("click", () => {
 });
 
 closeFavsBtn.addEventListener("click", () => {
-  favModal.classList.remove("sl-modal--open");
+  favModal.classList.remove("sl-modal-open");
 });
 
 favAddBtn.addEventListener("click", () => {
@@ -225,11 +228,13 @@ favAddBtn.addEventListener("click", () => {
 });
 
 favModal.addEventListener("click", (e) => {
-  if (e.target === favModal) favModal.classList.remove("sl-modal--open");
+  if (e.target === favModal) favModal.classList.remove("sl-modal-open");
 });
 
 if (clearCompletedBtn) {
   clearCompletedBtn.addEventListener("click", () => {
+
+    menu.style.display = "none";
 
     if (items.length === 0){
       showToast("Shopping list is empty.");
@@ -252,6 +257,7 @@ if (clearCompletedBtn) {
 
 if (clearAllBtn) {
   clearAllBtn.addEventListener("click", () => {
+    menu.style.display = "none";
     if (items.length === 0){
       showToast("Shopping list is empty.");
       return;

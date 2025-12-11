@@ -276,7 +276,7 @@ footer {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.sl-btn--primary {
+.sl-btn-main {
   background: #588157;
   border-color: black;
   border-width: .04cm;
@@ -310,8 +310,8 @@ footer {
 .sl-text {
   min-width: 0;
   word-break: break-word;
-  font-weight:300px;
-  font-size: 1.1rem;
+  font-weight: 300;
+  font-size: 1.2rem;
 }
 
 .sl-checked .sl-text {
@@ -335,11 +335,11 @@ footer {
   z-index: 50;
 }
 
-.sl-modal--open {
+.sl-modal-open {
   display: grid;
 }
 
-.sl-modal__card {
+.sl-modal_card {
   width: min(32rem, 92%);
   background: #fff;
   border-radius: 0.75rem;
@@ -348,7 +348,7 @@ footer {
   padding: 1rem;
 }
 
-.sl-modal__header {
+.sl-modal_header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -356,12 +356,12 @@ footer {
   margin-bottom: 0.2rem;
 }
 
-.sl-modal__title {
+.sl-modal_title {
   margin: 0;
   font-size: 1.25rem;
 }
 
-.sl-modal__body {
+.sl-modal_body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -426,35 +426,6 @@ footer {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.sl-clear-buttons {
-  display: flex;
-  gap: 1rem;
-  position: absolute;      
-  bottom: 200px;           
-  right: 1.5rem;           
-}
-
-.sl-clear-btn {
-  background: #cc3b3b;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  font-family: 'Roboto Flex';
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-
-
-.sl-clear-btn:hover {
-  transform: scale(1.08);
-  background: #a32b2b;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-}
-
 
 .header .section {
   flex: 1;
@@ -465,7 +436,6 @@ footer {
 }
 
 .sl-list-wrapper {
-  height: 100%;
   background: white;
   border: 2px solid #ddd;
   border-radius: 0.5rem;
@@ -539,7 +509,7 @@ footer {
 .sl-menu-btn {
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 3rem;
   cursor: pointer;
   padding: 0.3rem 0.5rem;
 }
