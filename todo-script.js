@@ -180,8 +180,14 @@ favModal.addEventListener("click", (e) => {
 if (clearBtn) {
   clearBtn.addEventListener("click", () => {
     if (items.length === 0) return;
-    if (confirm("Clear all items?")) {
-      items = [];
+
+    const crossedOut = items.some(item => item.done);
+    if (!crossedOut){
+      return;
+    }
+
+    if (confirm("Clear all checked items?")) {
+      items = items.filter(item => !item.done);
       renderItems();
     }
   });
