@@ -28,6 +28,17 @@ const favEmpty = document.getElementById("sl-fav-empty");
 
 const clearBtn = document.getElementById("sl-clear-btn");
 
+//toast
+function showToast(message, duration = 2500) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, duration);
+}
+
 // ------- renderers -------
 function renderItems() {
   listEl.innerHTML = "";
@@ -180,16 +191,21 @@ favModal.addEventListener("click", (e) => {
 
 if (clearBtn) {
   clearBtn.addEventListener("click", () => {
-    if (items.length === 0) return;
+    if (items.length === 0){
+      showToast("Shopping list is empty.");
+      return;
+    }
 
     const crossedOut = items.some(item => item.done);
     if (!crossedOut){
+      showToast("No completed items to clear.");
       return;
     }
 
     if (confirm("Clear completed items?")) {
       items = items.filter(item => !item.done);
       renderItems();
+      showToast("All completed items cleared.")
     }
   });
 }
