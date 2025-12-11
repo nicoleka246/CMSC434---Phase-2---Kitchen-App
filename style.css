@@ -34,7 +34,7 @@ span {
 .device{
   width: 640px;
   height: 960px;
-  background-color: #a3b18a;
+  background-color: #b0c198;
   margin: auto;
   position: relative;
   overflow-y: auto;
@@ -71,7 +71,7 @@ div {
 .deviceSetting{
   width: 640px;
   height: 960px;
-  background-color: #a3b18a;
+  background-color: #b0c198;
   margin: auto;
   position: relative;
   overflow-y: auto;
@@ -122,7 +122,9 @@ footer {
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
-  background-color: #588157;
+  border-radius: 10px;
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.35);
+  background-color: #a3b18a;
 }
 
 .nav {
@@ -148,11 +150,13 @@ footer {
 }
 
 .nav:hover {
-  background-color: rgba(245, 245, 220, 0.682);
+  background-color: rgba(245, 245, 245, 0.554);
+  border-radius: 5px;
 }
 
 #nav-curr {
-  background-color: beige;
+  background-color: whitesmoke; 
+  border-radius: 5px;
 }
 
 .food-cad-header{
