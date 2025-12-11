@@ -413,10 +413,10 @@ footer {
 
 .sl-clear-buttons {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   position:fixed;
-  bottom: 130px;
-  left: 970px;
+  bottom: 120px;
+  left: 950px;
 }
 
 .sl-clear-btn {
