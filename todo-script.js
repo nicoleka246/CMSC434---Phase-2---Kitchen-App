@@ -115,6 +115,13 @@ function renderFavorites() {
     remove.title = "Remove from favorites";
     remove.textContent = "Remove";
     remove.addEventListener("click", () => {
+
+      const favName = favorites[index];
+
+      if (!confirm(`Remove "${favName}" from favorites?`)) {
+        return;
+      }
+
       favorites.splice(index, 1);
       save(LS_FAVS_KEY, favorites);
       renderFavorites();
@@ -139,6 +146,12 @@ function toggleDone(i) {
 }
 
 function removeItem(i) {
+  const item = items[i].text;
+
+  if (!confirm(`Delete "${item}"?`)) {
+    return;
+  }
+
   items.splice(i, 1);
   renderItems();
 }
