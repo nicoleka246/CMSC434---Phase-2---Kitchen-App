@@ -149,10 +149,6 @@ footer {
   margin-bottom: 4px;
 }
 
-.nav:hover {
-  background-color: rgba(245, 245, 245, 0.554);
-  border-radius: 5px;
-}
 
 #nav-curr {
   background-color: whitesmoke; 

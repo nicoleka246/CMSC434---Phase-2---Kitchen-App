@@ -135,13 +135,6 @@ input {
 
 }
 
-#current-inventory:hover,
-#personal-recipies:hover,
-#shopping-reminders:hover,
-#expiring-soon:hover {
-  transform: scale(1.03);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
 
 #expiring-soon,
 #shopping-reminders,
@@ -226,11 +219,6 @@ footer {
 .nav-img {
   height: 55px;
   margin-bottom: 4px;
-}
-
-.nav:hover {
-  background-color: rgba(245, 245, 245, 0.554); 
-  border-radius: 5px;
 }
 
 #nav-curr {

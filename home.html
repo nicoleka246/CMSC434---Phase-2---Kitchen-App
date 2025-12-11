@@ -12,7 +12,7 @@
         <img class = "header-img" src = "setting.png" alt = "setting">
         <h1>Kitchen Companion</h1>
         <a class = "user" href = "profile.html">
-            <img class = "header-img" src = "user.png" alt = "user">
+            <img class = "header-img" src = "chef.png" alt = "user">
             <span>User</span>
         </a>
         </div>
@@ -36,17 +36,6 @@
               <!--Food Will Be Added Here-->
               <p id = "empty"> There are currently no food items in your pantry.</p>
             </div>
-        </div>
-        <p class = "section">Personal Recipes</p>
-        <div id = "personal-recipies">
-            <ul id = "recipe-list"> 
-                <li>Vegan Tacos</li>
-                <li>Chicken Alfredo</li>
-                <li>Greek Salad</li>
-                <li>Avocado Toast</li>
-                <li>Butter Chicken</li>
-                <li>French Crepes</li>
-            </ul>
         </div>
         <p class = "section">Shopping Reminders</p>
         <div id = "shopping-reminders">
@@ -97,7 +86,6 @@
     document.addEventListener('DOMContentLoaded', () => {
     getInvent();
     getExp();
-    getRecipes();
     getShopRemind();
     window.addEventListener('storage', (e) => {
         if (e.key === 'items') {
@@ -105,14 +93,12 @@
             getExp();
             getShopRemind();
         } else if (e.key === 'recipes') {
-            getRecipes();
             getShopRemind();
         }
     });
     window.addEventListener('pageshow', () => {
         getInvent();
         getExp();
-        getRecipes();
         getShopRemind();
     });
 });
@@ -200,21 +186,7 @@ function getExp() {
             if (emptyExp) emptyExp.style.display = 'none';
         }
 }
-function getRecipes() {
-  const recList = document.getElementById('recipe-list');
-  const prepopulated = [
-    "Vegan Tacos",
-    "Chicken Alfredo",
-    "Greek Salad",
-    "Avocado Toast",
-    "Butter Chicken",
-    "French Crepes"
-  ];
-  const recs = JSON.parse(localStorage.getItem('recipes') || '[]');
-  const names = [...prepopulated,...recs.map(r => r.title)].filter(Boolean);
- recList.innerHTML = names.map(name => `<li>${name}</li>`).join('');
 
-}
 function getShopRemind() {
   const saved = JSON.parse(localStorage.getItem('recipes') || '[]');
   const recs = (window.defaultRecipes || []).concat(saved);
