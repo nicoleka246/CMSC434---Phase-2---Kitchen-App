@@ -29,6 +29,8 @@ const favEmpty = document.getElementById("sl-fav-empty");
 const clearCompletedBtn = document.getElementById("sl-clear-completed");
 const clearAllBtn = document.getElementById("sl-clear-all");
 
+const emptyMessage = document.getElementById("sl-empty-message");
+
 //toast
 function showToast(message, duration = 2500) {
   const toast = document.getElementById("toast");
@@ -43,6 +45,12 @@ function showToast(message, duration = 2500) {
 // ------- renderers -------
 function renderItems() {
   listEl.innerHTML = "";
+
+  if(items.length === 0){
+    emptyMessage.style.display = "flex";
+  }else{
+    emptyMessage.style.display = "none";
+  }
   items.forEach((item, index) => {
     const li = document.createElement("li");
     if (item.done) li.classList.add("sl-checked");

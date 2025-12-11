@@ -34,6 +34,10 @@
 
       <div class="sl-list-wrapper">
         <ul id="sl-list" class="sl-list"></ul>
+        <div id="sl-empty-message" class="sl-empty-list">
+          <p class="sl-empty-title">Your list is empty</p>
+          <p class="sl-empty-sub">Add items to get started!</p>
+        </div>
       </div>
 
     </main>
@@ -48,7 +52,7 @@
 
         <div class="sl-modal__body">
           <div class="sl-fav-add">
-            <input id="sl-fav-input" class="sl-input" type="text" placeholder="Add a favorite…" />
+            <input id="sl-fav-input" class="sl-input" type="text" placeholder="Add a favorite…" required/>
             <button id="sl-fav-add-btn" class="sl-btn sl-btn--primary" type="button">Add</button>
           </div>
 

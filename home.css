@@ -272,8 +272,9 @@ footer {
   margin: 0.25rem 0 0.5rem;
   background: transparent;
   text-align: left;
-  color: rgb(22, 22, 22);
+  color: #2d2d2d;
   font-size: 1rem;
+  font-family: 'DM Serif Text';
   padding-left: 1rem;
   font-weight: 550;
 }
@@ -404,13 +405,6 @@ footer {
   background: #ffe6e6;
 }
 
-.sl-delete svg {
-  width: 20px;
-  height: 20px;
-  display: block;
-  fill: currentColor;
-  /* makes it inherit red */
-}
 
 .sl-btn:hover {
   transform: scale(1.08);
@@ -517,4 +511,30 @@ footer {
 
 .toast.show {
   opacity: 1;
+}
+
+.sl-empty-list {
+  display: none;              
+  text-align: center;
+  margin-top: 8rem;
+  opacity: 0.7;
+  width: 95%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.sl-empty-title {
+  font-family: 'DM Serif Text';
+  font-size: 1.8rem;
+  color: #2d2d2d;
+  margin-bottom: 0.3rem;
+}
+
+.sl-empty-sub {
+  font-family: 'Roboto Flex';
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #2d2d2d;
 }
