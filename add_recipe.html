@@ -12,31 +12,28 @@
         <div id="requiredMessage"></div>
         <div class = "content-container">  
 
-            <label for="recipe-title">* Name</label>
-            <input class="button-styling-input" type="text" id="recipe-title" name="recipe-title" size="41">
+            <label for="recipe-title">Name</label>
+            <input class="button-styling-input" type="text" id="recipe-title" name="recipe-title" size="41" placeholder="Pasta">
             <br><br>
 
             <fieldset style="border: 1px solid #ddd; padding: 10px; border-radius: 6px; margin-bottom: 20px;">
             <legend>Recipe Details</legend>
 
-            <!-- Dietary -->
-            <label for="dietary"> Dietary:</label><br>
-            <input type="checkbox" id="vegan" value="Vegan" name="dietary[]">
-            <label for="vegan">Vegan</label>
-            <input type="checkbox" id="vegetarian" value="Vegetarian" name="dietary[]">
-            <label for="vegetarian">Vegetarian</label>
-            <input type="checkbox" id="glutenfree" value="Gluten-Free" name="dietary[]">
-            <label for="glutenfree">Gluten-Free</label>
-            <input type="checkbox" id="keto" value="Keto" name="dietary[]">
-            <label for="keto">Keto</label>
-            <input type="checkbox" id="paleo" value="Paleo" name="dietary[]">
-            <label for="paleo">Paleo</label>
-            <input type="checkbox" id="dairyfree" value="Dairy-Free" name="dietary[]">
-            <label for="dairyfree">Dairy-Free</label>
-            <br><br>
+            <!-- Diet -->
+            <label for="diet-select">Diet:</label>
+            <select class="button-styling-input" id="diet-select" name="cuisine">
+                <option value="">Any</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Gluten-Free">Gluten-Free</option>
+                <option value="Keto">Keto</option>
+                <option value="Paleo">Paleo</option>
+                <option value="Dairy-Free">Dairy-Free</option>
+              </select>
+            <br>
 
             <!-- Cuisine -->
-            <label for="cuisine-select">* Cuisine:</label>
+            <label for="cuisine-select">Cuisine:</label>
             <select class="button-styling-input" id="cuisine-select" name="cuisine">
                 <option value="">Any</option>
                 <option value="Italian">Italian</option>
@@ -47,10 +44,10 @@
                 <option value="Indian">Indian</option>
                 <option value="French">French</option>
             </select>
-            <br><br>
+            <br>
 
             <!-- Time -->
-            <label for="time-select">* Time:</label>
+            <label for="time-select">Time:</label>
             <select class="button-styling-input" id="time-select" name="time">
                 <option value="">Any</option>
                 <option value="under-15">Under 15 min</option>
@@ -58,10 +55,10 @@
                 <option value="30-60">30-60 min</option>
                 <option value="over-60">Over 60 min</option>
             </select>
-            <br><br>
+            <br>
 
             <!-- Difficulty -->
-            <label for="difficulty-select">* Difficulty:</label>
+            <label for="difficulty-select">Difficulty:</label>
             <select class="button-styling-input" id="difficulty-select" name="difficulty">
                 <option value="">Any</option>
                 <option value="beginner">Beginner</option>
@@ -71,20 +68,22 @@
             </fieldset>
 
             <!-- Ingredients -->
-            <label for="recipe-ingredients">* Ingredients</label>
+            <label for="recipe-ingredients">Ingredients</label>
             <br>
-            <textarea class="button-styling-input" id="recipe-ingredients" name="ingredients" rows="5" placeholder="List ingredients here, one per line"></textarea>
-            <br><br>
+            <textarea class="button-styling-input" id="recipe-ingredients" name="ingredients" rows="5" 
+                placeholder="Tomatoes, Onions, Heavy Cream, Garlic Paste" style="width: 590px;"></textarea>
+           
 
             <!-- Instructions -->
-            <label for="recipe-instructions">* Instructions</label>
+            <label for="recipe-instructions">Instructions</label>
             <br>
-            <textarea class="button-styling-input" id="recipe-instructions" name="instructions" rows="6" placeholder="Step by step instructions"></textarea>
-            <br><br>
-            
+            <textarea class="button-styling-input" id="recipe-instructions" name="instructions" rows="6" 
+                placeholder="1. Gather all ingredients
+2. Add dry ingredients to wet ingredients.
+3. Mix well." style="width: 590px;"></textarea>
+        
             <!-- Buttons -->
             <button id="save-item-button" class="button-styling-center" type="button" onclick="saveRecipe()">Save</button>
-            <br>
             <button id="cancel-item-button" class="button-styling-center" type="button" onclick="window.location.href='recipe.html'">Cancel</button>
         </div>
 
@@ -129,10 +128,7 @@ const editingIndex = localStorage.getItem("editing-existing-recipe");
         document.getElementById("recipe-ingredients").value = recipe.ingredients.join("\n");
         document.getElementById("recipe-instructions").value = recipe.instructions;
         // Dietary checkboxes
-        const dietary_arr = document.getElementsByName("dietary[]");
-        dietary_arr.forEach(cb => {
-            cb.checked = recipe.diet.includes(cb.value);
-        });
+        document.getElementById("diet-select").value = recipe.diet;
         // Cuisine select
         document.getElementById("cuisine-select").value = recipe.cuisine;
         // Time select (convert minutes back to option)
