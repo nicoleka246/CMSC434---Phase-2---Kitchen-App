@@ -131,15 +131,15 @@ input {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 24px;
+  gap: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
 
 }
 
 
 #expiring-soon,
-#shopping-reminders,
-#personal-recipies {
-  max-height: 125px;
+#shopping-reminders{
+  max-height: 160px;
   overflow-y: auto;
 }
 
@@ -182,10 +182,13 @@ input {
 }
 
 .food-img {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
-  margin-bottom: 6px;
+}
+.food-item span{
+  font-size: 16px;
+  font-weight: bolder;
 }
 
 /*Nav Bar Code*/
